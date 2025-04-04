@@ -1,0 +1,103 @@
+# .NET Core
+*.swp
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# Visual Studio
+.vs/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln.ide
+*.pidb
+*.svclog
+*.scc
+*_i.c
+*_p.c
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+.idea/
+
+# User-specific files
+*.rsuser
+*.userprefs
+
+# NuGet
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.assets.json
+
+# Databases
+*.mdf
+*.ldf
+*.ndf
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Test results
+TestResults/
+[Tt]est[Rr]esult*/
+coverage.opencover.xml
+coverage.cobertura.xml
+*.coverage
+*.coveragexml
+
+# Visual Studio code coverage results
+*.coverage
+*.coveragexml
+
+# Certificate files
+*.pfx
+*.snk
+
+# Local appsettings
+appsettings.Development.json
+appsettings.local.json

@@ -1,0 +1,5 @@
+Refresh Token With HttpOnly Cokies : 
+        They are assigned as HTTP Only cookies to the response from backend which actually adds ‚
+        Set-Cookie’ header in HTTP response. In this case browser sets the cookies received from backend. 
+        HTTP Only cookies are safe from any JavaScript running on the frontend page 
+        so it provides additional layer of security against cross site scripting (XSS) attacks

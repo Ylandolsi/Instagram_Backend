@@ -141,3 +141,6 @@
 /home/landolsi/Desktop/Instagram_Backend/Instagram_Backend/obj/Debug/net9.0/Instagram_Backend.pdb
 /home/landolsi/Desktop/Instagram_Backend/Instagram_Backend/obj/Debug/net9.0/Instagram_Backend.genruntimeconfig.cache
 /home/landolsi/Desktop/Instagram_Backend/Instagram_Backend/obj/Debug/net9.0/ref/Instagram_Backend.dll
+/home/landolsi/Desktop/Instagram_Backend/Instagram_Backend/obj/Debug/net9.0/Instagram_Backend.sourcelink.json
+/home/landolsi/Desktop/Instagram_Backend/Instagram_Backend/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.Google.dll
+/home/landolsi/Desktop/Instagram_Backend/Instagram_Backend/bin/Debug/net9.0/Scalar.AspNetCore.dll
