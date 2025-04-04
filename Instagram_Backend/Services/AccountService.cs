@@ -16,9 +16,11 @@ public class AccountService : IAccountService
     private readonly UserManager<User> _userManager;
 
     private readonly ApplicationDbContext _dbContext;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AccountService(IAuthTokenProcessor authTokenProcessor, UserManager<User> userManager , ApplicationDbContext dbContext)
+    public AccountService(IAuthTokenProcessor authTokenProcessor, UserManager<User> userManager , ApplicationDbContext dbContext , IHttpContextAccessor httpContextAccessor)
     {
+        _httpContextAccessor = httpContextAccessor;
         _dbContext = dbContext;
         _authTokenProcessor = authTokenProcessor;
         _userManager = userManager;
@@ -139,19 +141,19 @@ public class AccountService : IAccountService
             
 
             user = newUser;
+            var info = new UserLoginInfo("Google",
+                claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty,
+                "Google");
+
+            var loginResult = await _userManager.AddLoginAsync(user, info);
+                
+            if (!loginResult.Succeeded)
+            {
+                string errorOcc = $"Unable to add login: {string.Join(", ", loginResult.Errors.Select(x => x.Description))}";
+                throw new Exception($"External login provider: \"Google\" error occurred: {errorOcc}");
+            }
         }
         
-        var info = new UserLoginInfo("Google",
-            claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty,
-            "Google");
-
-        var loginResult = await _userManager.AddLoginAsync(user, info);
-            
-        if (!loginResult.Succeeded)
-        {
-            string errorOcc = $"Unable to add login: {string.Join(", ", loginResult.Errors.Select(x => x.Description))}";
-            throw new Exception($"External login provider: \"Google\" error occurred: {errorOcc}");
-        }
         
         var (jwtToken, expirationDateInUtc) = _authTokenProcessor.GenerateJwtToken(user);
         var refreshTokenValue = _authTokenProcessor.GenerateRefreshToken();
@@ -166,4 +168,23 @@ public class AccountService : IAccountService
         _authTokenProcessor.WriteAuthTokenAsHttpOnlyCookie("ACCESS_TOKEN", jwtToken, expirationDateInUtc);
         _authTokenProcessor.WriteAuthTokenAsHttpOnlyCookie("REFRESH_TOKEN", user.RefreshToken, refreshTokenExpirationDateInUtc);
     }
+    public async Task LogoutAsync()
+    {
+        var userId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (!string.IsNullOrEmpty(userId))
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                user.RefreshToken = null;
+                user.RefreshTokenExpiresAtUtc = DateTime.UtcNow.AddMinutes(-1);
+                await _userManager.UpdateAsync(user);
+            }
+        }
+        
+        _authTokenProcessor.ClearAuthTokenCookie("ACCESS_TOKEN");
+        _authTokenProcessor.ClearAuthTokenCookie("REFRESH_TOKEN");
+    }
+
 }

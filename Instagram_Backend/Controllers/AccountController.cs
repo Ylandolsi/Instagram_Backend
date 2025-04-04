@@ -63,6 +63,8 @@ public class AccountController : ControllerBase
             "Google",
             Url.Action(nameof(GoogleLoginCallback), "Account", new { returnUrl })
         );
+        // force the user to select an account
+        properties.SetParameter("prompt", "select_account");
 
         return Challenge(properties, new[] { "Google" });
     }
@@ -78,5 +80,12 @@ public class AccountController : ControllerBase
 
         await _accountService.LoginWithGoogleAsync(result.Principal);
         return Redirect(returnUrl ?? "/");
+    }
+
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await _accountService.LogoutAsync();
+        return Ok(new { message = "User logged out successfully" });
     }
 }

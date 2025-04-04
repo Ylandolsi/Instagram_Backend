@@ -75,4 +75,16 @@ public class AuthTokenProcessor : IAuthTokenProcessor
                 SameSite = SameSiteMode.Strict
             });
     }
+
+    public void ClearAuthTokenCookie(string cookieName)
+    {
+        _httpContextAccessor.HttpContext?.Response.Cookies.Delete(cookieName, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            IsEssential = true
+        });
+    }
+
 }

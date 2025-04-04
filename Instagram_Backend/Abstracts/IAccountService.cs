@@ -9,4 +9,6 @@ public interface IAccountService
     Task LoginAsync(LoginRequest loginRequest);
     Task RefreshTokenAsync(string? refreshToken);
     Task LoginWithGoogleAsync(ClaimsPrincipal? claimsPrincipal);
+
+    Task LogoutAsync();
 }
