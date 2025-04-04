@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Instagram_Backend.Requests;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
+using Instagram_Backend.Services.ExternalServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,9 +51,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(o =>
 builder.Services.AddCorsPolicy();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.ConfigureCloudinary(builder.Configuration);
 
 builder.Services.AddScoped<IAccountService,AccountService>();
 builder.Services.AddScoped<IAuthTokenProcessor,AuthTokenProcessor>();
+
+builder.Services.AddScoped<CloudinaryService>();
+
 
 
 builder.Services.AddAuth(builder.Configuration);

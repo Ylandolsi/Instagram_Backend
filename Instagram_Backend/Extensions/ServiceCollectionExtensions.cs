@@ -1,4 +1,5 @@
 using System.Text;
+using CloudinaryDotNet;
 using Instagram_Backend.Options;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -36,6 +37,33 @@ public static class ServiceCollectionExtensions
                 });
 
         });
+
+    }
+
+    internal static void ConfigureCloudinary ( this IServiceCollection services , IConfiguration configuration ){
+        Account cloudinaryAccount;
+        try{
+            var cloudName = configuration["Cloudinary:CloudName"];
+            var apiKey =configuration["Cloudinary:ApiKey"];
+            var apiSecret = configuration["Cloudinary:ApiSecret"];
+
+            if (string.IsNullOrEmpty(cloudName) || string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(apiSecret))
+            {
+                throw new Exception("Missing required Cloudinary configuration values");
+            }
+
+            cloudinaryAccount = new Account(
+                cloud: cloudName,
+                apiKey: apiKey,
+                apiSecret: apiSecret
+            );
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Failed to parse Cloudinary URL: {ex.Message}");
+        }
+        var cloudinary = new Cloudinary(cloudinaryAccount);
+        services.AddSingleton(cloudinary);
 
     }
     
