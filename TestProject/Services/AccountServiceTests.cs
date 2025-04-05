@@ -70,20 +70,83 @@ public class AccountServiceTests
     }
     
     [Theory]
-    [ClassData(typeof(RegisterUserInvalid))]
-    public async Task  RegisterAsync_WithExistingEmail_ThrowsBadRequestException(RegisterRequest request)
+    [InlineData("test1@example.com")]
+    
+    public async Task  RegisterAsync_WithExistingEmail_ThrowsBadRequestException(string email )
     {
+        var request = new RegisterRequest
+        {
+            Email = email,
+            FirstName = "Test",
+            LastName = "User",
+            Password = "P@ssword1",
+            ConfirmPassword = "P@ssword1"
+        };
         
         _mockUserManager.Setup(m => m.FindByEmailAsync(request.Email))
             .ReturnsAsync(new User { Email = request.Email, FirstName = "Test", LastName = "User" });
 
             
-        // // if bad request exception is not thrown, the test fails
-        // await Assert.ThrowsAsync<BadRequestException>(() =>  
-        //     _accountService.RegisterAsync(request));
+        // if bad request exception is not thrown, the test fails
+        await Assert.ThrowsAsync<BadRequestException>(() =>  
+            _accountService.RegisterAsync(request));
 
-        await _accountService.RegisterAsync(request);
+        
         
         _mockUserManager.Verify(m => m.CreateAsync(It.IsAny<User>()), Times.Never);
+    }
+
+    [Theory]
+    [ClassData(typeof(RegisterUserInvalid))]
+    
+    public async Task  RegisterAsync_ThowsInvalidOp(RegisterRequest request)
+    {
+        
+        _mockUserManager.Setup(m => m.FindByEmailAsync(request.Email))
+            .ReturnsAsync((User)null);;
+        
+        _mockUserManager.Setup(m => m.CreateAsync(It.IsAny<User>()))
+            .ReturnsAsync(IdentityResult.Failed(new IdentityError()));
+
+            
+        // if bad request exception is not thrown, the test fails
+        await Assert.ThrowsAsync<InvalidOpException>(() =>  
+            _accountService.RegisterAsync(request));
+
+        
+        
+        
+    }
+
+    [Theory]
+    [ClassData(typeof(LoginValid))]
+    public async Task LoginAsync_WithValidCredentials_SetsAuthTokens(LoginRequest request)
+    {
+        var user = new User
+        {
+            Email = request.Email,
+            FirstName = "Test",
+            LastName = "User",
+            RefreshToken = "OldRefreshToken",
+            RefreshTokenExpiresAtUtc = DateTime.UtcNow.AddDays(7)
+        };
+
+        _mockUserManager.Setup(m => m.FindByEmailAsync(request.Email))
+            .ReturnsAsync(user);
+        
+        _mockUserManager.Setup(m => m.CheckPasswordAsync(user, request.Password))
+            .ReturnsAsync(true);
+
+        _mockTokenProcessor.Setup(m => m.GenerateJwtToken(user))
+            .Returns(("GeneratedJwtToken", DateTime.UtcNow.AddMinutes(30)));
+
+        _mockTokenProcessor.Setup(m => m.GenerateRefreshToken())
+            .Returns("NewRefreshToken");
+
+        // Act
+        await _accountService.LoginAsync(request);
+
+        // Assert
+        _mockUserManager.Verify(m => m.UpdateAsync(user), Times.Once);
     }
 }
