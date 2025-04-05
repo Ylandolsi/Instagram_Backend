@@ -1,5 +1,12 @@
 
 namespace Instagram_Backend.Models;
+using System;
+
+public enum LikeType
+{
+    Post,
+    Comment
+}
 
 public class Like
 {
@@ -9,7 +16,7 @@ public class Like
     public Guid UserId { get; set; }
     public User User { get; set; } = null!;
 
-    public string Type { get; set; } = string.Empty; // "Post" or "Comment"
+    public LikeType Type { get; set; }
     
     public Guid? PostId { get; set; }
     public Post? Post { get; set; }

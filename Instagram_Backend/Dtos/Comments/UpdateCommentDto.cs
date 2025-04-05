@@ -1,7 +1,7 @@
 namespace Instagram_Backend.Dtos.Comments;
 
-public class CreateCommentDto
+public class UpdateCommentDto
 {
-     // CommentId will come from route parameter
+    // CommentId will come from route parameter
     public string Content { get; set; } = string.Empty;
 }
