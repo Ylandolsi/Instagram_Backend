@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using TestProject.TestData;
+using UnitTest.TestData;
 
-namespace TestProject.Services;
+namespace UnitTest.Services;
 
 public class AccountServiceTests
 {

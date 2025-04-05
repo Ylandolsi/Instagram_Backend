@@ -8,7 +8,7 @@
 // using Microsoft.AspNetCore.Mvc;
 // using Moq;
 
-// namespace TestProject.Controllers;
+// namespace UnitTest.Controllers;
 
 // public class AccountControllerTests
 // {

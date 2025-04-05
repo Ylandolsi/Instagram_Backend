@@ -1,11 +1,16 @@
+using System.Security.Claims;
 using Instagram_Backend.Abstracts;
 using Instagram_Backend.Models;
 using Instagram_Backend.Requests;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Instagram_Backend.Controllers;
+
+using JWTtokens = System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames ;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -14,12 +19,14 @@ public class AccountController : ControllerBase
     private readonly IAccountService _accountService;
     private readonly IAuthTokenProcessor _authTokenProcessor;
     private readonly SignInManager<User> _signInManager;
+    private readonly UserManager<User> _userManager;
 
     public AccountController(
         IAccountService accountService, 
         IAuthTokenProcessor authTokenProcessor,
-        SignInManager<User> signInManager )
+        SignInManager<User> signInManager  , UserManager<User> userManager)
     {
+        _userManager = userManager;
         _accountService = accountService;
         _authTokenProcessor = authTokenProcessor;
         _signInManager = signInManager;

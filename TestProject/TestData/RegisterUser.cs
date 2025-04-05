@@ -1,7 +1,7 @@
 using Instagram_Backend.Requests;
 using Xunit;
 
-namespace TestProject.TestData;
+namespace UnitTest.TestData;
 
 public class RegisterUserValid : TheoryData<RegisterRequest>
 {

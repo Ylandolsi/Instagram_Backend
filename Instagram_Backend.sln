@@ -2,7 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instagram_Backend", "Instagram_Backend\Instagram_Backend.csproj", "{C116FCB8-8F32-4B33-A025-036E0363BD91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{3B35B7C5-4C40-4B77-998C-98F47E0C08D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "TestProject\UnitTest.csproj", "{3B35B7C5-4C40-4B77-998C-98F47E0C08D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTest", "IntegrationTest\IntegrationTest.csproj", "{A1644674-FC05-4D70-A2BD-D58155E51CFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,18 @@ Global
 		{3B35B7C5-4C40-4B77-998C-98F47E0C08D7}.Release|x64.Build.0 = Release|Any CPU
 		{3B35B7C5-4C40-4B77-998C-98F47E0C08D7}.Release|x86.ActiveCfg = Release|Any CPU
 		{3B35B7C5-4C40-4B77-998C-98F47E0C08D7}.Release|x86.Build.0 = Release|Any CPU
+		{A1644674-FC05-4D70-A2BD-D58155E51CFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1644674-FC05-4D70-A2BD-D58155E51CFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1644674-FC05-4D70-A2BD-D58155E51CFB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A1644674-FC05-4D70-A2BD-D58155E51CFB}.Debug|x64.Build.0 = Debug|Any CPU
+		{A1644674-FC05-4D70-A2BD-D58155E51CFB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A1644674-FC05-4D70-A2BD-D58155E51CFB}.Debug|x86.Build.0 = Debug|Any CPU
+		{A1644674-FC05-4D70-A2BD-D58155E51CFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1644674-FC05-4D70-A2BD-D58155E51CFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1644674-FC05-4D70-A2BD-D58155E51CFB}.Release|x64.ActiveCfg = Release|Any CPU
+		{A1644674-FC05-4D70-A2BD-D58155E51CFB}.Release|x64.Build.0 = Release|Any CPU
+		{A1644674-FC05-4D70-A2BD-D58155E51CFB}.Release|x86.ActiveCfg = Release|Any CPU
+		{A1644674-FC05-4D70-A2BD-D58155E51CFB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

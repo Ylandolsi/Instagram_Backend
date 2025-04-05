@@ -34,4 +34,8 @@
 
     </ItemGroup>
 
+    <ItemGroup>
+      <InternalsVisibleTo Include="IntegrationTest" />
+    </ItemGroup>
+
 </Project>

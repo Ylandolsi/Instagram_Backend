@@ -15,8 +15,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
 using Instagram_Backend.Services.ExternalServices;
 
-using System.Runtime.CompilerServices;
-[assembly: InternalsVisibleTo("TestProject")]
 
 var builder = WebApplication.CreateBuilder(args);
 

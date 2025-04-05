@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace Instagram_Backend.Requests;
-public record RegisterRequest
+public class RegisterRequest
 {
     public required string FirstName { get; init; }
     public required string LastName { get; init; }
