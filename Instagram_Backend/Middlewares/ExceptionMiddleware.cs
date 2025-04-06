@@ -61,7 +61,8 @@ public class ExceptionMiddleware
         var response = new
         {
             message,
-            details = _env.IsDevelopment() ? ex.ToString() : null
+            details = _env.IsDevelopment() ? ex.ToString() : null , 
+            data = false
         };
 
         var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };

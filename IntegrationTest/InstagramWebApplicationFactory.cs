@@ -14,9 +14,11 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Encodings.Web;
-using IntegrationTest.Mocks ; 
+using IntegrationTest.Mocks ;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace IntegrationTest;
+
 
 internal class InstagramWebApplicationFactory : WebApplicationFactory<Program>
 {
@@ -58,6 +60,9 @@ internal class InstagramWebApplicationFactory : WebApplicationFactory<Program>
             {
                 options.UseInMemoryDatabase("TestingDb");
                 options.UseInternalServiceProvider(serviceProvider);
+                // Add this line to ignore transaction warnings
+                options.ConfigureWarnings(warnings => 
+                    warnings.Ignore(InMemoryEventId.TransactionIgnoredWarning));
             });
             
             // COMPLETELY REPLACE the authentication system
@@ -89,7 +94,7 @@ internal class InstagramWebApplicationFactory : WebApplicationFactory<Program>
             // Fix any dependency issues with Identity
             services.AddIdentityCore<User>()
                 .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-
+            services.AddScoped<IImageService, MockImageService>();
             services.AddSingleton<IAuthTokenProcessor, MockAuthTokenProcessor>();
                 
             // Build new service provider to initialize test database
@@ -133,6 +138,7 @@ internal class InstagramWebApplicationFactory : WebApplicationFactory<Program>
 // ==> means we can test endpoints ([Authorize]) without needing a real JWT token
 public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
+    const string TestUserId = "ce95b43e-6587-480c-8ca6-9e217f0873fe";
     // instead of using a real authentication scheme, we create a test one
     // that will always return a successful authentication result
     public TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, 
@@ -145,11 +151,12 @@ public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions
 
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
+
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, Guid.NewGuid().ToString()),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.NameIdentifier, "Test User"),
+            new Claim(ClaimTypes.NameIdentifier, TestUserId),
             new Claim(JwtRegisteredClaimNames.Email, "test@example.com") ,
 
         };

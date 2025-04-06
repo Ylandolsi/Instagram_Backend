@@ -12,12 +12,12 @@ public class User : IdentityUser<Guid> // guid is used as the primary key type
     public string Bio { get; set; } = string.Empty;
 
 
-    public static User Create(string email, string firstName, string lastName)
+    public static User Create(string email, string firstName, string lastName , string username)
     {
         return new User
         {
             Email = email,
-            UserName = email,
+            UserName = username,
             FirstName = firstName,
             LastName = lastName
         };

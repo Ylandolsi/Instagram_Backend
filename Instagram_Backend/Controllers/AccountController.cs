@@ -37,11 +37,19 @@ public class AccountController : ControllerBase
     {
         if (registerRequest == null || !ModelState.IsValid)
         {
-            return BadRequest("Invalid request");
+            return BadRequest(new ApiResponse<bool>
+            {
+                Message = "Invalid request",
+                Data = false,
+            });
         }
 
         await _accountService.RegisterAsync(registerRequest);
-        return Ok(new { message = "User registered successfully" });
+        return Ok(new ApiResponse<bool>
+        {
+            Message = "User registered successfully",
+            Data = true,
+        });
     }
 
     [HttpPost("login")]
@@ -49,18 +57,31 @@ public class AccountController : ControllerBase
     {
         if (loginRequest == null || !ModelState.IsValid)
         {
-            return BadRequest("Invalid request");
+            return BadRequest(new ApiResponse<bool>
+            {
+                Message = "Invalid request",
+                Data = false,
+            });
         }
         await _accountService.LoginAsync(loginRequest);
-        return Ok(new { message = "User logged in successfully" });
+        return Ok(new ApiResponse<bool>
+        {
+            Message = "User logged in successfully",
+            Data = true,
+        });
     }
 
     [HttpPost("refresh")]
+    [Authorize]
     public async Task<IActionResult> RefreshToken()
     {
         var refreshToken = Request.Cookies["REFRESH_TOKEN"];
         await _accountService.RefreshTokenAsync(refreshToken);
-        return Ok(new { message = "Token refreshed successfully" });
+        return Ok(new ApiResponse<bool>
+        {
+            Message = "Token refreshed successfully",
+            Data = true,
+        });
     }
     
     [HttpGet("login/google")]
@@ -82,7 +103,11 @@ public class AccountController : ControllerBase
         var result = await HttpContext.AuthenticateAsync("Google");
         if (!result.Succeeded)
         {
-            return Unauthorized();
+            return Unauthorized( new ApiResponse<bool>
+            {
+                Message = "Google login failed",
+                Data = false,
+            });
         }
 
         await _accountService.LoginWithGoogleAsync(result.Principal);
@@ -93,6 +118,57 @@ public class AccountController : ControllerBase
     public async Task<IActionResult> Logout()
     {
         await _accountService.LogoutAsync();
-        return Ok(new { message = "User logged out successfully" });
+        return Ok(new ApiResponse<bool>
+        {
+            Message = "User logged out successfully",
+            Data = true,
+        });
+    }
+
+    [HttpPost("verify/email")]
+    public async Task<IActionResult> VerifyEmailExists(string email){
+        if (string.IsNullOrEmpty(email))
+        {
+            return BadRequest(new ApiResponse<bool>
+            {
+                Message = "Email cannot be null or empty",
+                Data = false,
+            });
+        }
+        var exists = await _accountService.VerifyEmailExistsAsync(email); 
+        return Ok(new ApiResponse<bool>
+        {
+            Message = $"Email = {email} {(exists ? "exists" : "does not exist")}" ,
+            Data = exists ,
+        }); 
+    }
+
+    [HttpPost("verify/username")] 
+    public async Task<IActionResult> VerifyUsernameExists(string username){
+        if (string.IsNullOrEmpty(username))
+        {
+            return BadRequest(new ApiResponse<bool>
+            {
+                Message = "Username cannot be null or empty",
+                Data = false,
+            });
+        }
+        var exists = await _accountService.VerifyUsernameExistsAsync(username); 
+        return Ok(new ApiResponse<bool>
+        {
+            Message = $"Username = {username} {(exists ? "exists" : "does not exist")}" ,
+            Data = exists ,
+        }); 
+    }
+
+    // test 
+    [HttpGet("test")]
+    [Authorize]
+    public IActionResult Test()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        return Ok(userId);
+        // return Ok() ;
     }
 }

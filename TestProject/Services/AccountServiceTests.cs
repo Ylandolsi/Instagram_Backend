@@ -79,6 +79,7 @@ public class AccountServiceTests
             Email = email,
             FirstName = "Test",
             LastName = "User",
+            UserName = "testuser",
             Password = "P@ssword1",
             ConfirmPassword = "P@ssword1"
         };
@@ -127,6 +128,7 @@ public class AccountServiceTests
             Email = request.Email,
             FirstName = "Test",
             LastName = "User",
+            UserName = "testuser",
             RefreshToken = "OldRefreshToken",
             RefreshTokenExpiresAtUtc = DateTime.UtcNow.AddDays(7)
         };

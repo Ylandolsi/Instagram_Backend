@@ -5,6 +5,9 @@ public class RegisterRequest
 {
     public required string FirstName { get; init; }
     public required string LastName { get; init; }
+    [Required]
+    public required string UserName {get; init ; }
+
     [EmailAddress]
     public required string Email { get; init; }
 

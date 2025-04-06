@@ -11,8 +11,9 @@ public class NotificationDto
     public string Content { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public bool IsRead { get; set; } = false;
+    
 
     public PostDto? Post { get; set; } = null!;
     public CommentDto? Comment { get; set; } = null!;
-    public UserDto? User { get; set; } = null!;
+    public UserDto? User { get; set; } = null!; // the user who triggered the notification
 }

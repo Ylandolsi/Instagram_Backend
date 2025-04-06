@@ -1,19 +1,20 @@
 using System.Net;
 using System.Net.Http.Json;
-using Xunit;
 using Instagram_Backend.Requests;
-
 namespace IntegrationTest;
 
 public class AuthenticationTests
 {
     private readonly InstagramWebApplicationFactory _factory;
     private readonly HttpClient _client;
+
     
     public AuthenticationTests()
     {
         _factory = new InstagramWebApplicationFactory();
+
         _client = _factory.CreateClient();
+
     }
 
     [Fact]
@@ -24,6 +25,7 @@ public class AuthenticationTests
         {
             FirstName = "Test",
             LastName = "User",
+            UserName = "testUser",
             Email = "testUser@gmail.com",
             Password = "P@ssword1",
             ConfirmPassword = "P@ssword1"
@@ -49,6 +51,7 @@ public class AuthenticationTests
         {
             FirstName = "Test",
             LastName = "User",
+            UserName = "testUser",
             Email = "invalid-email",
             Password = "P@ssword1",
             ConfirmPassword = "P@ssword1"
@@ -71,6 +74,7 @@ public class AuthenticationTests
         {
             FirstName = "Test",
             LastName = "User",
+            UserName = "testUser",
             Email = uniqueEmail,
             Password = "P@ssword1",
             ConfirmPassword = "P@ssword1"
@@ -89,6 +93,13 @@ public class AuthenticationTests
         var loginResponse = await _client.PostAsJsonAsync("/api/account/login", loginRequest);
         
         Assert.Equal(HttpStatusCode.OK, loginResponse.StatusCode);
+
+
+        var testAuth = await _client.GetAsync("/api/account/test");
+        Assert.Equal(HttpStatusCode.OK, testAuth.StatusCode);   
+        var testAuthContent = await testAuth.Content.ReadAsStringAsync();
+        Console.WriteLine(testAuthContent);
+        Assert.Equal("ce95b43e-6587-480c-8ca6-9e217f0873fe", testAuthContent);
     }
     [Fact]
     public async Task LoginFailed(){
@@ -101,3 +112,5 @@ public class AuthenticationTests
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
 }
+
+    

@@ -11,4 +11,7 @@ public interface IAccountService
     Task LoginWithGoogleAsync(ClaimsPrincipal? claimsPrincipal);
 
     Task LogoutAsync();
+
+    Task<bool> VerifyEmailExistsAsync(string email) ; 
+    Task<bool> VerifyUsernameExistsAsync(string username) ;
 }

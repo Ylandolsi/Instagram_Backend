@@ -1,0 +1,117 @@
+using System.Security.Claims;
+using Instagram_Backend.Abstracts;
+using Instagram_Backend.Dtos;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Instagram_Backend.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class UsersController : ControllerBase
+{
+    private readonly IUserService _userService;
+
+    public UsersController(IUserService userService)
+    {
+        _userService= userService;
+    }
+    
+    [HttpGet("{id:guid}/followers")]
+    public async Task<IActionResult> GetFollowers(Guid id, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
+    {
+        var followers = await _userService.GetMyFollowers(page, pageSize, id);
+        return Ok(new ApiResponse<PagedResult<UserDto>>
+        {
+            Message = $"Followers of userId = {id} Fetched with success",
+            Data = followers ,
+        });
+    }
+
+    [HttpGet("{id:guid}/following")]
+    public async Task<IActionResult> GetFollowing(Guid id, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
+    {
+        var following = await _userService.GetMyFollowing(page, pageSize, id);
+        return Ok( new ApiResponse<PagedResult<UserDto>>
+        {
+            Message = $"Following of userId = {id} Fetched with success",
+            Data = following ,
+        });
+    }
+
+    [HttpPost("{id:guid}/follow")]
+    [Authorize]
+    public async Task<IActionResult> FollowUser(Guid id)
+    {
+        var userId = GetUserIdFromToken();
+
+        if ( userId == Guid.Empty)
+            return Unauthorized(new ApiResponse<bool>
+            {
+                Message = "User not authenticated.",
+                Data = false,
+            });
+
+
+        if (userId == id)
+            return BadRequest(new ApiResponse<bool>
+            {
+                Message = "You cannot follow yourself.",
+                Data = false,
+            });
+            
+        
+        var result = await _userService.FollowUser(userId, id);
+        return Ok( new ApiResponse<object>
+        {
+            Message = $"UserId = {userId} Followed UserId = {id} with success " ,
+            Data = new
+            {
+                UserId = userId,
+                FollowedUserId = id
+            } ,
+        });
+    }
+    [HttpPost("{id:guid}/unfollow")]
+    [Authorize]
+    public async Task<IActionResult> UnfollowUser(Guid id)
+    {
+        var userId = GetUserIdFromToken();
+
+        if ( userId == Guid.Empty)
+            return Unauthorized(new ApiResponse<bool>
+            {
+                Message = "User not authenticated.",
+                Data = false,
+            });
+
+
+        if (userId == id)
+            return BadRequest(new ApiResponse<bool>
+            {
+                Message = "You cannot Unfollow yourself.",
+                Data = false,
+            });
+
+
+         await _userService.UnfollowUser(userId, id);
+        return Ok( new ApiResponse<object>
+        {
+            Message = $"UserId = {userId} Unfollowed UserId = {id} with success " ,
+            Data = new
+            {
+                UserId = userId,
+                UnfollowedUserId = id
+            } ,
+        });
+    }
+
+
+
+    private Guid GetUserIdFromToken()
+    {
+        var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        return Guid.TryParse(userIdStr, out var userId) ? userId : Guid.Empty;
+    }
+    
+}

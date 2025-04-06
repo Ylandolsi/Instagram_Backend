@@ -3,6 +3,7 @@ namespace Instagram_Backend.Abstracts;
 public interface INotificationService
 {
     Task<List<NotificationDto>> GetUserNotificationsAsync(Guid userId, int page, int pageSize);
+    Task<bool> DeleteNotificationAsync(Guid notificationId, Guid userId);
     Task<bool> MarkAsReadAsync(Guid notificationId, Guid userId);
     Task MarkAllAsReadAsync(Guid userId);
     

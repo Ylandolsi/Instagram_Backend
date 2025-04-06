@@ -54,8 +54,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureCloudinary(builder.Configuration);
 
-builder.Services.AddScoped<IAccountService,AccountService>();
 builder.Services.AddScoped<IAuthTokenProcessor,AuthTokenProcessor>();
+builder.Services.AddScoped< ICloudinaryService, CloudinaryService>();
+builder.Services.AddScoped<IAccountService,AccountService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IImageService , ImageService>() ;
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<ILikeService, LikeService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
+
 
 builder.Services.AddScoped<CloudinaryService>();
 

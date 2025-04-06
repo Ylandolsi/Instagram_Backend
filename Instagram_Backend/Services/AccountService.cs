@@ -35,7 +35,7 @@ public class AccountService : IAccountService
             throw new BadRequestException($"User Already Exists With email = { registerRequest.Email} ");
         }
 
-        var user = User.Create(registerRequest.Email, registerRequest.FirstName, registerRequest.LastName);
+        var user = User.Create(registerRequest.Email, registerRequest.FirstName, registerRequest.LastName , registerRequest.UserName);
         user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, registerRequest.Password);
 
         var result = await _userManager.CreateAsync(user);
@@ -185,6 +185,15 @@ public class AccountService : IAccountService
         
         _authTokenProcessor.ClearAuthTokenCookie("ACCESS_TOKEN");
         _authTokenProcessor.ClearAuthTokenCookie("REFRESH_TOKEN");
+    }
+
+    public async Task<bool>  VerifyEmailExistsAsync( string email){
+
+        return await _dbContext.Users.Where( u => u.Email == email).FirstOrDefaultAsync() != null ; 
+    }
+
+    public async Task<bool> VerifyUsernameExistsAsync ( string username){
+        return await _dbContext.Users.Where( u => u.UserName == username).FirstOrDefaultAsync() != null ; 
     }
 
 }
