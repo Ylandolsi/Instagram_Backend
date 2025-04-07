@@ -36,6 +36,7 @@ public class PostsTests
     [Fact]
     public async Task GetPost_WithValidId_ReturnsOkResult()
     {
+        
         // Arrange
         await CreateTestUser();
         var postId = await CreateTestPostWithImages();
@@ -74,6 +75,8 @@ public class PostsTests
         await CreateTestUser();
         var nonExistentId = Guid.NewGuid();
         
+        _client.DefaultRequestHeaders.Clear(); 
+        await _factory.AuthenticateClient(_client, TestUserId);
         // Act
         var response = await _client.GetAsync($"/api/posts/{nonExistentId}");
         
@@ -418,6 +421,8 @@ public class PostsTests
     [Fact]
     public async Task DeletePost_PostBelongingToAnotherUser_ReturnsNotFound()
     {
+        _client.DefaultRequestHeaders.Clear(); 
+
         // Arrange
         await CreateTestUser();
         await CreateOtherUser();
@@ -425,6 +430,7 @@ public class PostsTests
         // Create a post owned by the other user
         var otherUserPostId = await CreatePostForUser(_otherUserIdGuid);
         
+        await _factory.AuthenticateClient(_client, TestUserId);
         // Act
         var response = await _client.DeleteAsync($"/api/posts/{otherUserPostId}");
         
@@ -569,3 +575,5 @@ public class PostsTests
     
     #endregion
 }
+
+

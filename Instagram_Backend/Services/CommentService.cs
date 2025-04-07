@@ -108,14 +108,24 @@ public class CommentService : ICommentService
 
             var totalDescendantCount = allDescendantIds.Count  ; 
 
+            // Delete all descendants explicitly (don't rely on cascade)
+            foreach (var descendantId in allDescendantIds.Where(id => id != commentId))
+            {
+                var descendant = await _context.Comments.FindAsync(descendantId);
+                if (descendant != null)
+                {
+                    _context.Comments.Remove(descendant);
+                }
+            }
+
+
             var post = await _context.Posts.FindAsync(comment.PostId);
             if (post != null)
             {
                 post.CommentCount = Math.Max(0, post.CommentCount - totalDescendantCount);
                 _context.Posts.Update(post);
             }
-
-            // Delete the comment and any sub replies (CASCADE delete)
+            // delete the comment itself
             _context.Comments.Remove(comment);
 
             
@@ -151,6 +161,7 @@ public class CommentService : ICommentService
     {
 
         var commentsQuery =  _context.Comments
+            .Include(c => c.User)
             .Where(c => c.ParentCommentId == commentId) ; 
 
         return await MapperPagedResult.MapPagedResult2(commentsQuery, page, pageSize,
@@ -162,6 +173,7 @@ public class CommentService : ICommentService
     public async Task<PagedResult<CommentDto>> GetPostCommentsRootAsync(Guid postId, int page, int pageSize, Guid currentUserId )
     {
         var commentsQuery = _context.Comments
+            .Include(c => c.User)
             .Where(c => c.PostId == postId && c.ParentCommentId == null);
 
 
@@ -175,7 +187,8 @@ public class CommentService : ICommentService
     public async Task<CommentDto> UpdateCommentAsync(UpdateCommentDto updateCommentDto, Guid commentId, Guid userId)
     {
         var comment = await _context.Comments
-            .FirstOrDefaultAsync(c => c.Id == commentId);
+            .Include(c => c.User)
+            .FirstOrDefaultAsync(c => c.Id == commentId );
 
         if (comment == null)
         {
@@ -217,7 +230,7 @@ public class CommentService : ICommentService
             }
             
             var children = await _context.Comments
-                .Where(c => batch.Contains(c.ParentCommentId.Value))
+                .Where(c => c.ParentCommentId.HasValue &&  batch.Contains(c.ParentCommentId.Value))
                 .Select(c => c.Id)
                 .ToListAsync();
                 

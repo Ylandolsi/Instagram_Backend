@@ -151,7 +151,7 @@ internal class InstagramWebApplicationFactory : WebApplicationFactory<Program>
 public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
     // Remove the constant fallback (or change its behavior)
-    const string TestUserId = "ce95b43e-6587-480c-8ca6-9e217f0873fe";
+    // const string TestUserId = "ce95b43e-6587-480c-8ca6-9e217f0873fe";
 
     // Use the static property only
     public static string CurrentUserId { get; set; } = string.Empty;
@@ -169,7 +169,8 @@ public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions
         var userId = CurrentUserId;
         if(string.IsNullOrEmpty(userId))
         {
-            userId = TestUserId; 
+            // userId = TestUserId; 
+            userId = "anonymous" ; 
         }
 
         var claims = new[]
