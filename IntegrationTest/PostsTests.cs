@@ -238,6 +238,8 @@ public class PostsTests
             fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
             formData.Add(fileContent, "file", fileName);
         }
+        _client.DefaultRequestHeaders.Clear(); 
+        await _factory.AuthenticateClient(_client , TestUserId) ; 
         
         // Act
         var response = await _client.PostAsync("/api/posts", formData);
