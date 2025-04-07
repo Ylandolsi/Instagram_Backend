@@ -22,129 +22,99 @@ public class LikeService : ILikeService
 
     public async Task<bool> ToggleLikePostAsync(Guid postId, Guid userId)
     {
-        _logger.LogInformation("Toggling like for post {PostId} by user {UserId}", postId, userId);
-
+        using var transaction = await _context.Database.BeginTransactionAsync();
+        
         try
         {
             var post = await _context.Posts.FindAsync(postId);
             if (post == null)
-            {
-                _logger.LogWarning("Post {PostId} not found when toggling like", postId);
-                throw new NotFoundException($"Post with ID = {postId} not found");
-            }
-
-            var like = await _context.Likes
-                .FirstOrDefaultAsync(l => l.PostId == postId && l.UserId == userId && l.Type == LikeType.Post);
-
-            using var transaction = await _context.Database.BeginTransactionAsync();
-
-            try
-            {
-                if (like != null)
-                {
-                    // Unlike
-                    _context.Likes.Remove(like);
-                    _logger.LogDebug("User {UserId} removing like from post {PostId}", userId, postId);
-                }
-                else
-                {
-                    // Like
-                    _context.Likes.Add(new Like
-                    {
-                        Id = Guid.NewGuid(),
-                        PostId = postId,
-                        UserId = userId,
-                        Type = LikeType.Post,
-                        CreatedAt = DateTime.UtcNow
-                    });
-                    _logger.LogDebug("User {UserId} adding like to post {PostId}", userId, postId);
-                }
-
-                await _context.SaveChangesAsync();
-                await transaction.CommitAsync();
+                throw new NotFoundException($"Post not found");
                 
-                _logger.LogInformation("Successfully toggled like for post {PostId} by user {UserId}", postId, userId);
-                return like == null; // true if it was liked, false if unliked
-            }
-            catch (Exception ex)
+            var existingLike = await _context.Likes
+                .FirstOrDefaultAsync(l => l.PostId == postId && l.UserId == userId);
+                
+            if (existingLike != null)
             {
-                await transaction.RollbackAsync();
-                _logger.LogError(ex, "Error toggling like for post {PostId} by user {UserId}", postId, userId);
-                throw new InvalidOpException($"Failed to toggle like: {ex.Message}");
+                // Unlike
+                _context.Likes.Remove(existingLike);
+                post.LikeCount = Math.Max(0, post.LikeCount - 1);
             }
-        }
-        catch (NotFoundException)
-        {
-            throw;
+            else
+            {
+                // Like
+                var like = new Like
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = userId,
+                    PostId = postId,
+                    Type = LikeType.Post,
+                    CreatedAt = DateTime.UtcNow
+                };
+                
+                _context.Likes.Add(like);
+                post.LikeCount += 1;
+            }
+            
+            _context.Posts.Update(post);
+            await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
+            
+            return existingLike == null; //  true if liked, false if unliked
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Unexpected error toggling like for post {PostId} by user {UserId}", postId, userId);
-            throw new InvalidOpException($"An error occurred: {ex.Message}");
+            await transaction.RollbackAsync();
+            _logger.LogError(ex, "Error toggling post like");
+            throw;
         }
     }
 
     public async Task<bool> ToggleLikeCommentAsync(Guid commentId, Guid userId)
     {
-        _logger.LogInformation("Toggling like for comment {CommentId} by user {UserId}", commentId, userId);
-
+        using var transaction = await _context.Database.BeginTransactionAsync();
+        
         try
         {
             var comment = await _context.Comments.FindAsync(commentId);
             if (comment == null)
-            {
-                _logger.LogWarning("Comment {CommentId} not found when toggling like", commentId);
-                throw new NotFoundException($"Comment with ID = {commentId} not found");
-            }
-
-            var like = await _context.Likes
-                .FirstOrDefaultAsync(l => l.CommentId == commentId && l.UserId == userId && l.Type == LikeType.Comment);
-
-            using var transaction = await _context.Database.BeginTransactionAsync();
-
-            try
-            {
-                if (like != null)
-                {
-                    // Unlike
-                    _context.Likes.Remove(like);
-                    _logger.LogDebug("User {UserId} removing like from comment {CommentId}", userId, commentId);
-                }
-                else
-                {
-                    // Like
-                    _context.Likes.Add(new Like
-                    {
-                        Id = Guid.NewGuid(),
-                        CommentId = commentId,
-                        UserId = userId,
-                        Type = LikeType.Comment,
-                        CreatedAt = DateTime.UtcNow
-                    });
-                    _logger.LogDebug("User {UserId} adding like to comment {CommentId}", userId, commentId);
-                }
-
-                await _context.SaveChangesAsync();
-                await transaction.CommitAsync();
+                throw new NotFoundException($"Comment not found");
                 
-                _logger.LogInformation("Successfully toggled like for comment {CommentId} by user {UserId}", commentId, userId);
-                return like == null; //  true if it was liked, false if unliked
-            }
-            catch (Exception ex)
+            var existingLike = await _context.Likes
+                .FirstOrDefaultAsync(l => l.CommentId == commentId && l.UserId == userId);
+                
+            if (existingLike != null)
             {
-                await transaction.RollbackAsync();
-                _logger.LogError(ex, "Error toggling like for comment {CommentId} by user {UserId}", commentId, userId);
-                throw new InvalidOpException($"Failed to toggle like: {ex.Message}");
+                // Unlike
+                _context.Likes.Remove(existingLike);
+                comment.LikeCount = Math.Max(0, comment.LikeCount - 1);
             }
-        }
-        catch (NotFoundException)
-        {
-            throw;
+            else
+            {
+                // Like
+                var like = new Like
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = userId,
+                    CommentId = commentId,
+                    Type = LikeType.Comment,
+                    CreatedAt = DateTime.UtcNow
+                };
+                
+                _context.Likes.Add(like);
+                comment.LikeCount += 1;
+            }
+            
+            _context.Comments.Update(comment);
+            await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
+            
+            return existingLike == null; // true if liked, false if unliked
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Unexpected error toggling like for comment {CommentId} by user {UserId}", commentId, userId);
-            throw new InvalidOpException($"An error occurred: {ex.Message}");
+            await transaction.RollbackAsync();
+            _logger.LogError(ex, "Error toggling comment like");
+            throw;
         }
     }
 
@@ -209,8 +179,6 @@ public class LikeService : ILikeService
                 .Include(l => l.Post)
                 .ThenInclude(p => p.User)
                 .Include(l => l.Post.Images)
-                .Include(l => l.Post.Comments)
-                .Include(l => l.Post.Likes)
                 .OrderByDescending(l => l.CreatedAt)
                 .Select(l => l.Post);
                 
@@ -219,7 +187,7 @@ public class LikeService : ILikeService
                 page, 
                 pageSize, 
                 (post) => {
-                    var dto = MapperDto.MapPostToDto(post, userId);
+                    var dto = MapperDto.MapPostToDto(post, userId , null );
                     dto.IsLikedByCurrentUser = true; // Always true bcz these are liked posts
                     return dto;
                 });

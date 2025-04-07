@@ -1,5 +1,7 @@
 
 namespace Instagram_Backend.Mappers;
+
+using Instagram_Backend.Database;
 using Instagram_Backend.Dtos;
 using Instagram_Backend.Dtos.Comments;
 using Instagram_Backend.Dtos.Posts;
@@ -7,6 +9,7 @@ using Instagram_Backend.Models;
 
 public static class MapperDto
 {
+
     public static UserDto MapUserToDto(User user)
     {
         return new UserDto
@@ -19,21 +22,6 @@ public static class MapperDto
         };
     }
 
-    public static CommentDto MapCommentToDto(Comment comment, Guid currentUserId)
-    {
-        return new CommentDto
-        {
-            Id = comment.Id,
-            PostId = comment.PostId,
-            User = MapUserToDto(comment.User),
-            Content = comment.Content,
-            CreatedAt = comment.CreatedAt,
-            LikeCount = comment.Likes.Count(l => l.UserId == currentUserId),
-            IsLikedByCurrentUser = comment.Likes.Any(l => l.UserId == currentUserId),
-            ParentCommentId = comment.ParentCommentId,
-            ReplyCount = comment.Replies.Count
-        };
-    }
     public static ImageDto MapImageToDto(Image image)
     {
         return new ImageDto
@@ -44,10 +32,43 @@ public static class MapperDto
             Order = image.Order
         };
     }
-
-
-    public static PostDto MapPostToDto(Post post, Guid currentUserId)
+    public static CommentDto MapCommentToDto(Comment comment, Guid currentUserId , ApplicationDbContext context)
     {
+        bool isLikedByCurrentUser = false;
+    
+        if (context != null)
+        {
+            isLikedByCurrentUser = context.Likes.Any(l => 
+                l.CommentId == comment.Id && 
+                l.UserId == currentUserId && 
+                l.Type == LikeType.Comment);
+        }
+        return new CommentDto
+        {
+            Id = comment.Id,
+            PostId = comment.PostId,
+            User = MapUserToDto(comment.User),
+            Content = comment.Content,
+            CreatedAt = comment.CreatedAt,
+            LikeCount = comment.LikeCount , 
+            ParentCommentId = comment.ParentCommentId,
+            ReplyCount = comment.ReplyCount,
+            IsLikedByCurrentUser = isLikedByCurrentUser,
+        };
+    }
+
+
+    public static PostDto MapPostToDto(Post post, Guid currentUserId , ApplicationDbContext context )
+    {
+        bool isLikedByCurrentUser = false;
+    
+        if (context != null)
+        {
+            isLikedByCurrentUser = context.Likes.Any(l => 
+                l.PostId == post.Id && 
+                l.UserId == currentUserId && 
+                l.Type == LikeType.Post);
+        }
         return new PostDto
         {
             Id = post.Id,
@@ -58,9 +79,10 @@ public static class MapperDto
                 .Select(i => MapImageToDto(i))
                 .ToList() ?? new List<ImageDto>(),
             CreatedAt = post.CreatedAt,
-            CommentCount = post.Comments?.Count ?? 0,
-            LikeCount = post.Likes?.Count ?? 0,
-            IsLikedByCurrentUser = post.Likes?.Any(l => l.UserId == currentUserId) ?? false,
+            CommentCount = post.CommentCount,
+            LikeCount = post.LikeCount,
+            IsLikedByCurrentUser = isLikedByCurrentUser,
+
         };
     }
 

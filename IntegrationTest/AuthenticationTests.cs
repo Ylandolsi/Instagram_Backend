@@ -8,12 +8,18 @@ public class AuthenticationTests
     private readonly InstagramWebApplicationFactory _factory;
     private readonly HttpClient _client;
 
+    private const string TestUserId = "ce95b43e-6587-480c-8ca6-9e217f0873fe";
+
+    private const string OtherUserId = "a807c843-8b08-42a0-bec3-8e02ed7b4279";
+    private readonly Guid _testUserIdGuid = Guid.Parse(TestUserId);
+    private readonly Guid _otherUserIdGuid = Guid.Parse(OtherUserId);
+
     
     public AuthenticationTests()
     {
         _factory = new InstagramWebApplicationFactory();
-
         _client = _factory.CreateClient();
+        // _factory.AuthenticateClient(_client, OtherUserId);
 
     }
 
@@ -65,9 +71,23 @@ public class AuthenticationTests
             HttpStatusCode.BadRequest, 
             response.StatusCode);
     }
+
+    [Fact]
+    public async Task LoginFailed(){
+        var loginRequest = new LoginRequest
+        {
+            Email = "email@example.com",
+            Password = "123"
+        };
+        var response = await _client.PostAsJsonAsync("/api/account/login", loginRequest);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
     [Fact]
     public async Task RegisterThenLogin_WithValidCredentials_ReturnsSuccess()
     {
+
+
         string uniqueEmail = $"testuser_{Guid.NewGuid()}@example.com";
         
         var registerRequest = new RegisterRequest
@@ -94,22 +114,17 @@ public class AuthenticationTests
         
         Assert.Equal(HttpStatusCode.OK, loginResponse.StatusCode);
 
+        _client.DefaultRequestHeaders.Clear();
+        await _factory.AuthenticateClient(_client, "mmoon");
 
         var testAuth = await _client.GetAsync("/api/account/test");
         Assert.Equal(HttpStatusCode.OK, testAuth.StatusCode);   
         var testAuthContent = await testAuth.Content.ReadAsStringAsync();
-        Console.WriteLine(testAuthContent);
-        Assert.Equal("ce95b43e-6587-480c-8ca6-9e217f0873fe", testAuthContent);
-    }
-    [Fact]
-    public async Task LoginFailed(){
-        var loginRequest = new LoginRequest
-        {
-            Email = "email@example.com",
-            Password = "123"
-        };
-        var response = await _client.PostAsJsonAsync("/api/account/login", loginRequest);
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        // Assert.Equal(TestUserId, testAuthContent);
+        Assert.Equal("mmoon", testAuthContent);
+
+        _client.DefaultRequestHeaders.Clear();
+        await _factory.AuthenticateClient(_client, TestUserId);
     }
 }
 

@@ -22,6 +22,18 @@ namespace IntegrationTest;
 
 internal class InstagramWebApplicationFactory : WebApplicationFactory<Program>
 {
+    public async Task AuthenticateClient(HttpClient client, string userId)
+    {
+        // Store the user ID for the TestAuthHandler to use
+        TestAuthHandler.CurrentUserId = userId;
+        
+        // Add an authorization header to the client
+        client.DefaultRequestHeaders.Authorization = 
+            new System.Net.Http.Headers.AuthenticationHeaderValue("TestScheme");
+
+        await  Task.CompletedTask ; 
+        
+    }
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseEnvironment("Testing");
@@ -138,27 +150,34 @@ internal class InstagramWebApplicationFactory : WebApplicationFactory<Program>
 // ==> means we can test endpoints ([Authorize]) without needing a real JWT token
 public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
+    // Remove the constant fallback (or change its behavior)
     const string TestUserId = "ce95b43e-6587-480c-8ca6-9e217f0873fe";
-    // instead of using a real authentication scheme, we create a test one
-    // that will always return a successful authentication result
+
+    // Use the static property only
+    public static string CurrentUserId { get; set; } = string.Empty;
+
     public TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, 
         ILoggerFactory logger, 
         UrlEncoder encoder, 
-        ISystemClock clock) 
-        : base(options, logger, encoder, clock)
+        ISystemClock clock) : base(options, logger, encoder, clock)
     {
     }
 
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
+        // Always use the value in CurrentUserId (which should be set by your tests)
+        var userId = CurrentUserId;
+        if(string.IsNullOrEmpty(userId))
+        {
+            userId = TestUserId; 
+        }
 
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, Guid.NewGuid().ToString()),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.NameIdentifier, TestUserId),
-            new Claim(JwtRegisteredClaimNames.Email, "test@example.com") ,
-
+            new Claim(ClaimTypes.NameIdentifier, userId),
+            new Claim(JwtRegisteredClaimNames.Email, "test@example.com")
         };
         
         var identity = new ClaimsIdentity(claims, "TestScheme");

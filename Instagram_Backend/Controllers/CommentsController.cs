@@ -58,7 +58,7 @@ public class CommentsController : ControllerBase
     }
 
     [HttpGet("posts/{postId:guid}")]
-    public async Task<IActionResult> GetPostComments(Guid postId, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
+    public async Task<IActionResult> GetPostCommentsRoot(Guid postId, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
     {
         var userId = GetUserIdFromToken();
         if (userId == Guid.Empty)
@@ -75,7 +75,7 @@ public class CommentsController : ControllerBase
                 Data = false,
             });
 
-        var comments = await _commentService.GetPostCommentsAsync(postId, page, pageSize);
+        var comments = await _commentService.GetPostCommentsRootAsync(postId, page, pageSize , userId);
         return Ok(new ApiResponse<PagedResult<CommentDto>>
         {
             Message = $"Comments for post {postId} fetched successfully.",
@@ -101,7 +101,7 @@ public class CommentsController : ControllerBase
                 Data = false,
             });
 
-        var replies = await _commentService.GetCommentRepliesAsync(commentId, page, pageSize);
+        var replies = await _commentService.GetCommentRepliesAsync(commentId, page, pageSize , userId);
         return Ok(new ApiResponse<PagedResult<CommentDto>>
         {
             Message = $"Replies for comment {commentId} fetched successfully.",
@@ -128,7 +128,7 @@ public class CommentsController : ControllerBase
                 Data = false,
             });
 
-        var comment = await _commentService.GetCommentByIdAsync(commentId);
+        var comment = await _commentService.GetCommentByIdAsync(commentId , userId);
         return Ok(new ApiResponse<CommentDto>
         {
             Message = $"Comment with ID {commentId} fetched successfully.",

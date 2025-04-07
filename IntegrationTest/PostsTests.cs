@@ -16,8 +16,10 @@ namespace IntegrationTest;
 public class PostsTests 
 {
     private const string TestUserId = "ce95b43e-6587-480c-8ca6-9e217f0873fe";
+
+    private const string OtherUserId = "a807c843-8b08-42a0-bec3-8e02ed7b4279";
     private readonly Guid _testUserIdGuid = Guid.Parse(TestUserId);
-    private readonly Guid _otherUserIdGuid = Guid.NewGuid();
+    private readonly Guid _otherUserIdGuid = Guid.Parse(OtherUserId);
     
     private readonly InstagramWebApplicationFactory _factory;
     private readonly HttpClient _client;
@@ -338,6 +340,7 @@ public class PostsTests
     [Fact]
     public async Task UpdatePost_PostBelongingToAnotherUser_ReturnsNotFound()
     {
+        await _factory.AuthenticateClient(_client, TestUserId);
         // Arrange
         await CreateTestUser();
         await CreateOtherUser();
@@ -357,6 +360,7 @@ public class PostsTests
         
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        _client.DefaultRequestHeaders.Clear();
     }
     
     #endregion

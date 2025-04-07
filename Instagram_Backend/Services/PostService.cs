@@ -156,8 +156,6 @@ public class PostService : IPostService
             .Where(p => p.Id == postId)
             .Include(p => p.User)
             .Include(p => p.Images)
-            .Include(p => p.Comments)
-            .Include(p => p.Likes)
             .FirstOrDefaultAsync();
             
         if (post == null)
@@ -167,9 +165,9 @@ public class PostService : IPostService
         }
         
         _logger.LogDebug("Found post {PostId} with {ImageCount} images, {CommentCount} comments, {LikeCount} likes", 
-            postId, post.Images?.Count ?? 0, post.Comments?.Count ?? 0, post.Likes?.Count ?? 0);
+            postId, post.Images?.Count ?? 0, post.CommentCount, post.LikeCount);
         
-        var result = MapperDto.MapPostToDto(post, userId);
+        var result = MapperDto.MapPostToDto(post, userId , _context);
         
         _logger.LogInformation("Successfully retrieved post {PostId}", postId);
         return result;
@@ -187,16 +185,15 @@ public class PostService : IPostService
             .Where(p => p.UserId == userId)
             .Include(p => p.User)
             .Include(p => p.Images)
-            .Include(p => p.Comments)
-            .Include(p => p.Likes)
             .OrderByDescending(p => p.CreatedAt);
             
-        return await MapperPagedResult.MapPagedResult(
+        return await MapperPagedResult.MapPagedResult2(
             postsQuery, 
             page, 
             pageSize, 
             currentUserId, 
-            (post, userId) => MapperDto.MapPostToDto(post, userId));
+            _context,
+            (post, userId , context ) => MapperDto.MapPostToDto(post, userId , context ));
     }
 
     public async Task<PagedResult<PostDto>> GetAllPostsAsync(int page, int pageSize, Guid currentUserId)
@@ -209,88 +206,17 @@ public class PostService : IPostService
         var postsQuery = _context.Posts
             .Include(p => p.User)
             .Include(p => p.Images)
-            .Include(p => p.Comments)
-            .Include(p => p.Likes)
             .OrderByDescending(p => p.CreatedAt);
             
-        return await MapperPagedResult.MapPagedResult(
+        return await MapperPagedResult.MapPagedResult2(
             postsQuery, 
             page, 
             pageSize, 
             currentUserId, 
-            (post, userId) => MapperDto.MapPostToDto(post, userId));
+            _context , 
+            (post, userId ,  context ) => MapperDto.MapPostToDto(post, userId , context));
     }
     
 
 }
 
-
-
-
-    // public async Task<PagedResult<PostDto>> GetPostsByUserIdAsync(Guid userId, int page, int pageSize, Guid currentUserId)
-    // {
-    //     _logger.LogInformation("Retrieving posts for user {UserId}, page {Page}, size {PageSize}", userId, page, pageSize);
-        
-    //     page = Math.Max(1, page);
-    //     pageSize = Math.Clamp(pageSize, 1, 50);
-        
-    //     var totalCount = await _context.Posts
-    //         .Where(p => p.UserId == userId)
-    //         .CountAsync();
-        
-    //     var posts = await _context.Posts
-    //         .Where(p => p.UserId == userId)
-    //         .Include(p => p.User)
-    //         .Include(p => p.Images)
-    //         .Include(p => p.Comments)
-    //         .Include(p => p.Likes)
-    //         .OrderByDescending(p => p.CreatedAt) 
-    //         .Skip((page - 1) * pageSize)
-    //         .Take(pageSize)
-    //         .ToListAsync();
-            
-    //     var postDtos = posts.Select(p => MapperDto.MapPostToDto(p, currentUserId)).ToList();
-        
-    //     _logger.LogInformation("Retrieved {Count} posts for user {UserId}", posts.Count, userId);
-        
-    //     return new PagedResult<PostDto>
-    //     {
-    //         Items = postDtos,
-    //         Page = page,
-    //         PageSize = pageSize,
-    //         TotalCount = totalCount,
-    //     };
-    // }
-
-    // public async Task<PagedResult<PostDto>> GetAllPostsAsync(int page, int pageSize, Guid currentUserId)
-    // {
-    //     _logger.LogInformation("Retrieving all posts, page {Page}, size {PageSize}", page, pageSize);
-        
-    //     page = Math.Max(1, page);
-    //     pageSize = Math.Clamp(pageSize, 1, 50);
-        
-    //     var totalCount = await _context.Posts.CountAsync();
-        
-    //     var posts = await _context.Posts
-    //         .Include(p => p.User)
-    //         .Include(p => p.Images)
-    //         .Include(p => p.Comments)
-    //         .Include(p => p.Likes)
-    //         .OrderByDescending(p => p.CreatedAt) 
-    //         .Skip((page - 1) * pageSize)
-    //         .Take(pageSize)
-    //         .ToListAsync();
-            
-    //     var postDtos = posts.Select(p => MapperDto.MapPostToDto(p, currentUserId))
-    //         .ToList();
-        
-    //     _logger.LogInformation("Retrieved {Count} posts for feed", posts.Count);
-        
-    //     return new PagedResult<PostDto>
-    //     {
-    //         Items = postDtos,
-    //         Page = page,
-    //         PageSize = pageSize,
-    //         TotalCount = totalCount,
-    //     };
-    // }

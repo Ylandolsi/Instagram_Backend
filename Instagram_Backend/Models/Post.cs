@@ -1,4 +1,3 @@
-
 namespace Instagram_Backend.Models;
 public class Post
 {
@@ -8,7 +7,9 @@ public class Post
     
     public Guid UserId { get; set; }
     public User User { get; set; } = null!;
+    
     public ICollection<Image> Images { get; set; } = new List<Image>();
-    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
-    public ICollection<Like> Likes { get; set; } = new List<Like>();
+    
+    public int CommentCount { get; set; } = 0;
+    public int LikeCount { get; set; } = 0;
 }

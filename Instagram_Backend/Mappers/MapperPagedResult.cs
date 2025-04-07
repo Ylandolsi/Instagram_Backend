@@ -1,3 +1,4 @@
+using Instagram_Backend.Database;
 using Instagram_Backend.Dtos;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +20,7 @@ public static class MapperPagedResult
             .Take(pageSize)
             .ToListAsync();
         
-        var mappedItems = items.Select(mapFunc).ToList();
+        var mappedItems = items.Select(item => mapFunc(item)).ToList();
 
         return new PagedResult<TDestination>
         {
@@ -30,9 +31,10 @@ public static class MapperPagedResult
         };
     }
     
-    public static async Task<PagedResult<TDestination>> MapPagedResult<TSource, TDestination>(
+    public static async Task<PagedResult<TDestination>> MapPagedResult2<TSource, TDestination>(
         IQueryable<TSource> source, int page, int pageSize, Guid currentUserId,
-        Func<TSource, Guid, TDestination> mapFunc)
+        ApplicationDbContext context,
+        Func<TSource, Guid, ApplicationDbContext ,  TDestination> mapFunc)
     {
         var totalCount = await source.CountAsync();
         
@@ -41,7 +43,7 @@ public static class MapperPagedResult
             .Take(pageSize)
             .ToListAsync();
         
-        var mappedItems = items.Select(item => mapFunc(item, currentUserId)).ToList();
+        var mappedItems = items.Select(item => mapFunc(item, currentUserId , context)).ToList();
 
         return new PagedResult<TDestination>
         {
