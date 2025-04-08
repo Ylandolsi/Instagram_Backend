@@ -22,6 +22,13 @@ public class PostsController : ControllerBase
     public async Task<IActionResult> GetPost(Guid id)
     {
         var userId = GetUserIdFromToken();
+        if (userId == Guid.Empty)
+            return Unauthorized( new ApiResponse<bool>
+            {
+                Message = "User not authenticated.",
+                Data = false,
+            });
+        
 
         if ( id == Guid.Empty)
             return BadRequest(new ApiResponse<bool>
@@ -30,13 +37,6 @@ public class PostsController : ControllerBase
                 Data = false,
             });
 
-        if (userId == Guid.Empty)
-            return Unauthorized( new ApiResponse<bool>
-            {
-                Message = "User not authenticated.",
-                Data = false,
-            });
-        
         var post = await _postService.GetPostByIdAsync(id , userId);
         return Ok(new ApiResponse<PostDto>
         {
@@ -50,17 +50,17 @@ public class PostsController : ControllerBase
     public async Task<IActionResult> GetUserPosts(Guid userId, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
     {
         var currentUserId = GetUserIdFromToken();
-        if (userId == Guid.Empty)
-            return BadRequest(new ApiResponse<bool>
-            {
-                Message = "Invalid user ID.",
-                Data = false,
-            });
-        
         if (currentUserId == Guid.Empty)
             return Unauthorized(new ApiResponse<bool>
             {
                 Message = "User not authenticated.",
+                Data = false,
+            });
+        
+        if (userId == Guid.Empty)
+            return BadRequest(new ApiResponse<bool>
+            {
+                Message = "Invalid user ID.",
                 Data = false,
             });
         

@@ -178,6 +178,20 @@ public class PostService : IPostService
     {
         _logger.LogInformation("Retrieving posts for user {UserId}, page {Page}, size {PageSize}", userId, page, pageSize);
         
+        if (userId == Guid.Empty)
+        {
+            _logger.LogWarning("Invalid user ID (Guid.Empty) provided for post retrieval");
+            throw new BadRequestException("Invalid user ID.");
+        }
+        
+
+        var userExists = await _context.Users.AnyAsync(u => u.Id == userId);
+        if (!userExists)
+        {
+            _logger.LogWarning("User {UserId} not found when retrieving posts", userId);
+            throw new NotFoundException($"User with ID = {userId} not found");
+        }
+        
         page = Math.Max(1, page);
         pageSize = Math.Clamp(pageSize, 1, 50);
         

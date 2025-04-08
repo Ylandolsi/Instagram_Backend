@@ -17,7 +17,7 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
         builder.Property(p => p.CommentCount).HasDefaultValue(0);
         
         builder.HasOne(p => p.User)
-            .WithMany()  
+            .WithMany(u => u.Posts)
             .HasForeignKey(p => p.UserId)
             .OnDelete(DeleteBehavior.Cascade);
     }
