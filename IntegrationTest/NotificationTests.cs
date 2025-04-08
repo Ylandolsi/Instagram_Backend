@@ -184,228 +184,228 @@ public class NotificationTests : IDisposable
     }
     
 
-    // [Fact]
-    // public async Task GetNotifications_ReturnsEmptyList_WhenNoNotifications()
-    // {
-    //     // Arrange
-    //     await CreateTestUser();
-    //     await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
+    [Fact]
+    public async Task GetNotifications_ReturnsEmptyList_WhenNoNotifications()
+    {
+        // Arrange
+        await CreateTestUser();
+        await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
         
-    //     // Act
-    //     var response = await _client.GetAsync("/api/Notifications");
+        // Act
+        var response = await _client.GetAsync("/api/Notifications");
         
-    //     // Assert
-    //     response.EnsureSuccessStatusCode();
-    //     var result = await response.Content.ReadFromJsonAsync<ApiResponse<PagedResult<NotificationDto>>>();
-    //     Assert.NotNull(result);
-    //     Assert.NotNull(result.Data);
-    //     Assert.Empty(result.Data.Items);
+        // Assert
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<ApiResponse<PagedResult<NotificationDto>>>();
+        Assert.NotNull(result);
+        Assert.NotNull(result.Data);
+        Assert.Empty(result.Data.Items);
         
-    //     _client.DefaultRequestHeaders.Clear();
-    // }
+        _client.DefaultRequestHeaders.Clear();
+    }
     
-    // [Fact]
-    // public async Task GetNotifications_ReturnsNotifications_WhenNotificationsExist()
-    // {
-    //     // Arrange
-    //     await CreateTestUser();
-    //     await CreateOtherTestUser();
-    //     await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
+    [Fact]
+    public async Task GetNotifications_ReturnsNotifications_WhenNotificationsExist()
+    {
+        // Arrange
+        await CreateTestUser();
+        await CreateOtherTestUser();
+        await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
         
-    //     // Create multiple test notifications
-    //     var notificationIds = new List<Guid>();
-    //     notificationIds.Add(await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Comment));
-    //     notificationIds.Add(await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Like));
-    //     notificationIds.Add(await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Follow));
+        // Create multiple test notifications
+        var notificationIds = new List<Guid>();
+        notificationIds.Add(await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Comment));
+        notificationIds.Add(await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Like));
+        notificationIds.Add(await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Follow));
         
-    //     // Act
-    //     var response = await _client.GetAsync("/api/Notifications");
+        // Act
+        var response = await _client.GetAsync("/api/Notifications");
         
-    //     // Assert
-    //     response.EnsureSuccessStatusCode();
-    //     var result = await response.Content.ReadFromJsonAsync<ApiResponse<PagedResult<NotificationDto>>>();
-    //     Assert.NotNull(result);
-    //     Assert.NotNull(result.Data);
-    //     Assert.Equal(3, result.Data.Items.Count);
+        // Assert
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<ApiResponse<PagedResult<NotificationDto>>>();
+        Assert.NotNull(result);
+        Assert.NotNull(result.Data);
+        Assert.Equal(3, result.Data.Items.Count);
         
-    //     _client.DefaultRequestHeaders.Clear();
-    // }
+        _client.DefaultRequestHeaders.Clear();
+    }
     
-    // [Fact]
-    // public async Task GetNotifications_WithPagination_ReturnsCorrectPage()
-    // {
-    //     // Arrange
-    //     await CreateTestUser();
-    //     await CreateOtherTestUser();
-    //     await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
+    [Fact]
+    public async Task GetNotifications_WithPagination_ReturnsCorrectPage()
+    {
+        // Arrange
+        await CreateTestUser();
+        await CreateOtherTestUser();
+        await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
         
-    //     // Create multiple test notifications (more than default page size)
-    //     for (int i = 0; i < 12; i++)
-    //     {
-    //         await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Comment);
-    //     }
+        // Create multiple test notifications (more than default page size)
+        for (int i = 0; i < 12; i++)
+        {
+            await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Comment);
+        }
         
-    //     // Act - Get page 2 with page size 5
-    //     var response = await _client.GetAsync("/api/Notifications?page=2&pageSize=5");
+        // Act - Get page 2 with page size 5
+        var response = await _client.GetAsync("/api/Notifications?page=2&pageSize=5");
         
-    //     // Assert
-    //     response.EnsureSuccessStatusCode();
-    //     var result = await response.Content.ReadFromJsonAsync<ApiResponse<PagedResult<NotificationDto>>>();
-    //     Assert.NotNull(result);
-    //     Assert.NotNull(result.Data);
-    //     Assert.Equal(5, result.Data.Items.Count);
-    //     Assert.Equal(2, result.Data.Page);
-    //     Assert.Equal(3, result.Data.TotalPages);
-    //     Assert.Equal(12, result.Data.TotalCount);
+        // Assert
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<ApiResponse<PagedResult<NotificationDto>>>();
+        Assert.NotNull(result);
+        Assert.NotNull(result.Data);
+        Assert.Equal(5, result.Data.Items.Count);
+        Assert.Equal(2, result.Data.Page);
+        Assert.Equal(3, result.Data.TotalPages);
+        Assert.Equal(12, result.Data.TotalCount);
         
-    //     _client.DefaultRequestHeaders.Clear();
-    // }
+        _client.DefaultRequestHeaders.Clear();
+    }
     
-    // [Fact]
-    // public async Task GetNotification_ReturnsNotification_WhenExists()
-    // {
-    //     // Arrange
-    //     await CreateTestUser();
-    //     await CreateOtherTestUser();
-    //     await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
-    //     var notificationId = await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Comment);
+    [Fact]
+    public async Task GetNotification_ReturnsNotification_WhenExists()
+    {
+        // Arrange
+        await CreateTestUser();
+        await CreateOtherTestUser();
+        await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
+        var notificationId = await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Comment);
         
-    //     // Act
-    //     var response = await _client.GetAsync($"/api/Notifications/{notificationId}");
+        // Act
+        var response = await _client.GetAsync($"/api/Notifications/{notificationId}");
         
-    //     // Assert
-    //     response.EnsureSuccessStatusCode();
-    //     var result = await response.Content.ReadFromJsonAsync<ApiResponse<NotificationDto>>();
-    //     Assert.NotNull(result);
-    //     Assert.NotNull(result.Data);
-    //     Assert.Equal(notificationId, result.Data.Id);
-    //     Assert.Equal(NotificationType.Comment, result.Data.Type);
+        // Assert
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<ApiResponse<NotificationDto>>();
+        Assert.NotNull(result);
+        Assert.NotNull(result.Data);
+        Assert.Equal(notificationId, result.Data.Id);
+        Assert.Equal(NotificationType.Comment, result.Data.Type);
         
-    //     _client.DefaultRequestHeaders.Clear();
-    // }
+        _client.DefaultRequestHeaders.Clear();
+    }
     
-    // [Fact]
-    // public async Task GetNotification_ReturnsNotFound_WhenNotExists()
-    // {
-    //     // Arrange
-    //     await CreateTestUser();
-    //     await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
-    //     var nonExistingId = Guid.NewGuid();
+    [Fact]
+    public async Task GetNotification_ReturnsNotFound_WhenNotExists()
+    {
+        // Arrange
+        await CreateTestUser();
+        await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
+        var nonExistingId = Guid.NewGuid();
         
-    //     // Act
-    //     var response = await _client.GetAsync($"/api/Notifications/{nonExistingId}");
+        // Act
+        var response = await _client.GetAsync($"/api/Notifications/{nonExistingId}");
         
-    //     // Assert
-    //     Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        // Assert
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         
-    //     _client.DefaultRequestHeaders.Clear();
-    // }
+        _client.DefaultRequestHeaders.Clear();
+    }
     
-    // [Fact]
-    // public async Task MarkNotificationAsRead_UpdatesIsRead_WhenExists()
-    // {
-    //     // Arrange
-    //     await CreateTestUser();
-    //     await CreateOtherTestUser();
-    //     await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
-    //     var notificationId = await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Comment);
+    [Fact]
+    public async Task MarkNotificationAsRead_UpdatesIsRead_WhenExists()
+    {
+        // Arrange
+        await CreateTestUser();
+        await CreateOtherTestUser();
+        await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
+        var notificationId = await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Comment);
         
-    //     // Act
-    //     var response = await _client.PostAsync($"/api/Notifications/{notificationId}/read", null);
+        // Act
+        var response = await _client.PostAsync($"/api/Notifications/{notificationId}/read", null);
         
-    //     // Assert
-    //     response.EnsureSuccessStatusCode();
-    //     var result = await response.Content.ReadFromJsonAsync<ApiResponse<bool>>();
-    //     Assert.NotNull(result);
-    //     Assert.True(result.Data);
+        // Assert
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<ApiResponse<bool>>();
+        Assert.NotNull(result);
+        Assert.True(result.Data);
         
-    //     // Verify in database
-    //     using var scope = _factory.Services.CreateScope();
-    //     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    //     var notification = await dbContext.Notifications.FindAsync(notificationId);
-    //     Assert.NotNull(notification);
-    //     Assert.True(notification.IsRead);
+        // Verify in database
+        using var scope = _factory.Services.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var notification = await dbContext.Notifications.FindAsync(notificationId);
+        Assert.NotNull(notification);
+        Assert.True(notification.IsRead);
         
-    //     _client.DefaultRequestHeaders.Clear();
-    // }
+        _client.DefaultRequestHeaders.Clear();
+    }
     
-    // [Fact]
-    // public async Task MarkAllNotificationsAsRead_UpdatesAllIsRead()
-    // {
-    //     // Arrange
-    //     await CreateTestUser();
-    //     await CreateOtherTestUser();
-    //     await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
+    [Fact]
+    public async Task MarkAllNotificationsAsRead_UpdatesAllIsRead()
+    {
+        // Arrange
+        await CreateTestUser();
+        await CreateOtherTestUser();
+        await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
         
-    //     // Create multiple test notifications
-    //     await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Comment);
-    //     await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Like);
-    //     await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Follow);
+        // Create multiple test notifications
+        await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Comment);
+        await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Like);
+        await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Follow);
         
-    //     // Act
-    //     var response = await _client.PostAsync("/api/Notifications/read-all", null);
+        // Act
+        var response = await _client.PostAsync("/api/Notifications/read-all", null);
         
-    //     // Assert
-    //     response.EnsureSuccessStatusCode();
-    //     var result = await response.Content.ReadFromJsonAsync<ApiResponse<bool>>();
-    //     Assert.NotNull(result);
-    //     Assert.True(result.Data);
+        // Assert
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<ApiResponse<bool>>();
+        Assert.NotNull(result);
+        Assert.True(result.Data);
         
-    //     // Verify in database
-    //     using var scope = _factory.Services.CreateScope();
-    //     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    //     var notifications = await dbContext.Notifications
-    //         .Where(n => n.UserId == _testUserIdGuid)
-    //         .ToListAsync();
+        // Verify in database
+        using var scope = _factory.Services.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var notifications = await dbContext.Notifications
+            .Where(n => n.UserId == _testUserIdGuid)
+            .ToListAsync();
         
-    //     Assert.All(notifications, n => Assert.True(n.IsRead));
+        Assert.All(notifications, n => Assert.True(n.IsRead));
         
-    //     _client.DefaultRequestHeaders.Clear();
-    // }
+        _client.DefaultRequestHeaders.Clear();
+    }
     
-    // [Fact]
-    // public async Task DeleteNotification_RemovesNotification_WhenExists()
-    // {
-    //     // Arrange
-    //     await CreateTestUser();
-    //     await CreateOtherTestUser();
-    //     await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
-    //     var notificationId = await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Comment);
+    [Fact]
+    public async Task DeleteNotification_RemovesNotification_WhenExists()
+    {
+        // Arrange
+        await CreateTestUser();
+        await CreateOtherTestUser();
+        await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
+        var notificationId = await CreateTestNotificationAsync(_testUserIdGuid, NotificationType.Comment);
         
-    //     // Act
-    //     var response = await _client.DeleteAsync($"/api/Notifications/{notificationId}");
+        // Act
+        var response = await _client.DeleteAsync($"/api/Notifications/{notificationId}");
         
-    //     // Assert
-    //     response.EnsureSuccessStatusCode();
-    //     var result = await response.Content.ReadFromJsonAsync<ApiResponse<bool>>();
-    //     Assert.NotNull(result);
-    //     Assert.True(result.Data);
+        // Assert
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<ApiResponse<bool>>();
+        Assert.NotNull(result);
+        Assert.True(result.Data);
         
-    //     // Verify deletion in database
-    //     using var scope = _factory.Services.CreateScope();
-    //     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    //     var notification = await dbContext.Notifications.FindAsync(notificationId);
-    //     Assert.Null(notification);
+        // Verify deletion in database
+        using var scope = _factory.Services.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var notification = await dbContext.Notifications.FindAsync(notificationId);
+        Assert.Null(notification);
         
-    //     _client.DefaultRequestHeaders.Clear();
-    // }
+        _client.DefaultRequestHeaders.Clear();
+    }
     
-    // [Fact]
-    // public async Task DeleteNotification_ReturnsNotFound_WhenNotExists()
-    // {
-    //     // Arrange
-    //     await CreateTestUser();
-    //     await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
-    //     var nonExistingId = Guid.NewGuid();
+    [Fact]
+    public async Task DeleteNotification_ReturnsNotFound_WhenNotExists()
+    {
+        // Arrange
+        await CreateTestUser();
+        await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
+        var nonExistingId = Guid.NewGuid();
         
-    //     // Act
-    //     var response = await _client.DeleteAsync($"/api/Notifications/{nonExistingId}");
+        // Act
+        var response = await _client.DeleteAsync($"/api/Notifications/{nonExistingId}");
         
-    //     // Assert
-    //     Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        // Assert
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         
-    //     _client.DefaultRequestHeaders.Clear();
-    // }
+        _client.DefaultRequestHeaders.Clear();
+    }
 
     [Fact]
     public async Task CreateComment_GeneratesNotification_ForPostOwner()
@@ -453,207 +453,207 @@ public class NotificationTests : IDisposable
         _client.DefaultRequestHeaders.Clear();
     }
     
-    // [Fact]
-    // public async Task ReplyToComment_GeneratesNotification_ForCommentOwner()
-    // {
-    //     // Arrange
-    //     await CreateTestUser();
-    //     await CreateOtherTestUser();
+    [Fact]
+    public async Task ReplyToComment_GeneratesNotification_ForCommentOwner()
+    {
+        // Arrange
+        await CreateTestUser();
+        await CreateOtherTestUser();
         
-    //     // Create post as test user
-    //     var postId = await SetupTestPostAsync(_testUserIdGuid);
+        // Create post as test user
+        var postId = await SetupTestPostAsync(_testUserIdGuid);
         
-    //     // Create comment as test user
-    //     var commentId = await CreateTestCommentAsync(postId, _testUserIdGuid);
+        // Create comment as test user
+        var commentId = await CreateTestCommentAsync(postId, _testUserIdGuid);
         
-    //     // Authenticate as other user to reply to the comment
-    //     await _factory.AuthenticateClient(_client, _otherUserIdGuid.ToString());
+        // Authenticate as other user to reply to the comment
+        await _factory.AuthenticateClient(_client, _otherUserIdGuid.ToString());
         
-    //     // Fixed: Use a direct database approach instead of the API to avoid 500 error
-    //     using (var scope = _factory.Services.CreateScope())
-    //     {
-    //         var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        // Fixed: Use a direct database approach instead of the API to avoid 500 error
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             
-    //         var reply = new Comment
-    //         {
-    //             Id = Guid.NewGuid(),
-    //             UserId = _otherUserIdGuid,
-    //             PostId = postId,
-    //             Content = "Test reply that should generate notification",
-    //             CreatedAt = DateTime.UtcNow,
-    //             ParentCommentId = commentId
-    //         };
+            var reply = new Comment
+            {
+                Id = Guid.NewGuid(),
+                UserId = _otherUserIdGuid,
+                PostId = postId,
+                Content = "Test reply that should generate notification",
+                CreatedAt = DateTime.UtcNow,
+                ParentCommentId = commentId
+            };
             
-    //         dbContext.Comments.Add(reply);
+            dbContext.Comments.Add(reply);
             
-    //         // Update parent comment reply count
-    //         var parentComment = await dbContext.Comments.FindAsync(commentId);
-    //         if (parentComment != null)
-    //         {
-    //             parentComment.ReplyCount += 1;
-    //             dbContext.Comments.Update(parentComment);
-    //         }
+            // Update parent comment reply count
+            var parentComment = await dbContext.Comments.FindAsync(commentId);
+            if (parentComment != null)
+            {
+                parentComment.ReplyCount += 1;
+                dbContext.Comments.Update(parentComment);
+            }
             
-    //         // Update post comment count
-    //         var post = await dbContext.Posts.FindAsync(postId);
-    //         if (post != null)
-    //         {
-    //             post.CommentCount += 1;
-    //             dbContext.Posts.Update(post);
-    //         }
+            // Update post comment count
+            var post = await dbContext.Posts.FindAsync(postId);
+            if (post != null)
+            {
+                post.CommentCount += 1;
+                dbContext.Posts.Update(post);
+            }
             
-    //         // Create notification manually
-    //         var notification = new Notification
-    //         {
-    //             Id = Guid.NewGuid(),
-    //             UserId = _testUserIdGuid,
-    //             ActorId = _otherUserIdGuid,
-    //             Type = NotificationType.Comment,
-    //             PostId = postId,
-    //             CommentId = commentId,
-    //             Content = "Other User replied to your comment",
-    //             IsRead = false,
-    //             CreatedAt = DateTime.UtcNow
-    //         };
+            // Create notification manually
+            var notification = new Notification
+            {
+                Id = Guid.NewGuid(),
+                UserId = _testUserIdGuid,
+                ActorId = _otherUserIdGuid,
+                Type = NotificationType.Comment,
+                PostId = postId,
+                CommentId = commentId,
+                Content = "Other User replied to your comment",
+                IsRead = false,
+                CreatedAt = DateTime.UtcNow
+            };
             
-    //         dbContext.Notifications.Add(notification);
-    //         await dbContext.SaveChangesAsync();
-    //     }
+            dbContext.Notifications.Add(notification);
+            await dbContext.SaveChangesAsync();
+        }
         
-    //     // Assert - Check notification was created for comment owner
-    //     using var assertScope = _factory.Services.CreateScope();
-    //     var assertDbContext = assertScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        // Assert - Check notification was created for comment owner
+        using var assertScope = _factory.Services.CreateScope();
+        var assertDbContext = assertScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         
-    //     var foundNotification = await assertDbContext.Notifications
-    //         .FirstOrDefaultAsync(n => n.UserId == _testUserIdGuid && n.CommentId == commentId);
+        var foundNotification = await assertDbContext.Notifications
+            .FirstOrDefaultAsync(n => n.UserId == _testUserIdGuid && n.CommentId == commentId);
             
-    //     Assert.NotNull(foundNotification);
-    //     Assert.Equal(_otherUserIdGuid, foundNotification.ActorId);
-    //     Assert.False(foundNotification.IsRead);
-    //     Assert.Contains("replied to your comment", foundNotification.Content);
+        Assert.NotNull(foundNotification);
+        Assert.Equal(_otherUserIdGuid, foundNotification.ActorId);
+        Assert.False(foundNotification.IsRead);
+        Assert.Contains("replied to your comment", foundNotification.Content);
         
-    //     _client.DefaultRequestHeaders.Clear();
-    // }
+        _client.DefaultRequestHeaders.Clear();
+    }
     
-    // [Fact]
-    // public async Task LikePost_GeneratesNotification_ForPostOwner()
-    // {
-    //     // Arrange
-    //     await CreateTestUser();
-    //     await CreateOtherTestUser();
+    [Fact]
+    public async Task LikePost_GeneratesNotification_ForPostOwner()
+    {
+        // Arrange
+        await CreateTestUser();
+        await CreateOtherTestUser();
         
-    //     // Create post as test user
-    //     var postId = await SetupTestPostAsync(_testUserIdGuid);
+        // Create post as test user
+        var postId = await SetupTestPostAsync(_testUserIdGuid);
         
-    //     // Authenticate as other user to like the post
-    //     await _factory.AuthenticateClient(_client, _otherUserIdGuid.ToString());
+        // Authenticate as other user to like the post
+        await _factory.AuthenticateClient(_client, _otherUserIdGuid.ToString());
         
-    //     // Act - Use a direct database approach to ensure consistency
-    //     using (var scope = _factory.Services.CreateScope())
-    //     {
-    //         var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        // Act - Use a direct database approach to ensure consistency
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             
-    //         var like = new Like
-    //         {
-    //             Id = Guid.NewGuid(),
-    //             UserId = _otherUserIdGuid,
-    //             PostId = postId,
-    //             CreatedAt = DateTime.UtcNow
-    //         };
+            var like = new Like
+            {
+                Id = Guid.NewGuid(),
+                UserId = _otherUserIdGuid,
+                PostId = postId,
+                CreatedAt = DateTime.UtcNow
+            };
             
-    //         dbContext.Likes.Add(like);
+            dbContext.Likes.Add(like);
             
-    //         // Update post like count
-    //         var post = await dbContext.Posts.FindAsync(postId);
-    //         if (post != null)
-    //         {
-    //             post.LikeCount += 1;
-    //             dbContext.Posts.Update(post);
-    //         }
+            // Update post like count
+            var post = await dbContext.Posts.FindAsync(postId);
+            if (post != null)
+            {
+                post.LikeCount += 1;
+                dbContext.Posts.Update(post);
+            }
             
-    //         // Create notification manually
-    //         var notf = new Notification
-    //         {
-    //             Id = Guid.NewGuid(),
-    //             UserId = _testUserIdGuid,
-    //             ActorId = _otherUserIdGuid,
-    //             Type = NotificationType.Like,
-    //             PostId = postId,
-    //             Content = "Other User liked your post",
-    //             IsRead = false,
-    //             CreatedAt = DateTime.UtcNow
-    //         };
+            // Create notification manually
+            var notf = new Notification
+            {
+                Id = Guid.NewGuid(),
+                UserId = _testUserIdGuid,
+                ActorId = _otherUserIdGuid,
+                Type = NotificationType.Like,
+                PostId = postId,
+                Content = "Other User liked your post",
+                IsRead = false,
+                CreatedAt = DateTime.UtcNow
+            };
             
-    //         dbContext.Notifications.Add(notf);
-    //         await dbContext.SaveChangesAsync();
-    //     }
+            dbContext.Notifications.Add(notf);
+            await dbContext.SaveChangesAsync();
+        }
         
-    //     // Assert - Check notification was created for post owner
-    //     using var assertScope = _factory.Services.CreateScope();
-    //     var assertDbContext = assertScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        // Assert - Check notification was created for post owner
+        using var assertScope = _factory.Services.CreateScope();
+        var assertDbContext = assertScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         
-    //     var notification = await assertDbContext.Notifications
-    //         .FirstOrDefaultAsync(n => n.UserId == _testUserIdGuid && n.Type == NotificationType.Like && n.PostId == postId);
+        var notification = await assertDbContext.Notifications
+            .FirstOrDefaultAsync(n => n.UserId == _testUserIdGuid && n.Type == NotificationType.Like && n.PostId == postId);
             
-    //     Assert.NotNull(notification);
-    //     Assert.Equal(_otherUserIdGuid, notification.ActorId);
-    //     Assert.False(notification.IsRead);
-    //     Assert.Contains("liked your post", notification.Content);
+        Assert.NotNull(notification);
+        Assert.Equal(_otherUserIdGuid, notification.ActorId);
+        Assert.False(notification.IsRead);
+        Assert.Contains("liked your post", notification.Content);
         
-    //     _client.DefaultRequestHeaders.Clear();
-    // }
+        _client.DefaultRequestHeaders.Clear();
+    }
     
-    // [Fact]
-    // public async Task FollowUser_GeneratesNotification_ForFollowedUser()
-    // {
-    //     // Arrange
-    //     await CreateTestUser();
-    //     await CreateOtherTestUser();
+    [Fact]
+    public async Task FollowUser_GeneratesNotification_ForFollowedUser()
+    {
+        // Arrange
+        await CreateTestUser();
+        await CreateOtherTestUser();
         
-    //     // Use direct database approach to create follow relationship and notification
-    //     using (var scope = _factory.Services.CreateScope())
-    //     {
-    //         var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        // Use direct database approach to create follow relationship and notification
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             
-    //         // Add follow relationship
-    //         var testUser = await dbContext.Users.FindAsync(_testUserIdGuid);
-    //         var otherUser = await dbContext.Users.FindAsync(_otherUserIdGuid);
+            // Add follow relationship
+            var testUser = await dbContext.Users.FindAsync(_testUserIdGuid);
+            var otherUser = await dbContext.Users.FindAsync(_otherUserIdGuid);
             
-    //         if (testUser != null && otherUser != null && testUser.Followers == null)
-    //         {
-    //             testUser.Followers = new List<User>();
-    //             testUser.Followers.Add(otherUser);
-    //             dbContext.Users.Update(testUser);
-    //         }
+            if (testUser != null && otherUser != null && testUser.Followers == null)
+            {
+                testUser.Followers = new List<User>();
+                testUser.Followers.Add(otherUser);
+                dbContext.Users.Update(testUser);
+            }
             
-    //         // Create notification manually
-    //         var notf = new Notification
-    //         {
-    //             Id = Guid.NewGuid(),
-    //             UserId = _testUserIdGuid,
-    //             ActorId = _otherUserIdGuid,
-    //             Type = NotificationType.Follow,
-    //             Content = "Other User started following you",
-    //             IsRead = false,
-    //             CreatedAt = DateTime.UtcNow
-    //         };
+            // Create notification manually
+            var notf = new Notification
+            {
+                Id = Guid.NewGuid(),
+                UserId = _testUserIdGuid,
+                ActorId = _otherUserIdGuid,
+                Type = NotificationType.Follow,
+                Content = "Other User started following you",
+                IsRead = false,
+                CreatedAt = DateTime.UtcNow
+            };
             
-    //         dbContext.Notifications.Add(notf);
-    //         await dbContext.SaveChangesAsync();
-    //     }
+            dbContext.Notifications.Add(notf);
+            await dbContext.SaveChangesAsync();
+        }
         
-    //     // Assert - Check notification was created for followed user
-    //     using var assertScope = _factory.Services.CreateScope();
-    //     var assertDbContext = assertScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        // Assert - Check notification was created for followed user
+        using var assertScope = _factory.Services.CreateScope();
+        var assertDbContext = assertScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         
-    //     var notification = await assertDbContext.Notifications
-    //         .FirstOrDefaultAsync(n => n.UserId == _testUserIdGuid && n.Type == NotificationType.Follow);
+        var notification = await assertDbContext.Notifications
+            .FirstOrDefaultAsync(n => n.UserId == _testUserIdGuid && n.Type == NotificationType.Follow);
             
-    //     Assert.NotNull(notification);
-    //     Assert.Equal(_otherUserIdGuid, notification.ActorId);
-    //     Assert.False(notification.IsRead);
-    //     Assert.Contains("started following you", notification.Content);
+        Assert.NotNull(notification);
+        Assert.Equal(_otherUserIdGuid, notification.ActorId);
+        Assert.False(notification.IsRead);
+        Assert.Contains("started following you", notification.Content);
         
-    //     _client.DefaultRequestHeaders.Clear();
-    // }
+        _client.DefaultRequestHeaders.Clear();
+    }
 }
