@@ -13,11 +13,13 @@ public class LikeService : ILikeService
 {
     private readonly ApplicationDbContext _context;
     private readonly ILogger<LikeService> _logger;
+    private readonly INotificationService _notificationService;
 
-    public LikeService(ApplicationDbContext context, ILogger<LikeService> logger)
+    public LikeService(ApplicationDbContext context, ILogger<LikeService> logger  , INotificationService notificationService)
     {
         _context = context;
         _logger = logger;
+        _notificationService = notificationService;
     }
 
     public async Task<bool> ToggleLikePostAsync(Guid postId, Guid userId)
@@ -55,9 +57,24 @@ public class LikeService : ILikeService
                 post.LikeCount += 1;
             }
             
+
+
+
+
             _context.Posts.Update(post);
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();
+
+            if ( post != null && existingLike == null && post.UserId != userId)
+            {
+                await _notificationService.CreateNotificationAsync(
+                NotificationType.Like, 
+                post.UserId, // receiver
+                userId,      // sender
+                "liked your post",
+                postId);
+                
+            }
             
             return existingLike == null; //  true if liked, false if unliked
         }
@@ -104,10 +121,24 @@ public class LikeService : ILikeService
                 comment.LikeCount += 1;
             }
             
+
             _context.Comments.Update(comment);
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();
-            
+
+            if ( comment != null && existingLike == null && comment.UserId != userId)
+            {
+                await _notificationService.CreateNotificationAsync(
+                NotificationType.Like, 
+                comment.UserId, // receiver
+                userId,      // sender
+                "liked your comment",
+                null , commentId);
+                
+            }
+
+
+
             return existingLike == null; // true if liked, false if unliked
         }
         catch (Exception ex)

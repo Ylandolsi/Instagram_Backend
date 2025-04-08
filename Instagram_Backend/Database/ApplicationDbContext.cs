@@ -29,4 +29,6 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<Guid>, 
     public DbSet<Image> Images { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Like> Likes { get; set; }
+
+    public DbSet<Notification> Notifications { get; set; }
 }

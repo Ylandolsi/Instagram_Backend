@@ -1,84 +1,164 @@
-// using System.Security.Claims;
-// using Instagram_Backend.Abstracts;
-// using Microsoft.AspNetCore.Authorization;
-// using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Instagram_Backend.Abstracts;
+using Instagram_Backend.Dtos;
+using Instagram_Backend.Dtos.Notifications;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-// namespace Instagram_Backend.Controllers;
+namespace Instagram_Backend.Controllers;
 
-// [Authorize]
-// [ApiController]
-// [Route("api/[controller]")]
-// public class NotificationsController : ControllerBase
-// {
-//     private readonly INotificationService _notificationService;
+[Authorize]
+[ApiController]
+[Route("api/[controller]")]
+public class NotificationsController : ControllerBase
+{
+    private readonly INotificationService _notificationService;
 
-//     public NotificationsController(INotificationService notificationService)
-//     {
-//         _notificationService = notificationService;
-//     }
+    public NotificationsController(INotificationService notificationService)
+    {
+        _notificationService = notificationService;
+    }
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetNotification(Guid id)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var userGuid))
+        {
+            return Unauthorized(new ApiResponse<bool>
+            {
+                Message = "User not found",
+                Data = false
+            });
+        }
 
-//     [HttpGet]
-//     public async Task<IActionResult> GetNotifications([FromQuery] int page = 1, [FromQuery] int pageSize = 20)
-//     {
-//         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-//         if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var userGuid))
-//         {
-//             return Unauthorized();
-//         }
+        if ( id == Guid.Empty)
+        {
+            return BadRequest(new ApiResponse<bool>
+            {
+                Message = "Invalid notification ID",
+                Data = false
+            });
+        }
+        var notification = await _notificationService.GetNotificationAsync(id, userGuid);
+        if (notification == null)
+        {
+            return NotFound(new ApiResponse<bool>
+            {
+                Message = "Notification not found",
+                Data = false
+            });
+        }
+        return Ok(new ApiResponse<NotificationDto>
+        {
+            Message = $"Notification fetched successfully for userId = {userGuid}",
+            Data = notification
+        });
         
-//         var notifications = await _notificationService.GetUserNotificationsAsync(userGuid, page, pageSize);
-//         return Ok(notifications);
-//     }
+ 
+    }
 
-//     [HttpDelete("{id:guid}")]
-//     public async Task<IActionResult> DeleteNotification(Guid id)
-//     {
-//         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-//         if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var userGuid))
-//         {
-//             return Unauthorized();
-//         }
+    [HttpGet]
+    public async Task<IActionResult> GetNotifications([FromQuery] int page = 1,  [FromQuery] int pageSize = 20)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var userGuid))
+        {
+            return Unauthorized(new ApiResponse<bool>
+            {
+                Message = "User not found",
+                Data = false
+            });
+        }
         
-//         // Add ownership check to prevent users from deleting others' notifications
-//         var result = await _notificationService.DeleteNotificationAsync(id, userGuid);
-        
-//         if (!result)
-//         {
-//             return NotFound(new{ message = "Notification not found or doesn't belong to you" });
-//         }
-        
-//         return Ok(new { message = "Notification deleted successfully" });
-//     }
+        var notifications = await _notificationService.GetUserNotificationsAsync(userGuid, page, pageSize);
+        return Ok(new ApiResponse<PagedResult<NotificationDto>>
+        {
+            Message = $"Notifications fetched successfully for userId = {userGuid}",
+            Data = notifications
+        });
+    }
 
-//     [HttpPatch("{id:guid}/read")]
-//     public async Task<IActionResult> MarkAsRead(Guid id)
-//     {
-//         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-//         if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var userGuid))
-//         {
-//             return Unauthorized();
-//         }
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteNotification(Guid id)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var userGuid))
+        {
+            return Unauthorized(new ApiResponse<bool>
+            {
+                Message = "User not found",
+                Data = false
+            });
+        }
         
-//         var result = await _notificationService.MarkAsReadAsync(id, userGuid);
+        var result = await _notificationService.DeleteNotificationAsync(id, userGuid);
         
-//         if (!result)
-//         {
-//             return NotFound(new {message= "Notification not found or doesn't belong to you"});
-//         }
+        if (!result)
+        {
+            return NotFound(new ApiResponse<bool>
+            {
+                Message = "Notification not found or doesn't belong to you",
+                Data = false
+            });
+        }
         
-//         return NoContent();
-//     }
+        return Ok(new ApiResponse<bool>
+        {
+            Message = "Notification deleted successfully",
+            Data = true
+        });
+    }
 
-//     [HttpPatch("read-all")]
-//     public async Task<IActionResult> MarkAllAsRead()
-//     {
-//         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-//         if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var userGuid))
-//         {
-//             return Unauthorized(new { message = "User not found" });
-//         }
+    [HttpPost("{id:guid}/read")]
+    public async Task<IActionResult> MarkAsRead(Guid id)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var userGuid))
+        {
+            return Unauthorized(new ApiResponse<bool>
+            {
+                Message = "User not found",
+                Data = false
+            });
+        }
         
-//         await _notificationService.MarkAllAsReadAsync(userGuid);
-//         return Ok(new { message = "All notifications marked as read" });
-//     }
-// }
+        var result = await _notificationService.MarkAsReadAsync(id, userGuid);
+        
+        if (!result)
+        {
+            return NotFound(new ApiResponse<bool>
+            {
+                Message = "Notification not found or doesn't belong to you",
+                Data = false
+            });
+        }
+        
+        return Ok(new ApiResponse<bool>
+        {
+            Message = "Notification marked as read successfully",
+            Data = true
+        });
+    }
+
+    [HttpPost("read-all")]
+    public async Task<IActionResult> MarkAllAsRead()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var userGuid))
+        {
+            return Unauthorized(new ApiResponse<bool>
+            {
+                Message = "User not found",
+                Data = false
+            });
+        }
+        
+        await _notificationService.MarkAllAsReadAsync(userGuid);
+        
+        return Ok(new ApiResponse<bool>
+        {
+            Message = "All notifications marked as read successfully",
+            Data = true
+        });
+    }
+}

@@ -1,14 +1,7 @@
 using System;
+using Instagram_Backend.Models;
 
 namespace Instagram_Backend.Dtos.Notifications;
-public enum NotificationType
-{
-    Like,
-    Comment,
-    Follow
-    // Mention,
-    // TaggedInPost
-}
 
 public class SendNotificationDto
 {

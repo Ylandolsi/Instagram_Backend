@@ -11,11 +11,13 @@ public class UserService : IUserService
 {
     private readonly ApplicationDbContext _context;
     private readonly ILogger<UserService> _logger;
+    private readonly INotificationService _notificationService;
 
-    public UserService(ApplicationDbContext context, ILogger<UserService> logger)
+    public UserService(ApplicationDbContext context, ILogger<UserService> logger , INotificationService notificationService)
     {
         _context = context;
         _logger = logger;
+        _notificationService = notificationService;
     }
 
 
@@ -65,6 +67,12 @@ public class UserService : IUserService
             await transaction.CommitAsync();
 
             _logger.LogInformation("User {UserId} successfully followed {ToFollowId}", userId, toFollowId);
+            
+            await _notificationService.CreateNotificationAsync(
+                    Models.NotificationType.Follow,
+                    toFollowId,
+                    userId,
+                    "started following you");
             return true;
         }
         catch (Exception ex)

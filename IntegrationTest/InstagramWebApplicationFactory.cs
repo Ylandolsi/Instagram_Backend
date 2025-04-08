@@ -16,7 +16,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text.Encodings.Web;
 using IntegrationTest.Mocks ;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-
+using System.Net.Http.Headers;
+using Instagram_Backend.Hubs;
+using Microsoft.AspNetCore.SignalR;
+using Moq;
 namespace IntegrationTest;
 
 
@@ -29,7 +32,7 @@ internal class InstagramWebApplicationFactory : WebApplicationFactory<Program>
         
         // Add an authorization header to the client
         client.DefaultRequestHeaders.Authorization = 
-            new System.Net.Http.Headers.AuthenticationHeaderValue("TestScheme");
+            new AuthenticationHeaderValue("TestScheme");
 
         await  Task.CompletedTask ; 
         
@@ -108,6 +111,24 @@ internal class InstagramWebApplicationFactory : WebApplicationFactory<Program>
                 .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             services.AddScoped<IImageService, MockImageService>();
             services.AddSingleton<IAuthTokenProcessor, MockAuthTokenProcessor>();
+
+            services.AddScoped<IHubContext<NotificationHub>>(sp => {
+                var mock = new Mock<IHubContext<NotificationHub>>();
+                var mockClients = new Mock<IHubClients>();
+                var mockClientProxy = new Mock<IClientProxy>();
+                
+                mockClientProxy.Setup(m => m.SendCoreAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<object[]>(),
+                    It.IsAny<CancellationToken>()
+                )).Returns(Task.CompletedTask);
+                
+                mockClients.Setup(m => m.Group(It.IsAny<string>())).Returns(mockClientProxy.Object);
+                mock.Setup(m => m.Clients).Returns(mockClients.Object);
+                
+                return mock.Object;
+            });
+
                 
             // Build new service provider to initialize test database
             using var scope = services.BuildServiceProvider().CreateScope();

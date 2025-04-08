@@ -14,6 +14,7 @@ using Instagram_Backend.Requests;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
 using Instagram_Backend.Services.ExternalServices;
+using Instagram_Backend.Hubs;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -53,6 +54,7 @@ builder.Services.AddCorsPolicy();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureCloudinary(builder.Configuration);
+builder.Services.AddSignalR();
 
 builder.Services.AddScoped<IAuthTokenProcessor,AuthTokenProcessor>();
 builder.Services.AddScoped< ICloudinaryService, CloudinaryService>();
@@ -62,6 +64,7 @@ builder.Services.AddScoped<IImageService , ImageService>() ;
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<ILikeService, LikeService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 
 builder.Services.AddScoped<CloudinaryService>();
@@ -86,7 +89,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseGlobalExceptionHandler();
 
-
 app.UseCors("DefaultPolicy");
 
 app.UseHttpsRedirection();
@@ -95,5 +97,6 @@ app.UseAuthorization();
 
 
 app.MapControllers();
+app.MapHub<NotificationHub>("/hubs/notifications");
 
 app.Run();

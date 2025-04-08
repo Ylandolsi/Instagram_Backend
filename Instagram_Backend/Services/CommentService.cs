@@ -1,5 +1,3 @@
-
-
 using Instagram_Backend.Abstracts;
 using Instagram_Backend.Database;
 using Instagram_Backend.Dtos;
@@ -15,9 +13,11 @@ public class CommentService : ICommentService
 {
     private readonly ILogger<CommentService> _logger;
     private readonly ApplicationDbContext _context;
+    private readonly INotificationService _notificationService;
 
-    public CommentService(ILogger<CommentService> logger, ApplicationDbContext context)
+    public CommentService(ILogger<CommentService> logger, ApplicationDbContext context , INotificationService notificationService)
     {
+        _notificationService = notificationService;
         _logger = logger;
         _context = context;
     }
@@ -55,12 +55,46 @@ public class CommentService : ICommentService
             }
 
             post.CommentCount += 1;
+
+
             _context.Posts.Update(post);
             
             await _context.Comments.AddAsync(comment);
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();
             
+            if (post != null && post.UserId != userId)
+            {
+                // Notify post owner about the comment
+                await _notificationService.CreateNotificationAsync(
+                    NotificationType.Comment, 
+                    post.UserId,
+                    userId,
+                    "commented on your post",
+                    PostId,
+                    comment.Id); 
+            }
+            
+            // If this is a reply to another comment, notify that comment's owner too
+            if (createCommentDto.ParentCommentId.HasValue)
+            {
+                var parentComment = await _context.Comments
+                    .Include(c => c.User)
+                    .FirstOrDefaultAsync(c => c.Id == createCommentDto.ParentCommentId.Value);
+                    
+                if (parentComment != null && parentComment.UserId != userId)
+                {
+                    await _notificationService.CreateNotificationAsync(
+                        NotificationType.Comment,
+                        parentComment.UserId,
+                        userId,
+                        "replied to your comment",
+                        PostId,
+                        comment.Id);
+                }
+            }
+
+
             return true;
         }
         catch (Exception ex)

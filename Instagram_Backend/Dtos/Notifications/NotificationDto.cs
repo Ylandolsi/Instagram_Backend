@@ -7,7 +7,7 @@ using Instagram_Backend.Models;
 public class NotificationDto
 {
     public Guid Id { get; set; }
-    public string Type { get; set; } = string.Empty;
+    public NotificationType Type { get; set; }
     public string Content { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public bool IsRead { get; set; } = false;
