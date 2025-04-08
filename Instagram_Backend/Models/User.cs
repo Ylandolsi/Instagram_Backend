@@ -33,10 +33,10 @@ public class User : IdentityUser<Guid> // guid is used as the primary key type
     public ICollection<Like> Likes { get; set; } = new List<Like>();
     public ICollection<User> Followers { get; set; } = new List<User>();
     public ICollection<User> Following { get; set; } = new List<User>();
+    public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
     
     
     // public ICollection<User> BlockedUser { get; set; } = new List<User>();
-    // public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
     // public ICollection<FollowRequest> FollowRequests { get; set; } = new List<FollowRequest>();
     // public ICollection<Story> Stories { get; set; } = new List<Story>();
     // public ICollection<StoryView> StoryViews { get; set; } = new List<StoryView>();
