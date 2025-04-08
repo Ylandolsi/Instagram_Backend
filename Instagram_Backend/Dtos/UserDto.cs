@@ -8,4 +8,5 @@ public class UserDto
 
     public string UserName { get; set; } = string.Empty; 
     public string ProfilePictureUrl { get; set; } = string.Empty;
+    public bool IsFollowedByCurrentUser { get; set; } = false;
 }

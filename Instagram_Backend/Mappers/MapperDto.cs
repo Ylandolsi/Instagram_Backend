@@ -6,6 +6,7 @@ using Instagram_Backend.Dtos;
 using Instagram_Backend.Dtos.Comments;
 using Instagram_Backend.Dtos.Posts;
 using Instagram_Backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 public static class MapperDto
 {
@@ -73,11 +74,22 @@ public static class MapperDto
                 l.UserId == currentUserId && 
                 l.Type == LikeType.Comment);
         }
+        var userDto = comment.User != null ? MapUserToDto(comment.User) : null;
+        if( userDto != null)
+        {
+            if (context != null)
+            {
+                userDto.IsFollowedByCurrentUser = context.Users
+                    .Include(u => u.Followers)
+                    .FirstOrDefault(u => u.Id == currentUserId)?
+                    .Followers.Any(f => f.Id == comment.User.Id) ?? false;
+            }
+        }
         return new CommentDto
         {
             Id = comment.Id,
             PostId = comment.PostId,
-            User = MapUserToDto(comment.User),
+            User = userDto,
             Content = comment.Content,
             CreatedAt = comment.CreatedAt,
             LikeCount = comment.LikeCount , 
@@ -99,10 +111,21 @@ public static class MapperDto
                 l.UserId == currentUserId && 
                 l.Type == LikeType.Post);
         }
+        var dto = post.User != null ? MapUserToDto(post.User)   : null ; 
+        if ( dto != null){
+            if ( context != null)
+            {
+                dto.IsFollowedByCurrentUser = context.Users
+                    .Include(u => u.Followers)
+                    .FirstOrDefault(u => u.Id == currentUserId)?
+                    .Followers.Any(f => f.Id == post.User.Id) ?? false;
+            }
+
+        }
         return new PostDto
         {
             Id = post.Id,
-            User = post.User != null ? MapUserToDto(post.User) : null,
+            User = dto , 
             Caption = post.Caption,
             Images = post.Images?
                 .OrderBy(i => i.Order)

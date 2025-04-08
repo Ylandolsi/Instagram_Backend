@@ -171,5 +171,56 @@ public class UserService : IUserService
             user => MapperDto.MapUserToDto(user));
     }
 
+    public async Task<PagedResult<UserDto>> SearchUsersAsync(string query, int page, int pageSize, Guid currentUserId)
+    {
+        _logger.LogInformation("Searching users with query '{Query}', page {Page}, pageSize {PageSize}", 
+            query, page, pageSize);
+
+        page = Math.Max(1, page);
+        pageSize = Math.Clamp(pageSize, 1, 50);
+        
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            return new PagedResult<UserDto>
+            {
+                Items = new List<UserDto>(),
+                Page = 0,
+                PageSize = pageSize,
+                TotalCount = 0,
+            };
+        }
+        
+        query = query.Trim().ToLower();
+        
+        var currentUser = await _context.Users
+            .Include(u => u.Following)
+            .FirstOrDefaultAsync(u => u.Id == currentUserId);
+            
+        var followingIds = currentUser?.Following?.Select(f => f.Id).ToHashSet() ?? new HashSet<Guid>();
+        
+        var usersQuery = _context.Users
+            .Where(u => u.Id != currentUserId) 
+            .Where(u => 
+                (u.UserName != null && u.UserName.ToLower().Contains(query)) || 
+                (u.FirstName != null && u.FirstName.ToLower().Contains(query)) || 
+                (u.LastName != null && u.LastName.ToLower().Contains(query)))
+            .OrderBy(u => u.UserName);
+        
+        var result = await MapperPagedResult.MapPagedResult2(
+            usersQuery, 
+            page, 
+            pageSize,
+            currentUserId,
+            _context,
+            (user, userId, context) => {
+                var dto = MapperDto.MapUserToDto(user);
+                dto.IsFollowedByCurrentUser = followingIds.Contains(user.Id);
+                return dto;
+            });
+        
+        return result;
+    }
+
+
 
 }

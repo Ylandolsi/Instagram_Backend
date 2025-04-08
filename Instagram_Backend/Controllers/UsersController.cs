@@ -106,7 +106,30 @@ public class UsersController : ControllerBase
         });
     }
 
+    [HttpGet("search")]
+    public async Task<ActionResult> SearchUsers(
+        [FromQuery] string query,
+        [FromQuery] int page = 1, 
+        [FromQuery] int pageSize = 10)
+    {
+        if (string.IsNullOrWhiteSpace(query) || query.Length < 2)
+        {
+            return BadRequest(new ApiResponse<bool>
+            {
+                Data = false,
+                Message = "Search query must be at least 2 characters long"
+            });
+        }
 
+        var currentUserId = GetUserIdFromToken();
+        var result = await _userService.SearchUsersAsync(query, page, pageSize, currentUserId);
+
+        return Ok(new ApiResponse<PagedResult<UserDto>>
+        {
+            Data = result,
+            Message = "Users found successfully"
+        });
+    }
 
     private Guid GetUserIdFromToken()
     {

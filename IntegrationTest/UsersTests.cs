@@ -356,4 +356,146 @@ public class UsersTests : IDisposable
         
         _client.DefaultRequestHeaders.Clear();
     }
+    [Fact]
+    public async Task SearchUsers_ReturnsMatchingUsers()
+    {
+        // Arrange
+        // Create users with distinctive searchable names
+        await CreateTestUser(_otherUserIdGuid, "Jane", "Smith", "janesmith456");
+
+        // Create additional test users with different name patterns
+        var userId3 = Guid.NewGuid();
+        await CreateTestUser(userId3, "John", "Johnson", "johnny789");
+        
+        var userId4 = Guid.NewGuid();
+        await CreateTestUser(userId4, "Janet", "Williams", "jwilliams");
+        
+        var userId5 = Guid.NewGuid();
+        await CreateTestUser(userId5, "Robert", "Smith", "robsmith");
+
+        var userId6 = Guid.NewGuid();
+        await CreateTestUser(userId6, "Johnnn", "Doenn", "johndoe123");
+        
+        _client.DefaultRequestHeaders.Clear(); 
+        await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
+        
+
+        // Act - Search for "john" (should match John Doe and John Johnson)
+        var response = await _client.GetAsync("/api/users/search?query=joh&page=1&pageSize=10");
+        
+        // Assert
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<ApiResponse<PagedResult<UserDto>>>();
+        
+        foreach (var user in result.Data.Items)
+        {
+            Console.WriteLine($"User: {user.UserName}");
+        }
+
+        Assert.NotNull(result);
+        Assert.NotNull(result.Data);
+        Assert.Equal(2, result.Data.Items.Count);
+        Assert.Contains(result.Data.Items, user => user.UserName == "johndoe123");
+        Assert.Contains(result.Data.Items, user => user.UserName == "johnny789");
+        Assert.DoesNotContain(result.Data.Items, user => user.UserName == "janesmith456");
+        
+        // Act - Search for "smith" (should match Jane Smith and Robert Smith)
+        response = await _client.GetAsync("/api/users/search?query=smith&page=1&pageSize=10");
+        
+        // Assert
+        response.EnsureSuccessStatusCode();
+        result = await response.Content.ReadFromJsonAsync<ApiResponse<PagedResult<UserDto>>>();
+        
+        Assert.NotNull(result);
+        Assert.NotNull(result.Data);
+        Assert.Equal(2, result.Data.Items.Count);
+        Assert.Contains(result.Data.Items, user => user.UserName == "janesmith456");
+        Assert.Contains(result.Data.Items, user => user.UserName == "robsmith");
+        
+        _client.DefaultRequestHeaders.Clear();
+    }
+    [Fact]
+    public async Task SearchUsers_WithShortQuery_ReturnsBadRequest()
+    {
+        // Arrange
+        await CreateTestUser(_testUserIdGuid);
+        
+        _client.DefaultRequestHeaders.Clear(); 
+        await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
+        
+        // Act - Search with a single character
+        var response = await _client.GetAsync("/api/users/search?query=j&page=1&pageSize=10");
+        
+        // Assert
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        
+        _client.DefaultRequestHeaders.Clear();
+    }
+
+    [Fact]
+    public async Task SearchUsers_WithNoResults_ReturnsEmptyList()
+    {
+        // Arrange
+        await CreateTestUser(_testUserIdGuid);
+        
+        _client.DefaultRequestHeaders.Clear(); 
+        await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
+        
+        // Act - Search for something that shouldn't match any users
+        var response = await _client.GetAsync("/api/users/search?query=xyz123&page=1&pageSize=10");
+        
+        // Assert
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadFromJsonAsync<ApiResponse<PagedResult<UserDto>>>();
+        
+        Assert.NotNull(result);
+        Assert.NotNull(result.Data);
+        Assert.Empty(result.Data.Items);
+        
+        _client.DefaultRequestHeaders.Clear();
+    }
+
+    private async Task<Guid> CreateTestUser(Guid IdCreate, string firstName, string lastName, string userName)
+    {
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        
+        // Check if user already exists
+        if (await db.Users.AnyAsync(u => u.Id == IdCreate))
+        {
+            if ( IdCreate == _testUserIdGuid)
+            {
+                Console.WriteLine($"User already created : {IdCreate}");
+            }
+
+            // Update the existing user with the provided name properties
+            var existingUser = await db.Users.FindAsync(IdCreate);
+            if (existingUser != null)
+            {
+                existingUser.FirstName = firstName;
+                existingUser.LastName = lastName;
+                existingUser.UserName = userName;
+                await db.SaveChangesAsync();
+            }
+            return IdCreate;
+        }
+        
+        var user = new User
+        {
+            Id = IdCreate,
+            UserName = userName,
+            Email = $"{userName}@example.com",
+            FirstName = firstName,
+            LastName = lastName,
+            EmailConfirmed = true
+        };
+        
+        db.Users.Add(user);
+        await db.SaveChangesAsync();
+            if ( IdCreate == _testUserIdGuid)
+        {
+                Console.WriteLine($"User newly created : {IdCreate}");
+            }
+        return IdCreate;
+    }
 }
