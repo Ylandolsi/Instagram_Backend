@@ -210,25 +210,45 @@ public class PostService : IPostService
             (post, userId , context ) => MapperDto.MapPostToDto(post, userId , context ));
     }
 
-    public async Task<PagedResult<PostDto>> GetAllPostsAsync(int page, int pageSize, Guid currentUserId)
+   public async Task<PagedResult<PostDto>> GetAllPostsAsync(int page, int pageSize, Guid currentUserId)
     {
-        _logger.LogInformation("Retrieving all posts, page {Page}, size {PageSize}", page, pageSize);
+        _logger.LogInformation("Retrieving feed for user {UserId}, page {Page}, size {PageSize}", 
+            currentUserId, page, pageSize);
         
         page = Math.Max(1, page);
         pageSize = Math.Clamp(pageSize, 1, 50);
         
+        var currentUser = await _context.Users
+            .Include(u => u.Following)
+            .FirstOrDefaultAsync(u => u.Id == currentUserId);
+        
+        if (currentUser == null)
+        {
+            _logger.LogWarning("User {UserId} not found when retrieving feed", currentUserId);
+            throw new NotFoundException($"User not found with ID = {currentUserId}");
+        }
+        
+        var followedUserIds = currentUser.Following
+            .Select(f => f.Id)
+            .ToList();
+        
+        followedUserIds.Add(currentUserId);
+        
         var postsQuery = _context.Posts
+            .Where(p => followedUserIds.Contains(p.UserId))
             .Include(p => p.User)
             .Include(p => p.Images)
             .OrderByDescending(p => p.CreatedAt);
             
+        _logger.LogDebug("Fetching posts from {FollowedCount} users for feed", followedUserIds.Count);
+        
         return await MapperPagedResult.MapPagedResult2(
             postsQuery, 
             page, 
             pageSize, 
             currentUserId, 
-            _context , 
-            (post, userId ,  context ) => MapperDto.MapPostToDto(post, userId , context));
+            _context, 
+            (post, userId, context) => MapperDto.MapPostToDto(post, userId, context));
     }
     
 

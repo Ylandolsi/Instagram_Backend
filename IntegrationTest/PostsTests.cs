@@ -169,27 +169,45 @@ public class PostsTests
     #region GET All Posts (Feed)
     
     [Fact]
-    public async Task GetAllPosts_ReturnsOkResult()
+    public async Task GetAllPosts_ReturnsOnlyFollowedUsersPosts()
     {
         // Arrange
         await CreateTestUser();
         await CreateOtherUser();
         
-        // Create posts for both users
         await CreateTestPost("Test post from test user");
         await CreatePostForUser(_otherUserIdGuid, "Test post from other user");
         
-        // Act
+        _client.DefaultRequestHeaders.Clear();
+        
+        await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
+        
+        // Initially, the user doesn't follow anyone
+        var initialResponse = await _client.GetAsync("/api/posts?page=1&pageSize=10");
+        initialResponse.EnsureSuccessStatusCode();
+        var initialResult = await initialResponse.Content.ReadFromJsonAsync<ApiResponse<PagedResult<PostDto>>>();
+        
+        Assert.NotNull(initialResult);
+        Assert.NotNull(initialResult.Data);
+        Assert.Single(initialResult.Data.Items); // Only their own post
+        Assert.Equal("Test post from test user", initialResult.Data.Items[0].Caption);
+        
+        // Now follow the other user
+        var followResponse = await _client.PostAsync($"/api/users/{_otherUserIdGuid}/follow", null);
+        followResponse.EnsureSuccessStatusCode();
+        
         var response = await _client.GetAsync("/api/posts?page=1&pageSize=10");
         
-        // Assert
         response.EnsureSuccessStatusCode();
         var result = await response.Content.ReadFromJsonAsync<ApiResponse<PagedResult<PostDto>>>();
-        
+
         Assert.NotNull(result);
         Assert.NotNull(result.Data);
         Assert.Equal(2, result.Data.Items.Count);
         Assert.Equal(2, result.Data.TotalCount);
+        
+        Assert.Contains(result.Data.Items, p => p.Caption == "Test post from test user");
+        Assert.Contains(result.Data.Items, p => p.Caption == "Test post from other user");
     }
     
     #endregion
