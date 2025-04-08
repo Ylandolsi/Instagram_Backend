@@ -21,8 +21,7 @@ public class CommentsController : ControllerBase
     }
 
     [HttpPost]
-    [Route("{postId:guid}")]
-    public async Task<IActionResult> CreateComment([FromBody] CreateCommentDto createCommentDto, Guid postId)
+    public async Task<IActionResult> CreateComment([FromBody] CreateCommentDto createCommentDto)
     {
         var userId = GetUserIdFromToken();
 
@@ -33,21 +32,21 @@ public class CommentsController : ControllerBase
                 Data = false,
             });
 
-        if (postId == Guid.Empty)
-            return BadRequest(new ApiResponse<bool>
-            {
-                Message = "Invalid post ID.",
-                Data = false,
-            });
-        
         if ( !ModelState.IsValid)
             return BadRequest(new ApiResponse<bool>
             {
                 Message = "Invalid comment data.",
                 Data = false,
             });
+        if (createCommentDto.PostId == Guid.Empty)
+            return BadRequest(new ApiResponse<bool>
+            {
+                Message = "Invalid post ID.",
+                Data = false,
+            });
+        
 
-        var result = await _commentService.CreateCommentAsync(createCommentDto, postId, userId);
+        var result = await _commentService.CreateCommentAsync(createCommentDto,createCommentDto.PostId, userId);
         return Ok(new ApiResponse<bool>
         {
             Message = result ? "Comment created successfully." : "Failed to create comment.",

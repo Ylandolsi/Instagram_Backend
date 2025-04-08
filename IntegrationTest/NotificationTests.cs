@@ -428,7 +428,7 @@ public class NotificationTests : IDisposable
         
         // Act
         var response = await _client.PostAsync(
-            $"/api/Comments/{postId}", 
+            $"/api/Comments", 
             CreateJsonContent(createCommentDto));
         
         // Allow some time for the notification to be created asynchronously

@@ -138,11 +138,11 @@ public class CommentsTests : IDisposable
         // Arrange
         await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
         var postId = await SetupTestPostAsync();
-        var createCommentDto = new CreateCommentDto { Content = "New test comment" };
+        var createCommentDto = new CreateCommentDto { Content = "New test comment" , PostId=postId };
         
         // Act
         var response = await _client.PostAsync(
-            $"/api/Comments/{postId}", 
+            $"/api/Comments", 
             CreateJsonContent(createCommentDto));
         
         // Assert
@@ -171,13 +171,14 @@ public class CommentsTests : IDisposable
         var createCommentDto = new CreateCommentDto 
         { 
             Content = "Reply to comment", 
-            ParentCommentId = parentCommentId 
+            ParentCommentId = parentCommentId ,
+            PostId = postId
         };
         
         await _factory.AuthenticateClient(_client, _testUserIdGuid.ToString());
         // Act
         var response = await _client.PostAsync(
-            $"/api/Comments/{postId}", 
+            $"/api/Comments", 
             CreateJsonContent(createCommentDto));
         
         // Assert
@@ -206,13 +207,13 @@ public class CommentsTests : IDisposable
     {
         // Arrange - not authenticating client
         var postId = await SetupTestPostAsync();
-        var createCommentDto = new CreateCommentDto { Content = "Should not be created" };
+        var createCommentDto = new CreateCommentDto { Content = "Should not be created" , PostId = postId };
         
         _client.DefaultRequestHeaders.Clear(); 
         await _factory.AuthenticateClient(_client, "");
         // Act
         var response = await _client.PostAsync(
-            $"/api/Comments/{postId}", 
+            $"/api/Comments", 
             CreateJsonContent(createCommentDto));
         
         // Assert

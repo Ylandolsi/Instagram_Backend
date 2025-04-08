@@ -380,6 +380,8 @@ public class PostsTests
         var postId = await CreateTestPost();
         
         // Act
+        _client.DefaultRequestHeaders.Clear();
+        await _factory.AuthenticateClient(_client, TestUserId);
         var response = await _client.DeleteAsync($"/api/posts/{postId}");
         
         // Assert
@@ -391,6 +393,8 @@ public class PostsTests
         // Verify the post is deleted
         var getResponse = await _client.GetAsync($"/api/posts/{postId}");
         Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
+        _client.DefaultRequestHeaders.Clear();
+
     }
     
     [Fact]
