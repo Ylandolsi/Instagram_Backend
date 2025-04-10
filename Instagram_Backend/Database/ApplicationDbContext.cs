@@ -2,6 +2,7 @@ using Instagram_Backend.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Instagram_Backend.Database;
 
@@ -10,6 +11,14 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<Guid>, 
     public ApplicationDbContext(DbContextOptions options) : base(options)
     {
         
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+        // to avoid the warning about DateTime && GUID 
+        optionsBuilder.ConfigureWarnings(warnings =>
+            warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
     }
 
     protected override void OnModelCreating(ModelBuilder builder)

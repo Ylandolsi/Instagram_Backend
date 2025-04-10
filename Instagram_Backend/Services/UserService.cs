@@ -27,7 +27,6 @@ public class UserService : IUserService
     {
         _logger.LogInformation("User {UserId} attempting to follow {ToFollowId}", userId, toFollowId);
 
-        // Validate inputs
         if (userId == toFollowId)
         {
             _logger.LogWarning("User {UserId} attempted to follow themselves", userId);
@@ -52,7 +51,9 @@ public class UserService : IUserService
             throw new NotFoundException($"User not found with ID = {toFollowId}");
         }
 
-        var FollowOp = await _context.UserFollowers.Where(f  => f.FollowerId == userId && f.FollowingId == toFollowId)
+        var FollowOp = await _context.UserFollowers
+                        .Where(f  => f.FollowerId == userId 
+                                    && f.FollowingId == toFollowId)
                         .FirstOrDefaultAsync();
 
         if (FollowOp != null)
@@ -77,7 +78,7 @@ public class UserService : IUserService
             _logger.LogInformation("User {UserId} successfully followed {ToFollowId}", userId, toFollowId);
             
             await _notificationService.CreateNotificationAsync(
-                    Models.NotificationType.Follow,
+                    NotificationType.Follow,
                     toFollowId,
                     userId,
                     "started following you");

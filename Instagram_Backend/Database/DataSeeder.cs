@@ -11,11 +11,10 @@ public static class DataSeeder
     {
         // Fixed dates for seeding
         var baseDate = new DateTime(2025, 3, 15, 0, 0, 0, DateTimeKind.Utc);
-
+        var createdAt = baseDate; 
         // Password123!
         var PasswordHash = "AQAAAAIAAYagAAAAEG9Yh999XbrReKfYRF6NzknIDvSmTjBuDq4KQkfqZweYlubTSIOeVLFmxSD3tar1IA==" ; 
         
-        // Create users
         var users = new List<User>
         {
             new User
@@ -73,7 +72,7 @@ public static class DataSeeder
             {
                 Id = Guid.Parse("a1111111-a111-a111-a111-a11111111111"),
                 Caption = "Beautiful sunset at the beach!",
-                CreatedAt = baseDate.AddDays(-10),
+                CreatedAt = createdAt,
                 UserId = users[0].Id,
                 CommentCount = 2,
                 LikeCount = 15
@@ -82,7 +81,7 @@ public static class DataSeeder
             {
                 Id = Guid.Parse("a2222222-a222-a222-a222-a22222222222"),
                 Caption = "My homemade pasta recipe 🍝",
-                CreatedAt = baseDate.AddDays(-5),
+                CreatedAt = createdAt,
                 UserId = users[1].Id,
                 CommentCount = 3,
                 LikeCount = 42
@@ -91,17 +90,15 @@ public static class DataSeeder
             {
                 Id = Guid.Parse("a3333333-a333-a333-a333-a33333333333"),
                 Caption = "New coding setup complete",
-                CreatedAt = baseDate.AddDays(-2),
+                CreatedAt = createdAt,
                 UserId = users[2].Id,
                 CommentCount = 4,
                 LikeCount = 28
             }
         };
 
-        // Seed posts
         modelBuilder.Entity<Post>().HasData(posts);
 
-        // Create images for posts
         var images = new List<Image>
         {
             new Image
@@ -134,17 +131,15 @@ public static class DataSeeder
             }
         };
 
-        // Seed images
         modelBuilder.Entity<Image>().HasData(images);
 
-        // Create comments
         var comments = new List<Comment>
         {
             new Comment
             {
                 Id = Guid.Parse("c1111111-c111-c111-c111-c11111111111"),
                 Content = "Amazing view!",
-                CreatedAt = baseDate.AddDays(-9),
+                CreatedAt = createdAt,
                 UserId = users[1].Id,
                 PostId = posts[0].Id,
                 LikeCount = 3,
@@ -154,7 +149,7 @@ public static class DataSeeder
             {
                 Id = Guid.Parse("c2222222-c222-c222-c222-c22222222222"),
                 Content = "Thanks! It was incredible.",
-                CreatedAt = baseDate.AddDays(-9).AddHours(2),
+                CreatedAt = createdAt,
                 UserId = users[0].Id,
                 PostId = posts[0].Id,
                 ParentCommentId = Guid.Parse("c1111111-c111-c111-c111-c11111111111"),
@@ -165,7 +160,7 @@ public static class DataSeeder
             {
                 Id = Guid.Parse("c3333333-c333-c333-c333-c33333333333"),
                 Content = "This looks delicious!",
-                CreatedAt = baseDate.AddDays(-4),
+                CreatedAt = createdAt,
                 UserId = users[2].Id,
                 PostId = posts[1].Id,
                 LikeCount = 4,
@@ -175,7 +170,7 @@ public static class DataSeeder
             {
                 Id = Guid.Parse("c4444444-c444-c444-c444-c44444444444"),
                 Content = "Can you share the recipe?",
-                CreatedAt = baseDate.AddDays(-4).AddHours(1),
+                CreatedAt = createdAt,
                 UserId = users[0].Id,
                 PostId = posts[1].Id,
                 LikeCount = 0,
@@ -185,7 +180,7 @@ public static class DataSeeder
             {
                 Id = Guid.Parse("c5555555-c555-c555-c555-c55555555555"),
                 Content = "Sure, I'll DM you!",
-                CreatedAt = baseDate.AddDays(-4).AddHours(3),
+                CreatedAt = createdAt,
                 UserId = users[1].Id,
                 PostId = posts[1].Id,
                 ParentCommentId = Guid.Parse("c4444444-c444-c444-c444-c44444444444"),
@@ -196,7 +191,7 @@ public static class DataSeeder
             {
                 Id = Guid.Parse("c6666666-c666-c666-c666-c66666666666"),
                 Content = "Nice setup! What monitor is that?",
-                CreatedAt = baseDate.AddDays(-1),
+                CreatedAt = createdAt,
                 UserId = users[0].Id,
                 PostId = posts[2].Id,
                 LikeCount = 1,
@@ -206,7 +201,7 @@ public static class DataSeeder
             {
                 Id = Guid.Parse("c7777777-c777-c777-c777-c77777777777"),
                 Content = "It's an LG 34\" ultrawide",
-                CreatedAt = baseDate.AddHours(-20),
+                CreatedAt = createdAt,
                 UserId = users[2].Id,
                 PostId = posts[2].Id,
                 ParentCommentId = Guid.Parse("c6666666-c666-c666-c666-c66666666666"),
@@ -215,10 +210,8 @@ public static class DataSeeder
             }
         };
 
-        // Seed comments
         modelBuilder.Entity<Comment>().HasData(comments);
 
-        // Create likes
         var likes = new List<Like>
         {
             // Likes for posts
@@ -227,48 +220,48 @@ public static class DataSeeder
                 Id = Guid.Parse("d1111111-d111-d111-d111-d11111111111"),
                 UserId = users[1].Id,
                 Type = LikeType.Post,
-                PostId = posts[0].Id,
-                CreatedAt = baseDate.AddDays(-9)
+                CreatedAt = createdAt,PostId = posts[0].Id
+                ,
             },
             new Like
             {
                 Id = Guid.Parse("d2222222-d222-d222-d222-d22222222222"),
                 UserId = users[2].Id,
                 Type = LikeType.Post,
-                PostId = posts[0].Id,
-                CreatedAt = baseDate.AddDays(-8)
+                CreatedAt = createdAt,PostId = posts[0].Id
+                ,
             },
             new Like
             {
                 Id = Guid.Parse("d3333333-d333-d333-d333-d33333333333"),
                 UserId = users[0].Id,
                 Type = LikeType.Post,
-                PostId = posts[1].Id,
-                CreatedAt = baseDate.AddDays(-5)
+                CreatedAt = createdAt,PostId = posts[1].Id
+                ,
             },
             new Like
             {
                 Id = Guid.Parse("d4444444-d444-d444-d444-d44444444444"),
                 UserId = users[2].Id,
                 Type = LikeType.Post,
-                PostId = posts[1].Id,
-                CreatedAt = baseDate.AddDays(-4)
+                CreatedAt = createdAt,PostId = posts[1].Id
+                ,
             },
             new Like
             {
                 Id = Guid.Parse("d5555555-d555-d555-d555-d55555555555"),
                 UserId = users[0].Id,
                 Type = LikeType.Post,
-                PostId = posts[2].Id,
-                CreatedAt = baseDate.AddDays(-1)
+                CreatedAt = createdAt,PostId = posts[2].Id
+                ,
             },
             new Like
             {
                 Id = Guid.Parse("d6666666-d666-d666-d666-d66666666666"),
                 UserId = users[1].Id,
                 Type = LikeType.Post,
-                PostId = posts[2].Id,
-                CreatedAt = baseDate.AddHours(-12)
+                CreatedAt = createdAt,PostId = posts[2].Id
+                ,
             },
 
             // Likes for comments
@@ -277,24 +270,24 @@ public static class DataSeeder
                 Id = Guid.Parse("d7777777-d777-d777-d777-d77777777777"),
                 UserId = users[0].Id,
                 Type = LikeType.Comment,
-                CommentId = comments[0].Id,
-                CreatedAt = baseDate.AddDays(-8)
+                CreatedAt = createdAt,CommentId = comments[0].Id
+                ,
             },
             new Like
             {
                 Id = Guid.Parse("d8888888-d888-d888-d888-d88888888888"),
                 UserId = users[2].Id,
                 Type = LikeType.Comment,
-                CommentId = comments[0].Id,
-                CreatedAt = baseDate.AddDays(-7)
+                CreatedAt = createdAt,CommentId = comments[0].Id
+                ,
             },
             new Like
             {
                 Id = Guid.Parse("d9999999-d999-d999-d999-d99999999999"),
                 UserId = users[1].Id,
                 Type = LikeType.Comment,
-                CommentId = comments[1].Id,
-                CreatedAt = baseDate.AddDays(-8)
+                CreatedAt = createdAt,CommentId = comments[1].Id
+                ,
             }
         };
 
@@ -313,7 +306,7 @@ public static class DataSeeder
                 Type = NotificationType.Like,
                 Content = "liked your post",
                 PostId = posts[0].Id,
-                CreatedAt = baseDate.AddDays(-9),
+                CreatedAt = createdAt,
                 IsRead = true
             },
             new Notification
@@ -324,7 +317,7 @@ public static class DataSeeder
                 Type = NotificationType.Like,
                 Content = "liked your post",
                 PostId = posts[0].Id,
-                CreatedAt = baseDate.AddDays(-8),
+                CreatedAt = createdAt,
                 IsRead = true
             },
             
@@ -338,7 +331,7 @@ public static class DataSeeder
                 Content = "commented on your post",
                 PostId = posts[0].Id,
                 CommentId = comments[0].Id,
-                CreatedAt = baseDate.AddDays(-9),
+                CreatedAt = createdAt,
                 IsRead = true
             },
             new Notification
@@ -350,7 +343,7 @@ public static class DataSeeder
                 Content = "replied to your comment",
                 PostId = posts[0].Id,
                 CommentId = comments[1].Id,
-                CreatedAt = baseDate.AddDays(-9).AddHours(2),
+                CreatedAt = createdAt,
                 IsRead = true
             },
             
@@ -362,7 +355,7 @@ public static class DataSeeder
                 ActorId = users[0].Id,
                 Type = NotificationType.Follow,
                 Content = "started following you",
-                CreatedAt = baseDate.AddDays(-15),
+                CreatedAt = createdAt,
                 IsRead = true
             },
             new Notification
@@ -372,15 +365,13 @@ public static class DataSeeder
                 ActorId = users[0].Id,
                 Type = NotificationType.Follow,
                 Content = "started following you",
-                CreatedAt = baseDate.AddDays(-14),
+                CreatedAt = createdAt,
                 IsRead = false
             }
         };
 
-        // Seed notifications
         modelBuilder.Entity<Notification>().HasData(notifications);
 
-        // Create user followers
         var userFollowers = new List<UserFollower>
         {
             new UserFollower
@@ -414,7 +405,6 @@ public static class DataSeeder
                 FollowingId = users[1].Id
             }
         };
-        // Seed user followers
         modelBuilder.Entity<UserFollower>().HasData(userFollowers);
         
 
