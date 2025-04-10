@@ -31,12 +31,10 @@ public class User : IdentityUser<Guid> // guid is used as the primary key type
     public ICollection<Post> Posts { get; set; } = new List<Post>();
     public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     public ICollection<Like> Likes { get; set; } = new List<Like>();
-    public ICollection<User> Followers { get; set; } = new List<User>();
-    public ICollection<User> Following { get; set; } = new List<User>();
     public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
     
-    // public ICollection<UserFollower> FollowerRelationships { get; set; } = new List<UserFollower>();
-    // public ICollection<UserFollower> FollowingRelationships { get; set; } = new List<UserFollower>();
+    public ICollection<UserFollower> FollowerRelationships { get; set; } = new List<UserFollower>();
+    public ICollection<UserFollower> FollowingRelationships { get; set; } = new List<UserFollower>();
     
     // public ICollection<User> BlockedUser { get; set; } = new List<User>();
     // public ICollection<FollowRequest> FollowRequests { get; set; } = new List<FollowRequest>();
@@ -46,4 +44,8 @@ public class User : IdentityUser<Guid> // guid is used as the primary key type
     // public ICollection<DirectMessage> ReceivedMessages { get; set; } = new List<DirectMessage>();
     // public ICollection<DirectMessageGroup> DirectMessageGroups { get; set; } = new List<DirectMessageGroup>();
     
+
+
 }
+    // public ICollection<User> Followers { get; set; } = new List<User>();
+    // public ICollection<User> Following { get; set; } = new List<User>();

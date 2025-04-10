@@ -3,6 +3,7 @@ using Instagram_Backend.Database;
 using Instagram_Backend.Dtos;
 using Instagram_Backend.Exceptions;
 using Instagram_Backend.Mappers;
+using Instagram_Backend.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Instagram_Backend.Services;
@@ -34,7 +35,6 @@ public class UserService : IUserService
         }
 
         var user = await _context.Users
-            .Include(u => u.Following)
             .FirstOrDefaultAsync(u => u.Id == userId);
 
         if (user == null)
@@ -52,7 +52,10 @@ public class UserService : IUserService
             throw new NotFoundException($"User not found with ID = {toFollowId}");
         }
 
-        if (user.Following.Any(f => f.Id == toFollowId))
+        var FollowOp = await _context.UserFollowers.Where(f  => f.FollowerId == userId && f.FollowingId == toFollowId)
+                        .FirstOrDefaultAsync();
+
+        if (FollowOp != null)
         {
             _logger.LogWarning("User {UserId} is already following {ToFollowId}", userId, toFollowId);
             throw new BadRequestException($"Already following user with ID = {toFollowId}");
@@ -62,7 +65,12 @@ public class UserService : IUserService
         
         try
         {
-            user.Following.Add(toFollowUser);
+            _context.UserFollowers.Add(new UserFollower
+            {
+                FollowerId = userId,
+                FollowingId = toFollowId
+            });
+
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();
 
@@ -88,7 +96,6 @@ public class UserService : IUserService
         _logger.LogInformation("User {UserId} attempting to unfollow {ToUnfollowId}", userId, toUnfollowId);
 
         var user = await _context.Users
-            .Include(u => u.Following)
             .FirstOrDefaultAsync(u => u.Id == userId);
 
         if (user == null)
@@ -106,7 +113,10 @@ public class UserService : IUserService
             throw new NotFoundException($"User not found with ID = {toUnfollowId}");
         }
 
-        if (!user.Following.Any(f => f.Id == toUnfollowId))
+        var FollowOp = await _context.UserFollowers.Where(f  => f.FollowerId == userId && f.FollowingId == toUnfollowId)
+                        .FirstOrDefaultAsync();
+
+        if (FollowOp == null)
         {
             _logger.LogWarning("User {UserId} is not following {ToUnfollowId}", userId, toUnfollowId);
             throw new BadRequestException($"Not following user with ID = {toUnfollowId}");
@@ -116,7 +126,7 @@ public class UserService : IUserService
         
         try
         {
-            user.Following.Remove(toUnfollowUser);
+            _context.UserFollowers.Remove(FollowOp);
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();
 
@@ -138,11 +148,22 @@ public class UserService : IUserService
         page = Math.Max(1, page);
         pageSize = Math.Clamp(pageSize, 1, 50);
 
-        var followersQuery = _context.Users
-            .Include(u => u.Followers)
-            .Include(u => u.Following)
-            .Where(u => u.Following.Any(f => f.Id == userId))
+        var followersQuery = _context.UserFollowers.Where(f => f.FollowingId == userId)
+            .Include(f => f.Follower)
+            .Select(f => f.Follower)
             .OrderBy(u => u.UserName);
+
+        if ( followersQuery == null)
+        {
+            _logger.LogWarning("No followers found for user {UserId}", userId);
+            return new PagedResult<UserDto>
+            {
+                Items = new List<UserDto>(),
+                Page = 0,
+                PageSize = pageSize,
+                TotalCount = 0,
+            };
+        }
             
         return await MapperPagedResult.MapPagedResult(
             followersQuery, 
@@ -158,15 +179,24 @@ public class UserService : IUserService
         page = Math.Max(1, page);
         pageSize = Math.Clamp(pageSize, 1, 50);
 
-        var followingQuery = _context.Users
-            .Include(u => u.Followers)
-            .Include(u => u.Following)
-            .Where(u => _context.Users
-                .Where(currentUser => currentUser.Id == userId)
-                .SelectMany(currentUser => currentUser.Following)
-                .Select(f => f.Id)
-                .Contains(u.Id))
+
+
+        var followingQuery = _context.UserFollowers.Where(f => f.FollowerId == userId)
+            .Include(f => f.Following)
+            .Select(f => f.Following)
             .OrderBy(u => u.UserName);
+        
+        if (followingQuery == null)
+        {
+            _logger.LogWarning("No followings found for user {UserId}", userId);
+            return new PagedResult<UserDto>
+            {
+                Items = new List<UserDto>(),
+                Page = 0,
+                PageSize = pageSize,
+                TotalCount = 0,
+            };
+        }
             
         return await MapperPagedResult.MapPagedResult(
             followingQuery, 
@@ -195,16 +225,14 @@ public class UserService : IUserService
         }
         
         query = query.Trim().ToLower();
-        
-        var currentUser = await _context.Users
-            .Include(u => u.Following)
-            .FirstOrDefaultAsync(u => u.Id == currentUserId);
-            
-        var followingIds = currentUser?.Following?.Select(f => f.Id).ToHashSet() ?? new HashSet<Guid>();
+
+        var followingIds = await _context.UserFollowers
+                                    .Where(uf => uf.FollowerId == currentUserId)
+                                    .Select(uf => uf.FollowingId)
+                                    .ToHashSetAsync() 
+                                    ?? new HashSet<Guid>();
         
         var usersQuery = _context.Users
-            .Include(u => u.Followers)
-            .Include(u => u.Following)
             .Where(u => u.Id != currentUserId) 
             .Where(u => 
                 (u.UserName != null && u.UserName.ToLower().Contains(query)) || 

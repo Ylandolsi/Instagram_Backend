@@ -27,7 +27,8 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<Guid>, 
         builder.SeedData();
     }
     
-    public DbSet<User> Users { get; set; } 
+    public DbSet<User> Users { get; set; }
+    public DbSet<UserFollower> UserFollowers { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<Image> Images { get; set; }
     public DbSet<Comment> Comments { get; set; }

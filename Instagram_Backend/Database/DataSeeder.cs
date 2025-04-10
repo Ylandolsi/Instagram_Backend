@@ -1,14 +1,19 @@
 using Instagram_Backend.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Instagram_Backend.Database;
 
 public static class DataSeeder
 {
+
     public static void SeedData(this ModelBuilder modelBuilder)
     {
         // Fixed dates for seeding
         var baseDate = new DateTime(2025, 3, 15, 0, 0, 0, DateTimeKind.Utc);
+
+        // Password123!
+        var PasswordHash = "AQAAAAIAAYagAAAAEG9Yh999XbrReKfYRF6NzknIDvSmTjBuDq4KQkfqZweYlubTSIOeVLFmxSD3tar1IA==" ; 
         
         // Create users
         var users = new List<User>
@@ -21,6 +26,7 @@ public static class DataSeeder
                 UserName = "johndoe",
                 Email = "john@example.com",
                 EmailConfirmed = true,
+                PasswordHash = PasswordHash,
                 NormalizedEmail = "JOHN@EXAMPLE.COM",
                 NormalizedUserName = "JOHNDOE",
                 ProfilePictureUrl = "https://randomuser.me/api/portraits/men/1.jpg",
@@ -34,6 +40,7 @@ public static class DataSeeder
                 UserName = "janesmith",
                 Email = "jane@example.com",
                 EmailConfirmed = true,
+                PasswordHash = PasswordHash,
                 NormalizedEmail = "JANE@EXAMPLE.COM",
                 NormalizedUserName = "JANESMITH",
                 ProfilePictureUrl = "https://randomuser.me/api/portraits/women/1.jpg",
@@ -47,6 +54,7 @@ public static class DataSeeder
                 UserName = "alexj",
                 Email = "alex@example.com",
                 EmailConfirmed = true,
+                PasswordHash = PasswordHash,
                 NormalizedEmail = "ALEX@EXAMPLE.COM",
                 NormalizedUserName = "ALEXJ",
                 ProfilePictureUrl = "https://randomuser.me/api/portraits/men/2.jpg",
@@ -56,6 +64,7 @@ public static class DataSeeder
 
         // Seed users
         modelBuilder.Entity<User>().HasData(users);
+
 
         // Create posts
         var posts = new List<Post>
@@ -370,6 +379,43 @@ public static class DataSeeder
 
         // Seed notifications
         modelBuilder.Entity<Notification>().HasData(notifications);
+
+        // Create user followers
+        var userFollowers = new List<UserFollower>
+        {
+            new UserFollower
+            {
+                FollowerId = users[1].Id,
+                FollowingId = users[0].Id
+            },
+            new UserFollower
+            {
+                FollowerId = users[2].Id,
+                FollowingId = users[0].Id
+            },
+            new UserFollower
+            {
+                FollowerId = users[0].Id,
+                FollowingId = users[1].Id
+            },
+            new UserFollower
+            {
+                FollowerId = users[0].Id,
+                FollowingId = users[2].Id
+            },
+            new UserFollower
+            {
+                FollowerId = users[1].Id,
+                FollowingId = users[2].Id
+            },
+            new UserFollower
+            {
+                FollowerId = users[2].Id,
+                FollowingId = users[1].Id
+            }
+        };
+        // Seed user followers
+        modelBuilder.Entity<UserFollower>().HasData(userFollowers);
         
 
 

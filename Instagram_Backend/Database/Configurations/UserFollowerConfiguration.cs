@@ -10,13 +10,15 @@ namespace Instagram_Backend.Database.Configurations
         {
             builder.HasKey(uf => new { uf.FollowerId, uf.FollowingId });
 
+            // when a new entity is added to UserFollower
+            // the UserFollow will be added to the FollowingRelationships collection of Follower User
             builder.HasOne( uf => uf.Follower)
-                .WithMany( u => u.Following )
+                .WithMany( u => u.FollowingRelationships )
                 .HasForeignKey( uf => uf.FollowerId )
                 .OnDelete(DeleteBehavior.NoAction);
                 
             builder.HasOne( uf => uf.Following)
-                .WithMany( u => u.Followers )
+                .WithMany( u => u.FollowerRelationships )
                 .HasForeignKey( uf => uf.FollowingId )
                 .OnDelete(DeleteBehavior.NoAction);
 

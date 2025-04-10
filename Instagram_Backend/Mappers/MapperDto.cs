@@ -21,8 +21,8 @@ public static class MapperDto
             UserName = user.UserName ?? string.Empty,
             ProfilePictureUrl = user.ProfilePictureUrl ?? string.Empty ,
             Bio = user.Bio ?? string.Empty,
-            FollowersCount = user.Followers.Count,
-            FollowingCount = user.Following.Count,
+            FollowersCount = user.FollowerRelationships.Count,
+            FollowingCount = user.FollowingRelationships.Count,
         };
     }
 
@@ -78,16 +78,7 @@ public static class MapperDto
                 l.Type == LikeType.Comment);
         }
         var userDto = comment.User != null ? MapUserToDto(comment.User) : null;
-        if( userDto != null)
-        {
-            if (context != null)
-            {
-                userDto.IsFollowedByCurrentUser = context.Users
-                    .Include(u => u.Followers)
-                    .FirstOrDefault(u => u.Id == currentUserId)?
-                    .Followers.Any(f => f.Id == comment.User.Id) ?? false;
-            }
-        }
+
         return new CommentDto
         {
             Id = comment.Id,
@@ -115,16 +106,7 @@ public static class MapperDto
                 l.Type == LikeType.Post);
         }
         var dto = post.User != null ? MapUserToDto(post.User)   : null ; 
-        if ( dto != null){
-            if ( context != null)
-            {
-                dto.IsFollowedByCurrentUser = context.Users
-                    .Include(u => u.Followers)
-                    .FirstOrDefault(u => u.Id == currentUserId)?
-                    .Followers.Any(f => f.Id == post.User.Id) ?? false;
-            }
 
-        }
         return new PostDto
         {
             Id = post.Id,

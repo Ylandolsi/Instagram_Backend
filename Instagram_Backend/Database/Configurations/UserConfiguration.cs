@@ -14,11 +14,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.ProfilePictureUrl).HasMaxLength(200);
         builder.Property(u => u.Bio).HasMaxLength(500);
 
-        builder.HasMany(u =>u.Followers)
-            .WithMany(u => u.Following);
-        
-        builder.HasMany( u => u.Followers)
-            .WithMany(u => u.Following) ; 
+
 
         builder.HasMany( u => u.Posts)
             .WithOne(p => p.User)

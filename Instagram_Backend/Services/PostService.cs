@@ -219,7 +219,6 @@ public class PostService : IPostService
         pageSize = Math.Clamp(pageSize, 1, 50);
         
         var currentUser = await _context.Users
-            .Include(u => u.Following)
             .FirstOrDefaultAsync(u => u.Id == currentUserId);
         
         if (currentUser == null)
@@ -228,8 +227,10 @@ public class PostService : IPostService
             throw new NotFoundException($"User not found with ID = {currentUserId}");
         }
         
-        var followedUserIds = currentUser.Following
-            .Select(f => f.Id)
+
+        var followedUserIds = _context.UserFollowers
+            .Where(f => f.FollowerId == currentUserId)
+            .Select(f => f.FollowingId)
             .ToList();
         
         followedUserIds.Add(currentUserId);
