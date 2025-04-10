@@ -27,7 +27,8 @@ public static class DataSeeder
                 EmailConfirmed = true,
                 PasswordHash = PasswordHash,
                 NormalizedEmail = "JOHN@EXAMPLE.COM",
-                NormalizedUserName = "JOHNDOE",
+                NormalizedUserName = "JOHNDOE", 
+                SecurityStamp = Guid.NewGuid().ToString(),
                 ProfilePictureUrl = "https://randomuser.me/api/portraits/men/1.jpg",
                 Bio = "Photography enthusiast and traveler"
             },
@@ -41,6 +42,7 @@ public static class DataSeeder
                 EmailConfirmed = true,
                 PasswordHash = PasswordHash,
                 NormalizedEmail = "JANE@EXAMPLE.COM",
+                SecurityStamp = Guid.NewGuid().ToString(),
                 NormalizedUserName = "JANESMITH",
                 ProfilePictureUrl = "https://randomuser.me/api/portraits/women/1.jpg",
                 Bio = "Food blogger | Travel lover"
@@ -55,6 +57,7 @@ public static class DataSeeder
                 EmailConfirmed = true,
                 PasswordHash = PasswordHash,
                 NormalizedEmail = "ALEX@EXAMPLE.COM",
+                SecurityStamp = Guid.NewGuid().ToString(),
                 NormalizedUserName = "ALEXJ",
                 ProfilePictureUrl = "https://randomuser.me/api/portraits/men/2.jpg",
                 Bio = "Software developer and coffee addict"
