@@ -250,6 +250,8 @@ public class LikeService : ILikeService
             var usersQuery = _context.Likes
                 .Where(l => l.PostId == postId && l.Type == LikeType.Post)
                 .Include(l => l.User)
+                    .ThenInclude(u => u.Followers)
+                    .ThenInclude(u => u.Following)
                 .OrderByDescending(l => l.CreatedAt)
                 .Select(l => l.User);
                 

@@ -139,6 +139,8 @@ public class UserService : IUserService
         pageSize = Math.Clamp(pageSize, 1, 50);
 
         var followersQuery = _context.Users
+            .Include(u => u.Followers)
+            .Include(u => u.Following)
             .Where(u => u.Following.Any(f => f.Id == userId))
             .OrderBy(u => u.UserName);
             
@@ -157,6 +159,8 @@ public class UserService : IUserService
         pageSize = Math.Clamp(pageSize, 1, 50);
 
         var followingQuery = _context.Users
+            .Include(u => u.Followers)
+            .Include(u => u.Following)
             .Where(u => _context.Users
                 .Where(currentUser => currentUser.Id == userId)
                 .SelectMany(currentUser => currentUser.Following)
@@ -199,6 +203,8 @@ public class UserService : IUserService
         var followingIds = currentUser?.Following?.Select(f => f.Id).ToHashSet() ?? new HashSet<Guid>();
         
         var usersQuery = _context.Users
+            .Include(u => u.Followers)
+            .Include(u => u.Following)
             .Where(u => u.Id != currentUserId) 
             .Where(u => 
                 (u.UserName != null && u.UserName.ToLower().Contains(query)) || 

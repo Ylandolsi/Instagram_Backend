@@ -7,6 +7,8 @@ using Instagram_Backend.Exceptions;
 using Instagram_Backend.Models;
 using Instagram_Backend.Requests;
 using Microsoft.EntityFrameworkCore;
+using Instagram_Backend.Dtos;
+using Instagram_Backend.Mappers;
 
 namespace Instagram_Backend.Services;
 
@@ -24,6 +26,21 @@ public class AccountService : IAccountService
         _dbContext = dbContext;
         _authTokenProcessor = authTokenProcessor;
         _userManager = userManager;
+    }
+
+    public async Task<UserDto> GetUserDataAsync(Guid userId)
+    {
+        var user = await _dbContext.Users
+            .Where(x => x.Id == userId)
+            .Select(x => MapperDto.MapUserToDto(x))
+            .FirstOrDefaultAsync();
+
+        if (user == null)
+        {
+            throw new NotFoundException($"User with ID {userId} not found.");
+        }
+
+        return user;
     }
 
     public async Task RegisterAsync(RegisterRequest registerRequest)
@@ -52,7 +69,7 @@ public class AccountService : IAccountService
 
         if (user == null || !await _userManager.CheckPasswordAsync(user, loginRequest.Password))
         {
-            throw new BadRequestException($"Login Failed With {loginRequest.Email}" );
+            throw new BadRequestException($"Password or email incorrect");
         }
 
         var (jwtToken, expirationDateInUtc) = _authTokenProcessor.GenerateJwtToken(user);

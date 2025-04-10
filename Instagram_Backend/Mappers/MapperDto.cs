@@ -19,7 +19,10 @@ public static class MapperDto
             FirstName = user.FirstName,
             LastName = user.LastName,
             UserName = user.UserName ?? string.Empty,
-            ProfilePictureUrl = user.ProfilePictureUrl ?? string.Empty
+            ProfilePictureUrl = user.ProfilePictureUrl ?? string.Empty ,
+            Bio = user.Bio ?? string.Empty,
+            FollowersCount = user.Followers.Count,
+            FollowingCount = user.Following.Count,
         };
     }
 

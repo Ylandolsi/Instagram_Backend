@@ -63,7 +63,7 @@ namespace Instagram_Backend.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Instagram_Backend.Models.Image", b =>
@@ -86,7 +86,7 @@ namespace Instagram_Backend.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("Instagram_Backend.Models.Like", b =>
@@ -118,7 +118,7 @@ namespace Instagram_Backend.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Likes");
+                    b.ToTable("Likes", (string)null);
                 });
 
             modelBuilder.Entity("Instagram_Backend.Models.Notification", b =>
@@ -166,7 +166,7 @@ namespace Instagram_Backend.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("Instagram_Backend.Models.Post", b =>
@@ -200,7 +200,7 @@ namespace Instagram_Backend.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("Instagram_Backend.Models.User", b =>
@@ -436,7 +436,7 @@ namespace Instagram_Backend.Migrations
 
                     b.HasIndex("FollowingId");
 
-                    b.ToTable("UserUser");
+                    b.ToTable("UserUser", (string)null);
                 });
 
             modelBuilder.Entity("Instagram_Backend.Models.Comment", b =>

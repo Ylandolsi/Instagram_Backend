@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Instagram_Backend.Abstracts;
+using Instagram_Backend.Dtos;
 using Instagram_Backend.Models;
 using Instagram_Backend.Requests;
 using Microsoft.AspNetCore.Authentication;
@@ -32,6 +33,25 @@ public class AccountController : ControllerBase
         _signInManager = signInManager;
     }
 
+    [HttpGet("me")]
+    [Authorize]
+    public async Task<IActionResult> GetData (){
+        var userId = GetUserIdFromToken(); 
+        if  ( userId == Guid.Empty)
+            return Unauthorized( new ApiResponse<bool>
+            {
+                Message = "User not authenticated.",
+                Data = false,
+            });
+        
+        var userData = await _accountService.GetUserDataAsync(userId) ; 
+        return Ok(new ApiResponse<UserDto>
+        {
+            Message = "User data fetched successfully",
+            Data = userData,
+        });
+    }
+
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequest registerRequest)
     {
@@ -39,7 +59,7 @@ public class AccountController : ControllerBase
         {
             return BadRequest(new ApiResponse<bool>
             {
-                Message = "Invalid request",
+                Message = $"Invalid request :{ModelState}",
                 Data = false,
             });
         }
@@ -59,7 +79,7 @@ public class AccountController : ControllerBase
         {
             return BadRequest(new ApiResponse<bool>
             {
-                Message = "Invalid request",
+                Message = $"Invalid request :{ModelState}",
                 Data = false,
             });
         }
@@ -72,7 +92,6 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("refresh")]
-    [Authorize]
     public async Task<IActionResult> RefreshToken()
     {
         var refreshToken = Request.Cookies["REFRESH_TOKEN"];
@@ -170,5 +189,14 @@ public class AccountController : ControllerBase
 
         return Ok(userId);
         // return Ok() ;
+    }
+
+
+
+
+    private Guid GetUserIdFromToken()
+    {
+        var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        return Guid.TryParse(userIdStr, out var userId) ? userId : Guid.Empty;
     }
 }

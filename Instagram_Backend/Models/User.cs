@@ -35,6 +35,8 @@ public class User : IdentityUser<Guid> // guid is used as the primary key type
     public ICollection<User> Following { get; set; } = new List<User>();
     public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
     
+    // public ICollection<UserFollower> FollowerRelationships { get; set; } = new List<UserFollower>();
+    // public ICollection<UserFollower> FollowingRelationships { get; set; } = new List<UserFollower>();
     
     // public ICollection<User> BlockedUser { get; set; } = new List<User>();
     // public ICollection<FollowRequest> FollowRequests { get; set; } = new List<FollowRequest>();

@@ -22,6 +22,9 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<Guid>, 
         builder.Entity<IdentityUserToken<Guid>>().ToTable("UserTokens");
         builder.Entity<IdentityUserRole<Guid>>().ToTable("UserRoles");
         builder.Entity<IdentityRoleClaim<Guid>>().ToTable("RoleClaims");
+    
+
+        builder.SeedData();
     }
     
     public DbSet<User> Users { get; set; } 
