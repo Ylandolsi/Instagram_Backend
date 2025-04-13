@@ -230,7 +230,7 @@ public class LikeService : ILikeService
         }
     }
 
-    public async Task<PagedResult<UserDto>> GetUsersWhoLikedPostAsync(Guid postId, int page, int pageSize)
+    public async Task<PagedResult<UserDto>> GetUsersWhoLikedPostAsync(Guid postId, Guid currentUserId , int page, int pageSize )
     {
         _logger.LogInformation("Retrieving users who liked post {PostId}, page {Page}, size {PageSize}", 
             postId, page, pageSize);
@@ -257,7 +257,12 @@ public class LikeService : ILikeService
                 usersQuery, 
                 page, 
                 pageSize, 
-                user => MapperDto.MapUserToDto(user));
+                (user )=> {
+                    var dto =  MapperDto.MapUserToDto(user); 
+                    dto.IsFollowedByCurrentUser = _context.UserFollowers
+                                    .Any(uf => uf.FollowerId == currentUserId && uf.FollowingId == dto.Id);
+                    return dto;
+        });
         }
         catch (NotFoundException)
         {

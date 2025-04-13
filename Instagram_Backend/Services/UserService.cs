@@ -21,6 +21,24 @@ public class UserService : IUserService
         _notificationService = notificationService;
     }
 
+    public async Task<UserDto> GetUserById(Guid id)
+    {
+        _logger.LogInformation("Fetching user with ID {UserId}", id);
+
+        var user = await _context.Users
+            .Include(u => u.FollowerRelationships)
+            .Include(u => u.FollowingRelationships)
+            .FirstOrDefaultAsync(u => u.Id == id);
+
+        if (user == null)
+        {
+            _logger.LogWarning("User not found: {UserId}", id);
+            throw new NotFoundException($"User not found with ID = {id}");
+        }
+
+        return MapperDto.MapUserToDto(user);
+    }
+
 
 
     public async Task<bool> FollowUser(Guid userId, Guid toFollowId)

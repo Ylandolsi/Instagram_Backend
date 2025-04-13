@@ -10,7 +10,7 @@ public interface ILikeService {
 
     Task<bool> IsCommentLikedByUserAsync(Guid commentId, Guid userId);
 
-    Task<PagedResult<UserDto>> GetUsersWhoLikedPostAsync(Guid postId , int pageNumber, int pageSize);
+    Task<PagedResult<UserDto>> GetUsersWhoLikedPostAsync(Guid postId ,  Guid currentUserId ,  int pageNumber, int pageSize);
     Task<PagedResult<PostDto>> GetLikedPostsByUserAsync(Guid userId, int pageNumber , int pageSize); // can only be used by the user himself
 
 }

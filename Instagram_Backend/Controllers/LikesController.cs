@@ -76,7 +76,7 @@ public class LikesController : ControllerBase
     }
     [HttpGet("posts/{postId:guid}/users")]
     [Authorize]
-    public async Task<IActionResult> GetUsersWhoLikedPost(Guid postId, int pageNumber = 1, int pageSize = 10)
+    public async Task<IActionResult> GetUsersWhoLikedPost(Guid postId,  int pageNumber = 1, int pageSize = 10)
     {
         var userId = GetUserIdFromToken();
 
@@ -94,7 +94,7 @@ public class LikesController : ControllerBase
                 Data = false,
             });
 
-        var result = await _likeService.GetUsersWhoLikedPostAsync(postId, pageNumber, pageSize);
+        var result = await _likeService.GetUsersWhoLikedPostAsync(postId, userId ,  pageNumber, pageSize);
         return Ok(new ApiResponse<PagedResult<UserDto>>
         {
             Message = $"Users who liked post with ID {postId} retrieved successfully",

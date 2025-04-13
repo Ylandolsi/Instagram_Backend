@@ -16,6 +16,22 @@ public class UsersController : ControllerBase
     {
         _userService= userService;
     }
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetUserById(Guid id)
+    {
+        var user = await _userService.GetUserById(id);
+        if (user == null)
+            return NotFound(new ApiResponse<bool>
+            {
+                Message = $"User with id {id} not found",
+                Data = false,
+            });
+        return Ok(new ApiResponse<UserDto>
+        {
+            Message = $"User with id {id} fetched successfully",
+            Data = user,
+        });
+    }
     
     [HttpGet("{id:guid}/followers")]
     public async Task<IActionResult> GetFollowers(Guid id, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)

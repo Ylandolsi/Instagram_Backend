@@ -31,6 +31,8 @@ public class AccountService : IAccountService
     public async Task<UserDto> GetUserDataAsync(Guid userId)
     {
         var user = await _dbContext.Users
+            .Include( x => x.FollowerRelationships)
+            .Include( x=> x.FollowingRelationships)
             .Where(x => x.Id == userId)
             .Select(x => MapperDto.MapUserToDto(x))
             .FirstOrDefaultAsync();

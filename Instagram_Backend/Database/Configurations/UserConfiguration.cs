@@ -36,6 +36,18 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasForeignKey(n => n.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        
+        builder.HasMany(u => u.FollowerRelationships)
+            .WithOne(uf => uf.Following)
+            .HasForeignKey(uf => uf.FollowingId)
+            .OnDelete(DeleteBehavior.NoAction);
+            
+        builder.HasMany(u => u.FollowingRelationships)
+            .WithOne(uf => uf.Follower)
+            .HasForeignKey(uf => uf.FollowerId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+
 
     }
     
