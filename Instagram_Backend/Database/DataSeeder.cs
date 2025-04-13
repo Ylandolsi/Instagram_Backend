@@ -82,6 +82,69 @@ public static class DataSeeder
             },
             new Post
             {
+                Id = Guid.Parse("a1111111-a111-a111-a111-a11111111111"),
+                Caption = "Beautiful sunset at the beach!",
+                CreatedAt = createdAt,
+                UserId = users[0].Id,
+                CommentCount = 2,
+                LikeCount = 15
+            },
+            new Post
+            {
+                Id = Guid.Parse("a1111111-a111-a111-a111-a11111111111"),
+                Caption = "Beautiful sunset at the beach!",
+                CreatedAt = createdAt,
+                UserId = users[0].Id,
+                CommentCount = 2,
+                LikeCount = 15
+            },
+            new Post
+            {
+                Id = Guid.Parse("a1111111-a111-a111-a111-a11111111111"),
+                Caption = "Beautiful sunset at the beach!",
+                CreatedAt = createdAt,
+                UserId = users[0].Id,
+                CommentCount = 2,
+                LikeCount = 15
+            },
+            new Post
+            {
+                Id = Guid.Parse("a1111111-a111-a111-a111-a11111111111"),
+                Caption = "Beautiful sunset at the beach!",
+                CreatedAt = createdAt,
+                UserId = users[0].Id,
+                CommentCount = 2,
+                LikeCount = 15
+            },
+            new Post
+            {
+                Id = Guid.Parse("a1111111-a111-a111-a111-a11111111111"),
+                Caption = "Beautiful sunset at the beach!",
+                CreatedAt = createdAt,
+                UserId = users[0].Id,
+                CommentCount = 2,
+                LikeCount = 15
+            },
+            new Post
+            {
+                Id = Guid.Parse("a1111111-a111-a111-a111-a11111111111"),
+                Caption = "New coding setup complete",
+                CreatedAt = createdAt,
+                UserId = users[2].Id,
+                CommentCount = 4,
+                LikeCount = 28
+            },
+            new Post
+            {
+                Id = Guid.Parse("a1111111-a111-a111-a111-a11111111111"),
+                Caption = "My homemade pasta recipe 🍝",
+                CreatedAt = createdAt,
+                UserId = users[1].Id,
+                CommentCount = 3,
+                LikeCount = 42
+            },
+            new Post
+            {
                 Id = Guid.Parse("a2222222-a222-a222-a222-a22222222222"),
                 Caption = "My homemade pasta recipe 🍝",
                 CreatedAt = createdAt,
@@ -97,6 +160,15 @@ public static class DataSeeder
                 UserId = users[2].Id,
                 CommentCount = 4,
                 LikeCount = 28
+            },
+            new Post
+            {
+                Id = Guid.Parse("a3333333-a333-a333-a333-a33333333333"),
+                Caption = "My homemade pasta recipe 🍝",
+                CreatedAt = createdAt,
+                UserId = users[1].Id,
+                CommentCount = 3,
+                LikeCount = 42
             }
         };
 
