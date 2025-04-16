@@ -142,7 +142,7 @@ public class CommentService : ICommentService
 
             var totalDescendantCount = allDescendantIds.Count  ; 
 
-            // Delete all descendants explicitly (don't rely on cascade)
+            // Delete all descendants 
             foreach (var descendantId in allDescendantIds.Where(id => id != commentId))
             {
                 var descendant = await _context.Comments.FindAsync(descendantId);

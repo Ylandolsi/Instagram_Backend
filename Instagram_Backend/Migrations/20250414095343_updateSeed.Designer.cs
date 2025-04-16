@@ -3,6 +3,7 @@ using System;
 using Instagram_Backend.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Instagram_Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250414095343_updateSeed")]
+    partial class updateSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,160 +71,160 @@ namespace Instagram_Backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f0e1bdaf-2c5b-4242-b5ea-baf07e38126a"),
+                            Id = new Guid("d362cee1-39c2-4fce-a53d-43397ab6b184"),
                             Content = "Amazing view!",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 3,
-                            PostId = new Guid("0e0445bd-fee5-43df-a3cb-90449f4f9133"),
+                            PostId = new Guid("a1580aad-5bc7-45e4-8347-232570d1579b"),
                             ReplyCount = 1,
-                            UserId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
+                            UserId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
                         },
                         new
                         {
-                            Id = new Guid("028f30f0-63f8-42e0-87a9-0cbcd0be493b"),
+                            Id = new Guid("8f425888-a589-444c-b274-258fa24e1561"),
                             Content = "Thanks! It was incredible.",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 1,
-                            ParentCommentId = new Guid("f0e1bdaf-2c5b-4242-b5ea-baf07e38126a"),
-                            PostId = new Guid("0e0445bd-fee5-43df-a3cb-90449f4f9133"),
+                            ParentCommentId = new Guid("d362cee1-39c2-4fce-a53d-43397ab6b184"),
+                            PostId = new Guid("a1580aad-5bc7-45e4-8347-232570d1579b"),
                             ReplyCount = 0,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
                         },
                         new
                         {
-                            Id = new Guid("64dbfcf3-89eb-4e4d-8b45-403ba71af73f"),
+                            Id = new Guid("34fc23fe-4af7-4619-9e1a-0325e3bbf34d"),
                             Content = "This looks delicious!",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 4,
-                            PostId = new Guid("d95811a5-6323-4e5c-be64-53838c5a1e7f"),
+                            PostId = new Guid("8dc7e07e-71dc-4677-ad0e-875f2bd59d77"),
                             ReplyCount = 1,
-                            UserId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
+                            UserId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
                         },
                         new
                         {
-                            Id = new Guid("92f1f196-0b61-4400-adbf-41273f7c7754"),
+                            Id = new Guid("b22eb11b-a224-4fc9-a6d0-ee1f3b177651"),
                             Content = "Can you share the recipe?",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 0,
-                            PostId = new Guid("d95811a5-6323-4e5c-be64-53838c5a1e7f"),
+                            PostId = new Guid("8dc7e07e-71dc-4677-ad0e-875f2bd59d77"),
                             ReplyCount = 1,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
                         },
                         new
                         {
-                            Id = new Guid("aabc57e2-fbfe-44ac-b771-d2d0992cbaae"),
+                            Id = new Guid("c87ddb1f-118e-4bf0-9a76-2e5fd32600f5"),
                             Content = "Sure, I'll DM you!",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 1,
-                            ParentCommentId = new Guid("92f1f196-0b61-4400-adbf-41273f7c7754"),
-                            PostId = new Guid("d95811a5-6323-4e5c-be64-53838c5a1e7f"),
+                            ParentCommentId = new Guid("b22eb11b-a224-4fc9-a6d0-ee1f3b177651"),
+                            PostId = new Guid("8dc7e07e-71dc-4677-ad0e-875f2bd59d77"),
                             ReplyCount = 0,
-                            UserId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
+                            UserId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
                         },
                         new
                         {
-                            Id = new Guid("89623aef-2400-42d1-82d1-d29902ac1dab"),
+                            Id = new Guid("e3e5419a-6fe7-4a5b-bb0e-6cb85723f874"),
                             Content = "Nice setup! What monitor is that?",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 1,
-                            PostId = new Guid("574b4e30-24f7-48c7-a080-342e8aa38f0d"),
+                            PostId = new Guid("8395d1f8-9394-4da6-ac04-d7d5eb4ee47d"),
                             ReplyCount = 1,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
                         },
                         new
                         {
-                            Id = new Guid("4c7f5e68-47cd-44d6-b01b-eeef1f036d47"),
+                            Id = new Guid("74211123-b6d9-476d-9d09-f3806cbfbd2b"),
                             Content = "It's an LG 34\" ultrawide",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 0,
-                            ParentCommentId = new Guid("89623aef-2400-42d1-82d1-d29902ac1dab"),
-                            PostId = new Guid("574b4e30-24f7-48c7-a080-342e8aa38f0d"),
+                            ParentCommentId = new Guid("e3e5419a-6fe7-4a5b-bb0e-6cb85723f874"),
+                            PostId = new Guid("8395d1f8-9394-4da6-ac04-d7d5eb4ee47d"),
                             ReplyCount = 0,
-                            UserId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
+                            UserId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
                         },
                         new
                         {
-                            Id = new Guid("822aea4b-d01b-47c2-ad5e-3aee5aa81e7e"),
+                            Id = new Guid("7c9445d5-5309-445f-bf36-3bfd32cbd1c1"),
                             Content = "This is incredible! Love the neon colors!",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 2,
-                            PostId = new Guid("40b690e5-5569-43ea-9d2d-98707748fd16"),
+                            PostId = new Guid("7a628109-d587-40f3-9900-2d5a6724d216"),
                             ReplyCount = 1,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
                         },
                         new
                         {
-                            Id = new Guid("c0cd4f7e-79ab-4e45-a5d3-4041a28dd533"),
+                            Id = new Guid("af9a62c2-2291-4502-b352-2fc02aa9d8c2"),
                             Content = "Thank you so much! Took me almost a week to finish.",
                             CreatedAt = new DateTime(2025, 3, 15, 1, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 1,
-                            ParentCommentId = new Guid("822aea4b-d01b-47c2-ad5e-3aee5aa81e7e"),
-                            PostId = new Guid("40b690e5-5569-43ea-9d2d-98707748fd16"),
+                            ParentCommentId = new Guid("7c9445d5-5309-445f-bf36-3bfd32cbd1c1"),
+                            PostId = new Guid("7a628109-d587-40f3-9900-2d5a6724d216"),
                             ReplyCount = 0,
-                            UserId = new Guid("ebe3156c-d427-4d2c-8594-88fe30e74b57")
+                            UserId = new Guid("dc3d8918-0070-47cd-aee7-bf6a43dfb6b2")
                         },
                         new
                         {
-                            Id = new Guid("76d24222-1a80-4ae0-9ae4-fc66d7de8f15"),
+                            Id = new Guid("20d5358e-11fc-4446-8e39-ebcae0f40ad9"),
                             Content = "What's your favorite HIIT exercise?",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 1,
-                            PostId = new Guid("07e032e0-3e5d-43ec-892d-6f2ad1419aea"),
+                            PostId = new Guid("9e460ac3-5486-4daa-a717-82ff17b09b70"),
                             ReplyCount = 1,
-                            UserId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
+                            UserId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
                         },
                         new
                         {
-                            Id = new Guid("6dabc5bd-4a70-4495-ad2f-94915f00681d"),
+                            Id = new Guid("1b179a0f-bfa4-43d5-8a77-7fa48444d5b8"),
                             Content = "Definitely burpees - they're brutal but effective!",
                             CreatedAt = new DateTime(2025, 3, 15, 2, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 2,
-                            ParentCommentId = new Guid("76d24222-1a80-4ae0-9ae4-fc66d7de8f15"),
-                            PostId = new Guid("07e032e0-3e5d-43ec-892d-6f2ad1419aea"),
+                            ParentCommentId = new Guid("20d5358e-11fc-4446-8e39-ebcae0f40ad9"),
+                            PostId = new Guid("9e460ac3-5486-4daa-a717-82ff17b09b70"),
                             ReplyCount = 0,
-                            UserId = new Guid("9b38eaf6-3af7-478e-8718-27583d270940")
+                            UserId = new Guid("c2e18fc7-6492-4081-8c19-8ba5e7c42005")
                         },
                         new
                         {
-                            Id = new Guid("fa487080-8ee4-47f2-9d19-ef31cff7bd29"),
+                            Id = new Guid("6172141f-b5b1-4420-b245-5c844633a9a5"),
                             Content = "These designs are stunning! Will they be available in your online shop?",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 3,
-                            PostId = new Guid("8d39b017-b461-4d07-bf32-1551fd75f6b1"),
+                            PostId = new Guid("a881316f-dcd2-4a49-a621-0a5d3fa66b86"),
                             ReplyCount = 1,
-                            UserId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
+                            UserId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
                         },
                         new
                         {
-                            Id = new Guid("872d8053-ba5c-4263-bb4e-0d9982097ccc"),
+                            Id = new Guid("382c2432-5246-4fef-b5a0-2c5c2848ff1b"),
                             Content = "Yes! They'll be available next month. I'll share a discount code soon!",
                             CreatedAt = new DateTime(2025, 3, 15, 3, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 1,
-                            ParentCommentId = new Guid("fa487080-8ee4-47f2-9d19-ef31cff7bd29"),
-                            PostId = new Guid("8d39b017-b461-4d07-bf32-1551fd75f6b1"),
+                            ParentCommentId = new Guid("6172141f-b5b1-4420-b245-5c844633a9a5"),
+                            PostId = new Guid("a881316f-dcd2-4a49-a621-0a5d3fa66b86"),
                             ReplyCount = 0,
-                            UserId = new Guid("13fe2ce5-4f13-4ff6-b247-b9b12c365cfe")
+                            UserId = new Guid("24005e30-4b5a-45b4-aab2-61aca02c8e7f")
                         },
                         new
                         {
-                            Id = new Guid("57be02c3-fc5f-4498-9e42-932884a57061"),
+                            Id = new Guid("c6df3203-8bf8-449f-aba8-f5c2e9845b93"),
                             Content = "That crust looks perfect! Would love to see your sourdough recipe.",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 2,
-                            PostId = new Guid("8b78b587-16f7-48a9-b838-f7e2f3127d93"),
+                            PostId = new Guid("aaefe87b-e5c5-4b29-b605-ac0de1d396ae"),
                             ReplyCount = 1,
-                            UserId = new Guid("225ec745-cee9-4cc7-b687-83c1ab7d0bc3")
+                            UserId = new Guid("f10db540-8ab5-42fc-98c1-1d6670e98a68")
                         },
                         new
                         {
-                            Id = new Guid("846ed4c5-d195-4c44-882c-f2aa69edee2d"),
+                            Id = new Guid("7a73cff3-6d43-4434-a777-133629767de7"),
                             Content = "I'll share it in my next post! It's all about the 24-hour fermentation.",
                             CreatedAt = new DateTime(2025, 3, 15, 1, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 1,
-                            ParentCommentId = new Guid("57be02c3-fc5f-4498-9e42-932884a57061"),
-                            PostId = new Guid("8b78b587-16f7-48a9-b838-f7e2f3127d93"),
+                            ParentCommentId = new Guid("c6df3203-8bf8-449f-aba8-f5c2e9845b93"),
+                            PostId = new Guid("aaefe87b-e5c5-4b29-b605-ac0de1d396ae"),
                             ReplyCount = 0,
-                            UserId = new Guid("3166a07a-ada2-4d3a-9af1-591683c31bcd")
+                            UserId = new Guid("1be6db51-a961-4adf-8902-9f7edd2d1d4c")
                         });
                 });
 
@@ -250,226 +253,226 @@ namespace Instagram_Backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ae40868a-d9e9-4de8-a052-56e09c0fbc17"),
+                            Id = new Guid("860e4830-81d0-48e5-b2eb-fa66bac4747b"),
                             Order = 1,
-                            PostId = new Guid("0e0445bd-fee5-43df-a3cb-90449f4f9133"),
+                            PostId = new Guid("a1580aad-5bc7-45e4-8347-232570d1579b"),
                             Url = "https://picsum.photos/id/1/800/800"
                         },
                         new
                         {
-                            Id = new Guid("f3499fcc-ac2c-47ee-ad6e-640960fa0206"),
+                            Id = new Guid("1234308d-61ea-493a-ab86-a9c0dce3175f"),
                             Order = 1,
-                            PostId = new Guid("d95811a5-6323-4e5c-be64-53838c5a1e7f"),
+                            PostId = new Guid("8dc7e07e-71dc-4677-ad0e-875f2bd59d77"),
                             Url = "https://picsum.photos/id/2/800/800"
                         },
                         new
                         {
-                            Id = new Guid("df8868cf-3150-43d6-a25d-0ea3a3600d42"),
+                            Id = new Guid("1528e35f-181b-4655-b401-5fba6929eeb5"),
                             Order = 2,
-                            PostId = new Guid("d95811a5-6323-4e5c-be64-53838c5a1e7f"),
+                            PostId = new Guid("8dc7e07e-71dc-4677-ad0e-875f2bd59d77"),
                             Url = "https://picsum.photos/id/3/800/800"
                         },
                         new
                         {
-                            Id = new Guid("a7061f1b-d3d8-4402-82ab-ce412bc0d8e5"),
+                            Id = new Guid("61cad9dc-5130-45a3-ac8f-1312ae01dc4d"),
                             Order = 1,
-                            PostId = new Guid("574b4e30-24f7-48c7-a080-342e8aa38f0d"),
+                            PostId = new Guid("8395d1f8-9394-4da6-ac04-d7d5eb4ee47d"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("47655644-78a9-4008-a555-7d5d1d81d5ae"),
+                            Id = new Guid("aa62ed32-8543-4137-8427-bcb75aa8eaff"),
                             Order = 1,
-                            PostId = new Guid("cf9fa288-d4c2-49e9-81f6-6fa48db7a317"),
+                            PostId = new Guid("359b2d41-56f5-4bea-95ae-9e5835b91c0b"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("172c5c39-2bcd-420a-8fe8-779d5f6f826e"),
+                            Id = new Guid("51922d1e-a26a-4f14-b412-1b81c63b4741"),
                             Order = 1,
-                            PostId = new Guid("1dbc524c-385d-4dc5-9798-2e35534ded72"),
+                            PostId = new Guid("d2e2a39d-5ede-4bbb-ad33-05d2af86f878"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("23016aba-06d4-4173-8611-4ffa5ad7da13"),
+                            Id = new Guid("ae6aa320-39e7-42d1-a86d-c1a08dd531aa"),
                             Order = 2,
-                            PostId = new Guid("1dbc524c-385d-4dc5-9798-2e35534ded72"),
+                            PostId = new Guid("d2e2a39d-5ede-4bbb-ad33-05d2af86f878"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("e7a0090e-fec4-440e-9849-e0cd0506db7c"),
+                            Id = new Guid("fcc56907-c4d5-4643-8130-9798a55f5a1b"),
                             Order = 3,
-                            PostId = new Guid("1dbc524c-385d-4dc5-9798-2e35534ded72"),
+                            PostId = new Guid("d2e2a39d-5ede-4bbb-ad33-05d2af86f878"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("af19d580-c750-4518-b48f-457bbb263845"),
+                            Id = new Guid("3573ffc6-bf63-4871-9e75-09ea6ad3a5e1"),
                             Order = 4,
-                            PostId = new Guid("1dbc524c-385d-4dc5-9798-2e35534ded72"),
+                            PostId = new Guid("d2e2a39d-5ede-4bbb-ad33-05d2af86f878"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("34ea3932-ef5b-4723-aca1-a1010b710e80"),
+                            Id = new Guid("2681d946-971e-465c-94b8-2d12d8b0bb58"),
                             Order = 1,
-                            PostId = new Guid("134c28d0-c0e6-4502-9053-80405b9f8f3f"),
+                            PostId = new Guid("f3d89927-4f0d-4678-99ce-c58643e163b1"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("8cead494-2ebb-443c-94cb-ac5ba53c518d"),
+                            Id = new Guid("8433b8ed-08c7-4d11-902e-52afe4261c91"),
                             Order = 1,
-                            PostId = new Guid("78ef649d-e91d-467f-90e9-c15d60a6f336"),
+                            PostId = new Guid("9bfe2ca3-73ab-404f-8f8c-dd5004b84d8b"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("9d98a17a-27d0-4a92-8bbb-d22af60367b1"),
+                            Id = new Guid("855c0349-cd22-4d4f-baa7-03ee0ab0e725"),
                             Order = 1,
-                            PostId = new Guid("82c9d1f2-e6e9-4c48-a603-54940108a5a0"),
+                            PostId = new Guid("bbbad0c3-9758-4508-81d2-ba0f1b068b44"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("d27ce7dd-d143-4716-bf24-1e1852d10f93"),
+                            Id = new Guid("43873c2e-86fa-4f30-9871-9715a7b7ae6e"),
                             Order = 1,
-                            PostId = new Guid("fb390cba-54ff-4b4a-82ce-86b15207b5af"),
+                            PostId = new Guid("20711cd8-f1b2-49d7-8e98-3c65d40c07f3"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("51c8415c-5eff-490a-989e-4ce2048af085"),
+                            Id = new Guid("11e56641-b4cf-4777-93c3-9dbf2048f6cd"),
                             Order = 1,
-                            PostId = new Guid("263bdd23-b6c7-432a-a0a1-1c4b974d8603"),
+                            PostId = new Guid("ce491c2e-6e81-48dc-877c-0375aa73f2fd"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("b8ec5f71-db16-4087-a4c3-ff6cfc621de6"),
+                            Id = new Guid("3dd9184c-508f-4d0b-a586-5271ff1b10f7"),
                             Order = 1,
-                            PostId = new Guid("6f47d184-f438-4504-adee-f9ea35a396fb"),
+                            PostId = new Guid("bfb2c1f0-fb02-4a79-9922-0594b29add61"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("5dd5b603-24b7-43ab-b64d-535f758cc346"),
+                            Id = new Guid("af98df1e-9c22-4b81-a4ef-2e42f0c8b82b"),
                             Order = 1,
-                            PostId = new Guid("dc9e389d-31ce-4f4b-8a05-deaad6bf495c"),
+                            PostId = new Guid("5c7e4574-4d60-4d7d-9b5e-eaaeb5ef391f"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("e1ab9054-0d6a-4dc0-921a-c5501aec2bc6"),
+                            Id = new Guid("a8bbf75e-e451-49b7-b5c5-65c80754f7f9"),
                             Order = 1,
-                            PostId = new Guid("485e4507-31b9-47fe-a3b6-d5a626c56303"),
+                            PostId = new Guid("4c19587a-dec7-449d-b335-30013ca29423"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("103cf52c-ce27-4739-bf9a-90d22b64fc9f"),
+                            Id = new Guid("a0b79a40-7a82-4580-902a-c17f7c991dab"),
                             Order = 2,
-                            PostId = new Guid("485e4507-31b9-47fe-a3b6-d5a626c56303"),
+                            PostId = new Guid("4c19587a-dec7-449d-b335-30013ca29423"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("49bab9ad-0756-4b30-af49-c37901c3b9c8"),
+                            Id = new Guid("253bba4d-b046-4e29-9076-ca1d5eeadb29"),
                             Order = 1,
-                            PostId = new Guid("369c3ad3-81a4-4a7c-b26e-40f0320352cf"),
+                            PostId = new Guid("e1d49a77-b7f7-4570-b2d7-5da07d7dcdda"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("0ba94e4f-711b-449d-822a-2dc20690cd93"),
+                            Id = new Guid("cbd41327-087c-4fe2-862a-1f4972055c5a"),
                             Order = 2,
-                            PostId = new Guid("369c3ad3-81a4-4a7c-b26e-40f0320352cf"),
+                            PostId = new Guid("e1d49a77-b7f7-4570-b2d7-5da07d7dcdda"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("5d6d4aa2-32ce-4f07-af31-8dca473f1c66"),
+                            Id = new Guid("c10d839b-83cf-4d30-a3ae-a22ed28ba400"),
                             Order = 1,
-                            PostId = new Guid("b3f308e0-a38c-4929-a138-3cfdb7a0955b"),
+                            PostId = new Guid("13c94976-8f59-4bbe-a8b4-05d840e166ed"),
                             Url = "https://picsum.photos/id/4/800/800"
                         },
                         new
                         {
-                            Id = new Guid("599feefc-6f8e-4d95-acbf-f627a7a4cf10"),
+                            Id = new Guid("fab243f1-cb12-489e-a238-48af72670de1"),
                             Order = 1,
-                            PostId = new Guid("40b690e5-5569-43ea-9d2d-98707748fd16"),
+                            PostId = new Guid("7a628109-d587-40f3-9900-2d5a6724d216"),
                             Url = "https://picsum.photos/id/10/800/800"
                         },
                         new
                         {
-                            Id = new Guid("b23e2e74-2a50-4bce-886e-59ecdfa94eaa"),
+                            Id = new Guid("7b606428-b2cf-4250-8942-e9a58ac715a7"),
                             Order = 1,
-                            PostId = new Guid("06d0895e-758b-44b6-b7a6-4b9bafa42fb5"),
+                            PostId = new Guid("d02c3613-2722-46e8-ba79-f971a7db3ad8"),
                             Url = "https://picsum.photos/id/11/800/800"
                         },
                         new
                         {
-                            Id = new Guid("1dc0b0a0-586b-4637-af16-2acacf05ae3c"),
+                            Id = new Guid("bea6504a-11bb-4537-96b8-f223cb18e94b"),
                             Order = 1,
-                            PostId = new Guid("07e032e0-3e5d-43ec-892d-6f2ad1419aea"),
+                            PostId = new Guid("9e460ac3-5486-4daa-a717-82ff17b09b70"),
                             Url = "https://picsum.photos/id/12/800/800"
                         },
                         new
                         {
-                            Id = new Guid("160764f6-e60f-4056-8892-27d20cf7c3b9"),
+                            Id = new Guid("ec65fab8-9a22-4c94-9498-ea73c561e168"),
                             Order = 1,
-                            PostId = new Guid("3605dfec-f485-49bc-a63d-9953d2d0f046"),
+                            PostId = new Guid("5c9fc803-7ecc-4f9a-80d7-1d3dedb7fc21"),
                             Url = "https://picsum.photos/id/13/800/800"
                         },
                         new
                         {
-                            Id = new Guid("5541912d-2037-4676-8c64-ec8f826bd935"),
+                            Id = new Guid("8d2d237c-409a-46fa-a214-ee99dd42425f"),
                             Order = 2,
-                            PostId = new Guid("3605dfec-f485-49bc-a63d-9953d2d0f046"),
+                            PostId = new Guid("5c9fc803-7ecc-4f9a-80d7-1d3dedb7fc21"),
                             Url = "https://picsum.photos/id/14/800/800"
                         },
                         new
                         {
-                            Id = new Guid("b1f1b708-e0e2-49fa-950a-9a66d8f4a4b3"),
+                            Id = new Guid("6aaee03a-3e42-4a30-ba24-85200478f2ee"),
                             Order = 1,
-                            PostId = new Guid("8d39b017-b461-4d07-bf32-1551fd75f6b1"),
+                            PostId = new Guid("a881316f-dcd2-4a49-a621-0a5d3fa66b86"),
                             Url = "https://picsum.photos/id/15/800/800"
                         },
                         new
                         {
-                            Id = new Guid("dd92783d-a41f-4ca5-95cc-710721040657"),
+                            Id = new Guid("cd02ea67-e03b-4294-ba70-a9a4b50fa9ee"),
                             Order = 2,
-                            PostId = new Guid("8d39b017-b461-4d07-bf32-1551fd75f6b1"),
+                            PostId = new Guid("a881316f-dcd2-4a49-a621-0a5d3fa66b86"),
                             Url = "https://picsum.photos/id/16/800/800"
                         },
                         new
                         {
-                            Id = new Guid("ac976bca-c0d3-4d00-ac64-5e29690e7120"),
+                            Id = new Guid("635df96f-ba20-4821-8b7d-9cba1d378304"),
                             Order = 3,
-                            PostId = new Guid("8d39b017-b461-4d07-bf32-1551fd75f6b1"),
+                            PostId = new Guid("a881316f-dcd2-4a49-a621-0a5d3fa66b86"),
                             Url = "https://picsum.photos/id/17/800/800"
                         },
                         new
                         {
-                            Id = new Guid("53c9ecab-bc4e-40c3-a6f7-af957f9e65a5"),
+                            Id = new Guid("bb2a35ec-003f-46a7-9a17-fc52dbd9da26"),
                             Order = 1,
-                            PostId = new Guid("8b78b587-16f7-48a9-b838-f7e2f3127d93"),
+                            PostId = new Guid("aaefe87b-e5c5-4b29-b605-ac0de1d396ae"),
                             Url = "https://picsum.photos/id/18/800/800"
                         },
                         new
                         {
-                            Id = new Guid("c615963a-6177-4868-9a3b-940746d12189"),
+                            Id = new Guid("00ebb873-6396-4888-815c-a403ca9f019e"),
                             Order = 1,
-                            PostId = new Guid("9aca14c9-eb4f-4183-a5ca-6a5c0f0835c0"),
+                            PostId = new Guid("f24e609d-3ba1-46dc-b8ec-5fae7bd04bbf"),
                             Url = "https://picsum.photos/id/19/800/800"
                         },
                         new
                         {
-                            Id = new Guid("d6713592-a6ee-4639-be6e-a77800ac141f"),
+                            Id = new Guid("a6393363-40b4-4684-8602-5c7023cb48e0"),
                             Order = 2,
-                            PostId = new Guid("9aca14c9-eb4f-4183-a5ca-6a5c0f0835c0"),
+                            PostId = new Guid("f24e609d-3ba1-46dc-b8ec-5fae7bd04bbf"),
                             Url = "https://picsum.photos/id/20/800/800"
                         });
                 });
@@ -508,131 +511,131 @@ namespace Instagram_Backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7094619d-0b37-4b89-baa4-973d0f8ac342"),
+                            Id = new Guid("1685a5b1-1646-4357-bcc1-b762c284d7cd"),
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            PostId = new Guid("0e0445bd-fee5-43df-a3cb-90449f4f9133"),
+                            PostId = new Guid("a1580aad-5bc7-45e4-8347-232570d1579b"),
                             Type = 0,
-                            UserId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
+                            UserId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
                         },
                         new
                         {
-                            Id = new Guid("7a77c408-c13b-47d3-a13b-a1a8af2c1bf2"),
+                            Id = new Guid("936c8eb2-69b1-456e-8c75-6818bc0a0571"),
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            PostId = new Guid("0e0445bd-fee5-43df-a3cb-90449f4f9133"),
+                            PostId = new Guid("a1580aad-5bc7-45e4-8347-232570d1579b"),
                             Type = 0,
-                            UserId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
+                            UserId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
                         },
                         new
                         {
-                            Id = new Guid("3aa300bc-01c6-4218-b067-431c09005199"),
+                            Id = new Guid("02b103a9-b9c1-406f-a73f-caa66cd8e7c8"),
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            PostId = new Guid("d95811a5-6323-4e5c-be64-53838c5a1e7f"),
+                            PostId = new Guid("8dc7e07e-71dc-4677-ad0e-875f2bd59d77"),
                             Type = 0,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
                         },
                         new
                         {
-                            Id = new Guid("bc26b3da-bb9e-4579-8324-cb04c2d44d22"),
+                            Id = new Guid("a21fee25-94d3-4465-be44-a0460cd55406"),
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            PostId = new Guid("d95811a5-6323-4e5c-be64-53838c5a1e7f"),
+                            PostId = new Guid("8dc7e07e-71dc-4677-ad0e-875f2bd59d77"),
                             Type = 0,
-                            UserId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
+                            UserId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
                         },
                         new
                         {
-                            Id = new Guid("1a902a24-b71d-43c2-8d93-e2ed06f734b1"),
+                            Id = new Guid("a4877887-05e5-4906-80a1-135d7c8dd187"),
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            PostId = new Guid("574b4e30-24f7-48c7-a080-342e8aa38f0d"),
+                            PostId = new Guid("8395d1f8-9394-4da6-ac04-d7d5eb4ee47d"),
                             Type = 0,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
                         },
                         new
                         {
-                            Id = new Guid("21f408eb-54a6-43f5-86b4-dbb58be7a4b4"),
+                            Id = new Guid("be508edf-5e51-4b15-8650-7fa68b7940f5"),
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            PostId = new Guid("574b4e30-24f7-48c7-a080-342e8aa38f0d"),
+                            PostId = new Guid("8395d1f8-9394-4da6-ac04-d7d5eb4ee47d"),
                             Type = 0,
-                            UserId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
+                            UserId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
                         },
                         new
                         {
-                            Id = new Guid("3bdb7474-b59f-49ce-8ff3-0e5eaf545df1"),
-                            CommentId = new Guid("f0e1bdaf-2c5b-4242-b5ea-baf07e38126a"),
+                            Id = new Guid("11f0875c-8046-4fd8-8c58-b8b0f7770979"),
+                            CommentId = new Guid("d362cee1-39c2-4fce-a53d-43397ab6b184"),
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             Type = 1,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
                         },
                         new
                         {
-                            Id = new Guid("166396d4-ce4c-42a5-8e96-056c25c36368"),
-                            CommentId = new Guid("f0e1bdaf-2c5b-4242-b5ea-baf07e38126a"),
+                            Id = new Guid("2cd1d1a2-0aa1-41b9-9435-d17211fad94e"),
+                            CommentId = new Guid("d362cee1-39c2-4fce-a53d-43397ab6b184"),
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             Type = 1,
-                            UserId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
+                            UserId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
                         },
                         new
                         {
-                            Id = new Guid("536b513c-780e-4023-a4bd-4a75f7c83d3d"),
-                            CommentId = new Guid("028f30f0-63f8-42e0-87a9-0cbcd0be493b"),
+                            Id = new Guid("b3f49bb9-a629-4849-9aa2-26b93d4194a7"),
+                            CommentId = new Guid("8f425888-a589-444c-b274-258fa24e1561"),
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             Type = 1,
-                            UserId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
+                            UserId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
                         },
                         new
                         {
-                            Id = new Guid("ae1167e0-02ba-4e88-b7af-9f5f3fc60580"),
+                            Id = new Guid("6196b128-bc36-46f8-8312-ed1f4c1de347"),
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            PostId = new Guid("40b690e5-5569-43ea-9d2d-98707748fd16"),
+                            PostId = new Guid("7a628109-d587-40f3-9900-2d5a6724d216"),
                             Type = 0,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
                         },
                         new
                         {
-                            Id = new Guid("2296b89f-b959-4fb6-b483-caf71ac22efa"),
+                            Id = new Guid("4788a956-0d2c-414f-b7c5-e94a9fa65472"),
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            PostId = new Guid("40b690e5-5569-43ea-9d2d-98707748fd16"),
+                            PostId = new Guid("7a628109-d587-40f3-9900-2d5a6724d216"),
                             Type = 0,
-                            UserId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
+                            UserId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
                         },
                         new
                         {
-                            Id = new Guid("b21eca66-308d-4ab4-a06d-e10d575f8c6a"),
+                            Id = new Guid("37841387-91b2-47ba-9416-4014fef6fa45"),
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            PostId = new Guid("07e032e0-3e5d-43ec-892d-6f2ad1419aea"),
+                            PostId = new Guid("9e460ac3-5486-4daa-a717-82ff17b09b70"),
                             Type = 0,
-                            UserId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
+                            UserId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
                         },
                         new
                         {
-                            Id = new Guid("e1177a87-801b-4460-bbd2-9b6c117101f7"),
+                            Id = new Guid("803e54d6-529d-47da-9f5b-534c844990e9"),
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            PostId = new Guid("07e032e0-3e5d-43ec-892d-6f2ad1419aea"),
+                            PostId = new Guid("9e460ac3-5486-4daa-a717-82ff17b09b70"),
                             Type = 0,
-                            UserId = new Guid("ebe3156c-d427-4d2c-8594-88fe30e74b57")
+                            UserId = new Guid("dc3d8918-0070-47cd-aee7-bf6a43dfb6b2")
                         },
                         new
                         {
-                            Id = new Guid("02a7bd8c-7d82-460d-ad66-376a7e6973e0"),
+                            Id = new Guid("480eb0d6-fc6f-4012-997b-2d9ae0b1697c"),
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            PostId = new Guid("8d39b017-b461-4d07-bf32-1551fd75f6b1"),
+                            PostId = new Guid("a881316f-dcd2-4a49-a621-0a5d3fa66b86"),
                             Type = 0,
-                            UserId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
+                            UserId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
                         },
                         new
                         {
-                            Id = new Guid("30d19b30-9a93-4495-b179-ca549b8b6ef1"),
-                            CommentId = new Guid("822aea4b-d01b-47c2-ad5e-3aee5aa81e7e"),
+                            Id = new Guid("a3790a15-2257-48b8-8be7-55b7632874fd"),
+                            CommentId = new Guid("7c9445d5-5309-445f-bf36-3bfd32cbd1c1"),
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             Type = 1,
-                            UserId = new Guid("ebe3156c-d427-4d2c-8594-88fe30e74b57")
+                            UserId = new Guid("dc3d8918-0070-47cd-aee7-bf6a43dfb6b2")
                         },
                         new
                         {
-                            Id = new Guid("030a7ee8-ab57-499b-b353-2e692f924e42"),
-                            CommentId = new Guid("fa487080-8ee4-47f2-9d19-ef31cff7bd29"),
+                            Id = new Guid("b6f3b6e4-5e74-4cd7-9082-a78beed00e42"),
+                            CommentId = new Guid("6172141f-b5b1-4420-b245-5c844633a9a5"),
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             Type = 1,
-                            UserId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
+                            UserId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
                         });
                 });
 
@@ -686,105 +689,105 @@ namespace Instagram_Backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7dfa9c33-9aa5-43ba-966a-050877429b73"),
-                            ActorId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9"),
+                            Id = new Guid("b02cc886-16ae-469c-9320-1589bc1e068e"),
+                            ActorId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50"),
                             Content = "liked your post",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsRead = true,
-                            PostId = new Guid("0e0445bd-fee5-43df-a3cb-90449f4f9133"),
+                            PostId = new Guid("a1580aad-5bc7-45e4-8347-232570d1579b"),
                             Type = 0,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
                         },
                         new
                         {
-                            Id = new Guid("fe0f1363-22ef-4f6f-8199-c104034d1f37"),
-                            ActorId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30"),
+                            Id = new Guid("1c19169c-063b-405e-b64b-353f017bc2e4"),
+                            ActorId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5"),
                             Content = "liked your post",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsRead = true,
-                            PostId = new Guid("0e0445bd-fee5-43df-a3cb-90449f4f9133"),
+                            PostId = new Guid("a1580aad-5bc7-45e4-8347-232570d1579b"),
                             Type = 0,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
                         },
                         new
                         {
-                            Id = new Guid("03204a2d-924e-49d0-b50e-7f927b5b3d80"),
-                            ActorId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9"),
-                            CommentId = new Guid("f0e1bdaf-2c5b-4242-b5ea-baf07e38126a"),
+                            Id = new Guid("bd655d3c-5f52-4d75-a4b1-98fc33600c12"),
+                            ActorId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50"),
+                            CommentId = new Guid("d362cee1-39c2-4fce-a53d-43397ab6b184"),
                             Content = "commented on your post",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsRead = true,
-                            PostId = new Guid("0e0445bd-fee5-43df-a3cb-90449f4f9133"),
+                            PostId = new Guid("a1580aad-5bc7-45e4-8347-232570d1579b"),
                             Type = 1,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
                         },
                         new
                         {
-                            Id = new Guid("07f66f1d-3eb0-411c-8a22-b3aa885526c5"),
-                            ActorId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a"),
-                            CommentId = new Guid("028f30f0-63f8-42e0-87a9-0cbcd0be493b"),
+                            Id = new Guid("9c571c77-23b4-4c14-8a8e-29252ccccc3c"),
+                            ActorId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79"),
+                            CommentId = new Guid("8f425888-a589-444c-b274-258fa24e1561"),
                             Content = "replied to your comment",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsRead = true,
-                            PostId = new Guid("0e0445bd-fee5-43df-a3cb-90449f4f9133"),
+                            PostId = new Guid("a1580aad-5bc7-45e4-8347-232570d1579b"),
                             Type = 1,
-                            UserId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
+                            UserId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
                         },
                         new
                         {
-                            Id = new Guid("f0e35c49-d9d6-4b4d-8938-5af8d3f4d63d"),
-                            ActorId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a"),
+                            Id = new Guid("12091fd8-110b-47eb-964b-1336456db8fa"),
+                            ActorId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79"),
                             Content = "started following you",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsRead = true,
                             Type = 2,
-                            UserId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
+                            UserId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
                         },
                         new
                         {
-                            Id = new Guid("9d1d61e8-ddde-43ea-a319-cc425bc69c27"),
-                            ActorId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a"),
+                            Id = new Guid("798f53fe-aeb4-4035-8e4c-ddd199a65ca3"),
+                            ActorId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79"),
                             Content = "liked your post",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsRead = false,
-                            PostId = new Guid("40b690e5-5569-43ea-9d2d-98707748fd16"),
+                            PostId = new Guid("7a628109-d587-40f3-9900-2d5a6724d216"),
                             Type = 0,
-                            UserId = new Guid("ebe3156c-d427-4d2c-8594-88fe30e74b57")
+                            UserId = new Guid("dc3d8918-0070-47cd-aee7-bf6a43dfb6b2")
                         },
                         new
                         {
-                            Id = new Guid("8f0ddd5c-0501-46bd-9156-96734e5eabcf"),
-                            ActorId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9"),
+                            Id = new Guid("3c2acfe7-bc70-4185-a3cc-1fe0479f6890"),
+                            ActorId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50"),
                             Content = "liked your post",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsRead = false,
-                            PostId = new Guid("40b690e5-5569-43ea-9d2d-98707748fd16"),
+                            PostId = new Guid("7a628109-d587-40f3-9900-2d5a6724d216"),
                             Type = 0,
-                            UserId = new Guid("ebe3156c-d427-4d2c-8594-88fe30e74b57")
+                            UserId = new Guid("dc3d8918-0070-47cd-aee7-bf6a43dfb6b2")
                         },
                         new
                         {
-                            Id = new Guid("eb179352-30fd-4e6b-a91c-ec32c71df733"),
-                            ActorId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a"),
-                            CommentId = new Guid("822aea4b-d01b-47c2-ad5e-3aee5aa81e7e"),
+                            Id = new Guid("787360b1-153d-45dd-b9cf-8f0b2bce5c25"),
+                            ActorId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79"),
+                            CommentId = new Guid("7c9445d5-5309-445f-bf36-3bfd32cbd1c1"),
                             Content = "commented on your post",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsRead = true,
-                            PostId = new Guid("40b690e5-5569-43ea-9d2d-98707748fd16"),
+                            PostId = new Guid("7a628109-d587-40f3-9900-2d5a6724d216"),
                             Type = 1,
-                            UserId = new Guid("ebe3156c-d427-4d2c-8594-88fe30e74b57")
+                            UserId = new Guid("dc3d8918-0070-47cd-aee7-bf6a43dfb6b2")
                         },
                         new
                         {
-                            Id = new Guid("ee9465ae-d778-4869-b812-56f0dc8c8ee7"),
-                            ActorId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30"),
-                            CommentId = new Guid("76d24222-1a80-4ae0-9ae4-fc66d7de8f15"),
+                            Id = new Guid("9ddc71a0-340c-41a1-90a9-0f9714cc72d6"),
+                            ActorId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5"),
+                            CommentId = new Guid("20d5358e-11fc-4446-8e39-ebcae0f40ad9"),
                             Content = "commented on your post",
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsRead = true,
-                            PostId = new Guid("07e032e0-3e5d-43ec-892d-6f2ad1419aea"),
+                            PostId = new Guid("9e460ac3-5486-4daa-a717-82ff17b09b70"),
                             Type = 1,
-                            UserId = new Guid("9b38eaf6-3af7-478e-8718-27583d270940")
+                            UserId = new Guid("c2e18fc7-6492-4081-8c19-8ba5e7c42005")
                         });
                 });
 
@@ -824,201 +827,201 @@ namespace Instagram_Backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0e0445bd-fee5-43df-a3cb-90449f4f9133"),
+                            Id = new Guid("a1580aad-5bc7-45e4-8347-232570d1579b"),
                             Caption = "Beautiful sunset at the beach!",
-                            CommentCount = 0,
+                            CommentCount = 2,
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
+                            LikeCount = 15,
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
                         },
                         new
                         {
-                            Id = new Guid("d95811a5-6323-4e5c-be64-53838c5a1e7f"),
-                            Caption = "My homemade pasta recipe 🍝",
-                            CommentCount = 0,
-                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
-                        },
-                        new
-                        {
-                            Id = new Guid("574b4e30-24f7-48c7-a080-342e8aa38f0d"),
-                            Caption = "My homemade pasta recipe 🍝",
-                            CommentCount = 0,
-                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
-                        },
-                        new
-                        {
-                            Id = new Guid("cf9fa288-d4c2-49e9-81f6-6fa48db7a317"),
-                            Caption = "Beautiful sunset at the beach!",
-                            CommentCount = 0,
-                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
-                        },
-                        new
-                        {
-                            Id = new Guid("1dbc524c-385d-4dc5-9798-2e35534ded72"),
-                            Caption = "Beautiful sunset at the beach!",
-                            CommentCount = 0,
-                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
-                        },
-                        new
-                        {
-                            Id = new Guid("134c28d0-c0e6-4502-9053-80405b9f8f3f"),
-                            Caption = "Beautiful sunset at the beach!",
-                            CommentCount = 0,
-                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
-                        },
-                        new
-                        {
-                            Id = new Guid("78ef649d-e91d-467f-90e9-c15d60a6f336"),
-                            Caption = "Beautiful sunset at the beach!",
-                            CommentCount = 0,
-                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
-                        },
-                        new
-                        {
-                            Id = new Guid("82c9d1f2-e6e9-4c48-a603-54940108a5a0"),
-                            Caption = "Beautiful sunset at the beach!",
-                            CommentCount = 0,
-                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
-                        },
-                        new
-                        {
-                            Id = new Guid("fb390cba-54ff-4b4a-82ce-86b15207b5af"),
-                            Caption = "New coding setup complete",
-                            CommentCount = 4,
-                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 28,
-                            UserId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
-                        },
-                        new
-                        {
-                            Id = new Guid("263bdd23-b6c7-432a-a0a1-1c4b974d8603"),
+                            Id = new Guid("8dc7e07e-71dc-4677-ad0e-875f2bd59d77"),
                             Caption = "My homemade pasta recipe 🍝",
                             CommentCount = 3,
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 42,
-                            UserId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
+                            UserId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
                         },
                         new
                         {
-                            Id = new Guid("6f47d184-f438-4504-adee-f9ea35a396fb"),
+                            Id = new Guid("8395d1f8-9394-4da6-ac04-d7d5eb4ee47d"),
+                            Caption = "My homemade pasta recipe 🍝",
+                            CommentCount = 3,
+                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            LikeCount = 42,
+                            UserId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
+                        },
+                        new
+                        {
+                            Id = new Guid("359b2d41-56f5-4bea-95ae-9e5835b91c0b"),
+                            Caption = "Beautiful sunset at the beach!",
+                            CommentCount = 2,
+                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            LikeCount = 15,
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
+                        },
+                        new
+                        {
+                            Id = new Guid("d2e2a39d-5ede-4bbb-ad33-05d2af86f878"),
+                            Caption = "Beautiful sunset at the beach!",
+                            CommentCount = 2,
+                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            LikeCount = 15,
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
+                        },
+                        new
+                        {
+                            Id = new Guid("f3d89927-4f0d-4678-99ce-c58643e163b1"),
+                            Caption = "Beautiful sunset at the beach!",
+                            CommentCount = 2,
+                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            LikeCount = 15,
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
+                        },
+                        new
+                        {
+                            Id = new Guid("9bfe2ca3-73ab-404f-8f8c-dd5004b84d8b"),
+                            Caption = "Beautiful sunset at the beach!",
+                            CommentCount = 2,
+                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            LikeCount = 15,
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
+                        },
+                        new
+                        {
+                            Id = new Guid("bbbad0c3-9758-4508-81d2-ba0f1b068b44"),
+                            Caption = "Beautiful sunset at the beach!",
+                            CommentCount = 2,
+                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            LikeCount = 15,
+                            UserId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
+                        },
+                        new
+                        {
+                            Id = new Guid("20711cd8-f1b2-49d7-8e98-3c65d40c07f3"),
                             Caption = "New coding setup complete",
                             CommentCount = 4,
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 28,
-                            UserId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
+                            UserId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
                         },
                         new
                         {
-                            Id = new Guid("dc9e389d-31ce-4f4b-8a05-deaad6bf495c"),
+                            Id = new Guid("ce491c2e-6e81-48dc-877c-0375aa73f2fd"),
+                            Caption = "My homemade pasta recipe 🍝",
+                            CommentCount = 3,
+                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            LikeCount = 42,
+                            UserId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
+                        },
+                        new
+                        {
+                            Id = new Guid("bfb2c1f0-fb02-4a79-9922-0594b29add61"),
                             Caption = "New coding setup complete",
                             CommentCount = 4,
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             LikeCount = 28,
-                            UserId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
+                            UserId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
                         },
                         new
                         {
-                            Id = new Guid("485e4507-31b9-47fe-a3b6-d5a626c56303"),
+                            Id = new Guid("5c7e4574-4d60-4d7d-9b5e-eaaeb5ef391f"),
                             Caption = "New coding setup complete",
-                            CommentCount = 0,
+                            CommentCount = 4,
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
+                            LikeCount = 28,
+                            UserId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
                         },
                         new
                         {
-                            Id = new Guid("369c3ad3-81a4-4a7c-b26e-40f0320352cf"),
+                            Id = new Guid("4c19587a-dec7-449d-b335-30013ca29423"),
                             Caption = "New coding setup complete",
-                            CommentCount = 0,
+                            CommentCount = 4,
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
+                            LikeCount = 28,
+                            UserId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
                         },
                         new
                         {
-                            Id = new Guid("b3f308e0-a38c-4929-a138-3cfdb7a0955b"),
+                            Id = new Guid("e1d49a77-b7f7-4570-b2d7-5da07d7dcdda"),
                             Caption = "New coding setup complete",
-                            CommentCount = 0,
+                            CommentCount = 4,
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
+                            LikeCount = 28,
+                            UserId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
                         },
                         new
                         {
-                            Id = new Guid("40b690e5-5569-43ea-9d2d-98707748fd16"),
+                            Id = new Guid("13c94976-8f59-4bbe-a8b4-05d840e166ed"),
+                            Caption = "New coding setup complete",
+                            CommentCount = 4,
+                            CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            LikeCount = 28,
+                            UserId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
+                        },
+                        new
+                        {
+                            Id = new Guid("7a628109-d587-40f3-9900-2d5a6724d216"),
                             Caption = "My latest digital art piece - cyberpunk cityscape 🌆",
-                            CommentCount = 0,
+                            CommentCount = 3,
                             CreatedAt = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("ebe3156c-d427-4d2c-8594-88fe30e74b57")
+                            LikeCount = 24,
+                            UserId = new Guid("dc3d8918-0070-47cd-aee7-bf6a43dfb6b2")
                         },
                         new
                         {
-                            Id = new Guid("06d0895e-758b-44b6-b7a6-4b9bafa42fb5"),
+                            Id = new Guid("d02c3613-2722-46e8-ba79-f971a7db3ad8"),
                             Caption = "New plant baby added to my collection! 🌱",
-                            CommentCount = 0,
+                            CommentCount = 5,
                             CreatedAt = new DateTime(2025, 3, 13, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("ebe3156c-d427-4d2c-8594-88fe30e74b57")
+                            LikeCount = 31,
+                            UserId = new Guid("dc3d8918-0070-47cd-aee7-bf6a43dfb6b2")
                         },
                         new
                         {
-                            Id = new Guid("07e032e0-3e5d-43ec-892d-6f2ad1419aea"),
+                            Id = new Guid("9e460ac3-5486-4daa-a717-82ff17b09b70"),
                             Caption = "Today's workout: 5 mile run and full-body HIIT 💪",
-                            CommentCount = 0,
+                            CommentCount = 4,
                             CreatedAt = new DateTime(2025, 3, 14, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("9b38eaf6-3af7-478e-8718-27583d270940")
+                            LikeCount = 18,
+                            UserId = new Guid("c2e18fc7-6492-4081-8c19-8ba5e7c42005")
                         },
                         new
                         {
-                            Id = new Guid("3605dfec-f485-49bc-a63d-9953d2d0f046"),
+                            Id = new Guid("5c9fc803-7ecc-4f9a-80d7-1d3dedb7fc21"),
                             Caption = "Meal prep for the week! Healthy eating doesn't have to be boring 🥗",
-                            CommentCount = 0,
+                            CommentCount = 6,
                             CreatedAt = new DateTime(2025, 3, 11, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("9b38eaf6-3af7-478e-8718-27583d270940")
+                            LikeCount = 27,
+                            UserId = new Guid("c2e18fc7-6492-4081-8c19-8ba5e7c42005")
                         },
                         new
                         {
-                            Id = new Guid("8d39b017-b461-4d07-bf32-1551fd75f6b1"),
+                            Id = new Guid("a881316f-dcd2-4a49-a621-0a5d3fa66b86"),
                             Caption = "My latest fashion collection inspired by Mediterranean summers ☀️",
-                            CommentCount = 0,
+                            CommentCount = 7,
                             CreatedAt = new DateTime(2025, 3, 12, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("13fe2ce5-4f13-4ff6-b247-b9b12c365cfe")
+                            LikeCount = 45,
+                            UserId = new Guid("24005e30-4b5a-45b4-aab2-61aca02c8e7f")
                         },
                         new
                         {
-                            Id = new Guid("8b78b587-16f7-48a9-b838-f7e2f3127d93"),
+                            Id = new Guid("aaefe87b-e5c5-4b29-b605-ac0de1d396ae"),
                             Caption = "Homemade sourdough pizza with fresh basil and buffalo mozzarella 🍕",
-                            CommentCount = 0,
+                            CommentCount = 5,
                             CreatedAt = new DateTime(2025, 3, 13, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("3166a07a-ada2-4d3a-9af1-591683c31bcd")
+                            LikeCount = 38,
+                            UserId = new Guid("1be6db51-a961-4adf-8902-9f7edd2d1d4c")
                         },
                         new
                         {
-                            Id = new Guid("9aca14c9-eb4f-4183-a5ca-6a5c0f0835c0"),
+                            Id = new Guid("f24e609d-3ba1-46dc-b8ec-5fae7bd04bbf"),
                             Caption = "Sunrise hike at Mount Rainier. Worth waking up at 4am! 🏔️",
-                            CommentCount = 0,
+                            CommentCount = 8,
                             CreatedAt = new DateTime(2025, 3, 10, 0, 0, 0, 0, DateTimeKind.Utc),
-                            LikeCount = 0,
-                            UserId = new Guid("225ec745-cee9-4cc7-b687-83c1ab7d0bc3")
+                            LikeCount = 52,
+                            UserId = new Guid("f10db540-8ab5-42fc-98c1-1d6670e98a68")
                         });
                 });
 
@@ -1115,10 +1118,10 @@ namespace Instagram_Backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a"),
+                            Id = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79"),
                             AccessFailedCount = 0,
                             Bio = "Photography enthusiast and traveler",
-                            ConcurrencyStamp = "e238415a-bfb5-4ccd-8c5e-8ddfa037b31d",
+                            ConcurrencyStamp = "f9f59a15-6e52-4e0a-ae4f-103ff9108ea8",
                             Email = "john@example.com",
                             EmailConfirmed = true,
                             FirstName = "John",
@@ -1129,16 +1132,16 @@ namespace Instagram_Backend.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAEG9Yh999XbrReKfYRF6NzknIDvSmTjBuDq4KQkfqZweYlubTSIOeVLFmxSD3tar1IA==",
                             PhoneNumberConfirmed = false,
                             ProfilePictureUrl = "https://randomuser.me/api/portraits/men/1.jpg",
-                            SecurityStamp = "1653bc25-5dba-43e5-88f1-579155df92f9",
+                            SecurityStamp = "c04ef068-a56b-411f-8ef5-4ce1634d64db",
                             TwoFactorEnabled = false,
                             UserName = "johndoe"
                         },
                         new
                         {
-                            Id = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9"),
+                            Id = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50"),
                             AccessFailedCount = 0,
                             Bio = "Food blogger | Travel lover",
-                            ConcurrencyStamp = "0fbe91ef-ef24-4902-8ea2-9289e4b4eaa6",
+                            ConcurrencyStamp = "a2407ff9-0417-48f8-a310-a7612d28974e",
                             Email = "jane@example.com",
                             EmailConfirmed = true,
                             FirstName = "Jane",
@@ -1149,16 +1152,16 @@ namespace Instagram_Backend.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAEG9Yh999XbrReKfYRF6NzknIDvSmTjBuDq4KQkfqZweYlubTSIOeVLFmxSD3tar1IA==",
                             PhoneNumberConfirmed = false,
                             ProfilePictureUrl = "https://randomuser.me/api/portraits/women/1.jpg",
-                            SecurityStamp = "9ef828db-a86b-4d3b-b28b-fdc77c73e5db",
+                            SecurityStamp = "0ee12117-8112-43f1-9e10-6707910a119d",
                             TwoFactorEnabled = false,
                             UserName = "janesmith"
                         },
                         new
                         {
-                            Id = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30"),
+                            Id = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5"),
                             AccessFailedCount = 0,
                             Bio = "Software developer and coffee addict",
-                            ConcurrencyStamp = "bcd608c0-f50d-4bce-9f64-3b47f8615afb",
+                            ConcurrencyStamp = "2d0e7e55-4e20-48b5-976a-ee019362b99a",
                             Email = "alex@example.com",
                             EmailConfirmed = true,
                             FirstName = "Alex",
@@ -1169,16 +1172,16 @@ namespace Instagram_Backend.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAEG9Yh999XbrReKfYRF6NzknIDvSmTjBuDq4KQkfqZweYlubTSIOeVLFmxSD3tar1IA==",
                             PhoneNumberConfirmed = false,
                             ProfilePictureUrl = "https://randomuser.me/api/portraits/men/2.jpg",
-                            SecurityStamp = "4ef796d1-b4c6-4da5-8849-7c22377025a3",
+                            SecurityStamp = "4d13b318-1f37-466d-9e71-a06e39b4f0e7",
                             TwoFactorEnabled = false,
                             UserName = "alexj"
                         },
                         new
                         {
-                            Id = new Guid("ebe3156c-d427-4d2c-8594-88fe30e74b57"),
+                            Id = new Guid("dc3d8918-0070-47cd-aee7-bf6a43dfb6b2"),
                             AccessFailedCount = 0,
                             Bio = "Digital artist and designer",
-                            ConcurrencyStamp = "fda8125b-9d2c-4811-9b50-b538899aa2c0",
+                            ConcurrencyStamp = "c322bf2b-7341-4ae3-8f99-ba6c5b7dc09f",
                             Email = "emily@example.com",
                             EmailConfirmed = true,
                             FirstName = "Emily",
@@ -1189,16 +1192,16 @@ namespace Instagram_Backend.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAEG9Yh999XbrReKfYRF6NzknIDvSmTjBuDq4KQkfqZweYlubTSIOeVLFmxSD3tar1IA==",
                             PhoneNumberConfirmed = false,
                             ProfilePictureUrl = "https://randomuser.me/api/portraits/women/2.jpg",
-                            SecurityStamp = "61ce76cd-91fa-4c86-a7d3-93e32332cb98",
+                            SecurityStamp = "9fa25bef-320e-4066-9674-27eeaae4d802",
                             TwoFactorEnabled = false,
                             UserName = "emilyc"
                         },
                         new
                         {
-                            Id = new Guid("9b38eaf6-3af7-478e-8718-27583d270940"),
+                            Id = new Guid("c2e18fc7-6492-4081-8c19-8ba5e7c42005"),
                             AccessFailedCount = 0,
                             Bio = "Fitness enthusiast and nutrition coach",
-                            ConcurrencyStamp = "ed4e68f3-34b9-48ef-80a8-3fe4a1201487",
+                            ConcurrencyStamp = "7c31ea13-62ba-4ac1-b205-7f54a43fa0ab",
                             Email = "michael@example.com",
                             EmailConfirmed = true,
                             FirstName = "Michael",
@@ -1209,16 +1212,16 @@ namespace Instagram_Backend.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAEG9Yh999XbrReKfYRF6NzknIDvSmTjBuDq4KQkfqZweYlubTSIOeVLFmxSD3tar1IA==",
                             PhoneNumberConfirmed = false,
                             ProfilePictureUrl = "https://randomuser.me/api/portraits/men/3.jpg",
-                            SecurityStamp = "8e43d83b-f78c-4360-acfc-202076334dcd",
+                            SecurityStamp = "91edc1c8-33ee-485b-b582-dcb6ee1d7ac2",
                             TwoFactorEnabled = false,
                             UserName = "michaelt"
                         },
                         new
                         {
-                            Id = new Guid("13fe2ce5-4f13-4ff6-b247-b9b12c365cfe"),
+                            Id = new Guid("24005e30-4b5a-45b4-aab2-61aca02c8e7f"),
                             AccessFailedCount = 0,
                             Bio = "Fashion designer and trend spotter",
-                            ConcurrencyStamp = "95fe12fe-243f-4261-8c73-aa88d0de0ff0",
+                            ConcurrencyStamp = "ca67cf9f-5e46-4a26-8295-0f3ec6de65ca",
                             Email = "sophia@example.com",
                             EmailConfirmed = true,
                             FirstName = "Sophia",
@@ -1229,16 +1232,16 @@ namespace Instagram_Backend.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAEG9Yh999XbrReKfYRF6NzknIDvSmTjBuDq4KQkfqZweYlubTSIOeVLFmxSD3tar1IA==",
                             PhoneNumberConfirmed = false,
                             ProfilePictureUrl = "https://randomuser.me/api/portraits/women/3.jpg",
-                            SecurityStamp = "4b07fef6-0eb4-4157-a57f-e415ca89fd4c",
+                            SecurityStamp = "0b8ccb92-1762-4952-9646-2d856844fee5",
                             TwoFactorEnabled = false,
                             UserName = "sophiag"
                         },
                         new
                         {
-                            Id = new Guid("3166a07a-ada2-4d3a-9af1-591683c31bcd"),
+                            Id = new Guid("1be6db51-a961-4adf-8902-9f7edd2d1d4c"),
                             AccessFailedCount = 0,
                             Bio = "Chef and food photographer",
-                            ConcurrencyStamp = "a91fe56d-4085-4a66-b728-37f0a04a343c",
+                            ConcurrencyStamp = "2e9edf8f-b83d-4014-aafe-353a2e7495d3",
                             Email = "david@example.com",
                             EmailConfirmed = true,
                             FirstName = "David",
@@ -1249,16 +1252,16 @@ namespace Instagram_Backend.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAEG9Yh999XbrReKfYRF6NzknIDvSmTjBuDq4KQkfqZweYlubTSIOeVLFmxSD3tar1IA==",
                             PhoneNumberConfirmed = false,
                             ProfilePictureUrl = "https://randomuser.me/api/portraits/men/4.jpg",
-                            SecurityStamp = "26d0aefe-4adf-4ede-9ba8-d5066b19216e",
+                            SecurityStamp = "83a09dfd-0569-48cf-9324-d9246f6eb057",
                             TwoFactorEnabled = false,
                             UserName = "davidw"
                         },
                         new
                         {
-                            Id = new Guid("225ec745-cee9-4cc7-b687-83c1ab7d0bc3"),
+                            Id = new Guid("f10db540-8ab5-42fc-98c1-1d6670e98a68"),
                             AccessFailedCount = 0,
                             Bio = "Travel blogger and outdoor enthusiast",
-                            ConcurrencyStamp = "3a501ab1-17d2-48a1-83ed-c8be0478aee8",
+                            ConcurrencyStamp = "cc81b016-b98c-4356-a43d-7cbdd843e0a3",
                             Email = "olivia@example.com",
                             EmailConfirmed = true,
                             FirstName = "Olivia",
@@ -1269,7 +1272,7 @@ namespace Instagram_Backend.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAEG9Yh999XbrReKfYRF6NzknIDvSmTjBuDq4KQkfqZweYlubTSIOeVLFmxSD3tar1IA==",
                             PhoneNumberConfirmed = false,
                             ProfilePictureUrl = "https://randomuser.me/api/portraits/women/4.jpg",
-                            SecurityStamp = "4630b4bf-0e43-4249-b760-437ef6df658c",
+                            SecurityStamp = "5d89e3f0-b985-480b-8f27-ca42310a697b",
                             TwoFactorEnabled = false,
                             UserName = "oliviam"
                         });
@@ -1292,123 +1295,123 @@ namespace Instagram_Backend.Migrations
                     b.HasData(
                         new
                         {
-                            FollowerId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9"),
-                            FollowingId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
+                            FollowerId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50"),
+                            FollowingId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
                         },
                         new
                         {
-                            FollowerId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30"),
-                            FollowingId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
+                            FollowerId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5"),
+                            FollowingId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
                         },
                         new
                         {
-                            FollowerId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a"),
-                            FollowingId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
+                            FollowerId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79"),
+                            FollowingId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
                         },
                         new
                         {
-                            FollowerId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a"),
-                            FollowingId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
+                            FollowerId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79"),
+                            FollowingId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
                         },
                         new
                         {
-                            FollowerId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9"),
-                            FollowingId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
+                            FollowerId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50"),
+                            FollowingId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
                         },
                         new
                         {
-                            FollowerId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30"),
-                            FollowingId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
+                            FollowerId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5"),
+                            FollowingId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
                         },
                         new
                         {
-                            FollowerId = new Guid("ebe3156c-d427-4d2c-8594-88fe30e74b57"),
-                            FollowingId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
+                            FollowerId = new Guid("dc3d8918-0070-47cd-aee7-bf6a43dfb6b2"),
+                            FollowingId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
                         },
                         new
                         {
-                            FollowerId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a"),
-                            FollowingId = new Guid("ebe3156c-d427-4d2c-8594-88fe30e74b57")
+                            FollowerId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79"),
+                            FollowingId = new Guid("dc3d8918-0070-47cd-aee7-bf6a43dfb6b2")
                         },
                         new
                         {
-                            FollowerId = new Guid("ebe3156c-d427-4d2c-8594-88fe30e74b57"),
-                            FollowingId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
+                            FollowerId = new Guid("dc3d8918-0070-47cd-aee7-bf6a43dfb6b2"),
+                            FollowingId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
                         },
                         new
                         {
-                            FollowerId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9"),
-                            FollowingId = new Guid("ebe3156c-d427-4d2c-8594-88fe30e74b57")
+                            FollowerId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50"),
+                            FollowingId = new Guid("dc3d8918-0070-47cd-aee7-bf6a43dfb6b2")
                         },
                         new
                         {
-                            FollowerId = new Guid("9b38eaf6-3af7-478e-8718-27583d270940"),
-                            FollowingId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30")
+                            FollowerId = new Guid("c2e18fc7-6492-4081-8c19-8ba5e7c42005"),
+                            FollowingId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5")
                         },
                         new
                         {
-                            FollowerId = new Guid("69d3cdf9-1fc2-4ccf-857b-79f4dc24ee30"),
-                            FollowingId = new Guid("9b38eaf6-3af7-478e-8718-27583d270940")
+                            FollowerId = new Guid("979b390a-b414-4bf4-bce5-a0510e9103c5"),
+                            FollowingId = new Guid("c2e18fc7-6492-4081-8c19-8ba5e7c42005")
                         },
                         new
                         {
-                            FollowerId = new Guid("9b38eaf6-3af7-478e-8718-27583d270940"),
-                            FollowingId = new Guid("ebe3156c-d427-4d2c-8594-88fe30e74b57")
+                            FollowerId = new Guid("c2e18fc7-6492-4081-8c19-8ba5e7c42005"),
+                            FollowingId = new Guid("dc3d8918-0070-47cd-aee7-bf6a43dfb6b2")
                         },
                         new
                         {
-                            FollowerId = new Guid("13fe2ce5-4f13-4ff6-b247-b9b12c365cfe"),
-                            FollowingId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9")
+                            FollowerId = new Guid("24005e30-4b5a-45b4-aab2-61aca02c8e7f"),
+                            FollowingId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50")
                         },
                         new
                         {
-                            FollowerId = new Guid("c76fa8a9-02c7-4c34-af26-692a567949e9"),
-                            FollowingId = new Guid("13fe2ce5-4f13-4ff6-b247-b9b12c365cfe")
+                            FollowerId = new Guid("4e1b1e0f-5c71-48ab-8bcb-f31760f94d50"),
+                            FollowingId = new Guid("24005e30-4b5a-45b4-aab2-61aca02c8e7f")
                         },
                         new
                         {
-                            FollowerId = new Guid("13fe2ce5-4f13-4ff6-b247-b9b12c365cfe"),
-                            FollowingId = new Guid("ebe3156c-d427-4d2c-8594-88fe30e74b57")
+                            FollowerId = new Guid("24005e30-4b5a-45b4-aab2-61aca02c8e7f"),
+                            FollowingId = new Guid("dc3d8918-0070-47cd-aee7-bf6a43dfb6b2")
                         },
                         new
                         {
-                            FollowerId = new Guid("3166a07a-ada2-4d3a-9af1-591683c31bcd"),
-                            FollowingId = new Guid("2146ff4d-eabf-480e-ba8b-ca0ad915a33a")
+                            FollowerId = new Guid("1be6db51-a961-4adf-8902-9f7edd2d1d4c"),
+                            FollowingId = new Guid("492e3957-5244-4a7a-9d4a-9efc8b121b79")
                         },
                         new
                         {
-                            FollowerId = new Guid("3166a07a-ada2-4d3a-9af1-591683c31bcd"),
-                            FollowingId = new Guid("13fe2ce5-4f13-4ff6-b247-b9b12c365cfe")
+                            FollowerId = new Guid("1be6db51-a961-4adf-8902-9f7edd2d1d4c"),
+                            FollowingId = new Guid("24005e30-4b5a-45b4-aab2-61aca02c8e7f")
                         },
                         new
                         {
-                            FollowerId = new Guid("225ec745-cee9-4cc7-b687-83c1ab7d0bc3"),
-                            FollowingId = new Guid("3166a07a-ada2-4d3a-9af1-591683c31bcd")
+                            FollowerId = new Guid("f10db540-8ab5-42fc-98c1-1d6670e98a68"),
+                            FollowingId = new Guid("1be6db51-a961-4adf-8902-9f7edd2d1d4c")
                         },
                         new
                         {
-                            FollowerId = new Guid("3166a07a-ada2-4d3a-9af1-591683c31bcd"),
-                            FollowingId = new Guid("225ec745-cee9-4cc7-b687-83c1ab7d0bc3")
+                            FollowerId = new Guid("1be6db51-a961-4adf-8902-9f7edd2d1d4c"),
+                            FollowingId = new Guid("f10db540-8ab5-42fc-98c1-1d6670e98a68")
                         },
                         new
                         {
-                            FollowerId = new Guid("225ec745-cee9-4cc7-b687-83c1ab7d0bc3"),
-                            FollowingId = new Guid("13fe2ce5-4f13-4ff6-b247-b9b12c365cfe")
+                            FollowerId = new Guid("f10db540-8ab5-42fc-98c1-1d6670e98a68"),
+                            FollowingId = new Guid("24005e30-4b5a-45b4-aab2-61aca02c8e7f")
                         },
                         new
                         {
-                            FollowerId = new Guid("9b38eaf6-3af7-478e-8718-27583d270940"),
-                            FollowingId = new Guid("3166a07a-ada2-4d3a-9af1-591683c31bcd")
+                            FollowerId = new Guid("c2e18fc7-6492-4081-8c19-8ba5e7c42005"),
+                            FollowingId = new Guid("1be6db51-a961-4adf-8902-9f7edd2d1d4c")
                         },
                         new
                         {
-                            FollowerId = new Guid("225ec745-cee9-4cc7-b687-83c1ab7d0bc3"),
-                            FollowingId = new Guid("ebe3156c-d427-4d2c-8594-88fe30e74b57")
+                            FollowerId = new Guid("f10db540-8ab5-42fc-98c1-1d6670e98a68"),
+                            FollowingId = new Guid("dc3d8918-0070-47cd-aee7-bf6a43dfb6b2")
                         },
                         new
                         {
-                            FollowerId = new Guid("13fe2ce5-4f13-4ff6-b247-b9b12c365cfe"),
-                            FollowingId = new Guid("225ec745-cee9-4cc7-b687-83c1ab7d0bc3")
+                            FollowerId = new Guid("24005e30-4b5a-45b4-aab2-61aca02c8e7f"),
+                            FollowingId = new Guid("f10db540-8ab5-42fc-98c1-1d6670e98a68")
                         });
                 });
 

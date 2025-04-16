@@ -21,11 +21,12 @@ public class UserService : IUserService
         _notificationService = notificationService;
     }
 
-    public async Task<UserDto> GetUserById(Guid id)
+    public async Task<UserDto> GetUserById(Guid id , Guid currentUserId)
     {
         _logger.LogInformation("Fetching user with ID {UserId}", id);
 
         var user = await _context.Users
+            .Include(u => u.Posts)
             .Include(u => u.FollowerRelationships)
             .Include(u => u.FollowingRelationships)
             .FirstOrDefaultAsync(u => u.Id == id);
@@ -36,7 +37,10 @@ public class UserService : IUserService
             throw new NotFoundException($"User not found with ID = {id}");
         }
 
-        return MapperDto.MapUserToDto(user);
+        var dto =  MapperDto.MapUserToDto(user);
+        if ( id != currentUserId ) dto.IsFollowedByCurrentUser = _context.UserFollowers
+            .Any(uf => uf.FollowerId == currentUserId && uf.FollowingId == id);
+        return  dto ; 
     }
 
 
@@ -160,7 +164,7 @@ public class UserService : IUserService
         }
     }
 
-    public async Task<PagedResult<UserDto>> GetMyFollowers(int page, int pageSize, Guid userId)
+    public async Task<PagedResult<UserDto>> GetMyFollowers(int page, int pageSize, Guid userId , Guid currentUserId)
     {
         _logger.LogInformation("Fetching followers for user {UserId} with page {Page} and pageSize {PageSize}", userId, page, pageSize);
 
@@ -171,6 +175,8 @@ public class UserService : IUserService
             .Include(f => f.Follower)
             .Select(f => f.Follower)
             .OrderBy(u => u.UserName);
+
+        
 
         if ( followersQuery == null)
         {
@@ -183,15 +189,24 @@ public class UserService : IUserService
                 TotalCount = 0,
             };
         }
+        var currentUserFollowing = await _context.UserFollowers
+            .Where(uf => uf.FollowerId == currentUserId)
+            .Select(uf => uf.FollowingId)
+            .ToHashSetAsync() 
+            ?? new HashSet<Guid>();
             
         return await MapperPagedResult.MapPagedResult(
             followersQuery, 
             page, 
             pageSize, 
-            user => MapperDto.MapUserToDto(user));
+            user => {
+                var dto = MapperDto.MapUserToDto(user);
+                dto.IsFollowedByCurrentUser = currentUserFollowing.Contains(user.Id);
+                return dto; 
+            });
     }
 
-    public async Task<PagedResult<UserDto>> GetMyFollowing(int page, int pageSize, Guid userId)
+    public async Task<PagedResult<UserDto>> GetMyFollowing(int page, int pageSize, Guid userId , Guid currentUserId)
     {
         _logger.LogInformation("Fetching followings for user {UserId} with page {Page} and pageSize {PageSize}", userId, page, pageSize);
 
@@ -216,12 +231,22 @@ public class UserService : IUserService
                 TotalCount = 0,
             };
         }
+
+        var currentUserFollowing = await _context.UserFollowers
+            .Where(uf => uf.FollowerId == currentUserId)
+            .Select(uf => uf.FollowingId)
+            .ToHashSetAsync() 
+            ?? new HashSet<Guid>();
             
         return await MapperPagedResult.MapPagedResult(
             followingQuery, 
             page, 
             pageSize, 
-            user => MapperDto.MapUserToDto(user));
+            user => {
+                var dto = MapperDto.MapUserToDto(user);
+                dto.IsFollowedByCurrentUser = currentUserFollowing.Contains(user.Id);
+                return dto; 
+            });
     }
 
     public async Task<PagedResult<UserDto>> SearchUsersAsync(string query, int page, int pageSize, Guid currentUserId)

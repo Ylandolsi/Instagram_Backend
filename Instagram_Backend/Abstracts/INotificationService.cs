@@ -13,7 +13,4 @@ public interface INotificationService
     Task CreateNotificationAsync(NotificationType type, Guid userId, Guid actorId, 
         string content, Guid? postId = null, Guid? commentId = null) ; 
     
-    // Methods that will emit events (for real-time later)
-    // Task CreateNotificationAsync(NotificationType type, Guid userId, Guid actorId, string message, Guid? postId = null, Guid? commentId = null);
-    // event EventHandler<NotificationEventArgs> OnNotificationCreated;
 }

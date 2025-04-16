@@ -142,7 +142,7 @@ public class AccountService : IAccountService
         {
             var newUser = new User
             {
-                UserName = email,
+                UserName = claimsPrincipal.FindFirstValue(ClaimTypes.GivenName) + claimsPrincipal.FindFirstValue(ClaimTypes.Surname) ?? string.Empty,
                 Email = email,
                 FirstName = claimsPrincipal.FindFirstValue(ClaimTypes.GivenName) ?? string.Empty,
                 LastName = claimsPrincipal.FindFirstValue(ClaimTypes.Surname) ?? string.Empty,

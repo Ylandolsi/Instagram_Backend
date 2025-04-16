@@ -25,6 +25,7 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
             .WithOne(i => i.Post)
             .HasForeignKey(i => i.PostId)
             .OnDelete(DeleteBehavior.Cascade);
+
                 
 
     }

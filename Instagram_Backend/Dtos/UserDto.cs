@@ -12,4 +12,5 @@ public class UserDto
     public string Bio { get; set; } = string.Empty;
     public int FollowersCount { get; set; } = 0;
     public int FollowingCount { get; set; } = 0;
+    public int PostsCount { get; set; } = 0;
 }

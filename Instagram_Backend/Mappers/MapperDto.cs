@@ -21,8 +21,9 @@ public static class MapperDto
             UserName = user.UserName ?? string.Empty,
             ProfilePictureUrl = user.ProfilePictureUrl ?? string.Empty ,
             Bio = user.Bio ?? string.Empty,
-            FollowersCount = user.FollowerRelationships.Count,
-            FollowingCount = user.FollowingRelationships.Count,
+            FollowersCount = user.FollowerRelationships?.Count ?? 0,
+            FollowingCount = user.FollowingRelationships?.Count ?? 0,
+            PostsCount = user.Posts?.Count ?? 0,
         };
     }
 

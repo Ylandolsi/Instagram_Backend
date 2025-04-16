@@ -19,7 +19,20 @@ public class UsersController : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetUserById(Guid id)
     {
-        var user = await _userService.GetUserById(id);
+        var currentUserId = GetUserIdFromToken();
+        if (currentUserId == Guid.Empty)
+            return Unauthorized(new ApiResponse<bool>
+            {
+                Message = "User not authenticated.",
+                Data = false,
+            });
+        if (id == Guid.Empty)
+            return BadRequest(new ApiResponse<bool>
+            {
+                Message = "UserId is empty",
+                Data = false,
+            });
+        var user = await _userService.GetUserById(id , currentUserId);
         if (user == null)
             return NotFound(new ApiResponse<bool>
             {
@@ -36,7 +49,14 @@ public class UsersController : ControllerBase
     [HttpGet("{id:guid}/followers")]
     public async Task<IActionResult> GetFollowers(Guid id, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
     {
-        var followers = await _userService.GetMyFollowers(page, pageSize, id);
+        Guid userId = GetUserIdFromToken();
+        if (userId == Guid.Empty)
+            return Unauthorized(new ApiResponse<bool>
+            {
+                Message = "User not authenticated.",
+                Data = false,
+            });
+        var followers = await _userService.GetMyFollowers(page, pageSize, id , userId);
         return Ok(new ApiResponse<PagedResult<UserDto>>
         {
             Message = $"Followers of userId = {id} Fetched with success",
@@ -47,7 +67,14 @@ public class UsersController : ControllerBase
     [HttpGet("{id:guid}/following")]
     public async Task<IActionResult> GetFollowing(Guid id, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
     {
-        var following = await _userService.GetMyFollowing(page, pageSize, id);
+        Guid userId = GetUserIdFromToken();
+        if (userId == Guid.Empty)
+            return Unauthorized(new ApiResponse<bool>
+            {
+                Message = "User not authenticated.",
+                Data = false,
+            });
+        var following = await _userService.GetMyFollowing(page, pageSize, id,userId);
         return Ok( new ApiResponse<PagedResult<UserDto>>
         {
             Message = $"Following of userId = {id} Fetched with success",

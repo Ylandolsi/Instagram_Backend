@@ -4,7 +4,8 @@ public enum NotificationType
 {
     Like,
     Comment,
-    Follow
+    Follow,
+
     // Mention,
     // TaggedInPost
 }
