@@ -9,10 +9,6 @@ using Instagram_Backend.Processors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
-using Microsoft.AspNetCore.Mvc;
-using Instagram_Backend.Requests;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Google;
 using Instagram_Backend.Services.ExternalServices;
 using Instagram_Backend.Hubs;
 
@@ -74,7 +70,7 @@ builder.Services.AddScoped<CloudinaryService>();
 builder.Services.AddAuth(builder.Configuration);
 builder.Services.AddAuthorization();
 
-builder.Services.AddHttpContextAccessor(); // ## 
+builder.Services.AddHttpContextAccessor(); 
 
 var app = builder.Build();
 

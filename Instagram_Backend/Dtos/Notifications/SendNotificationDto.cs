@@ -11,8 +11,6 @@ public class SendNotificationDto
     public NotificationType Type { get; set; }
     public string Content { get; set; } = string.Empty;
     
-    // either a post or a comment or none (  follow notification)
-    // depending on the type of notification
     public Guid? PostId { get; set; }
     
     public Guid? CommentId { get; set; }

@@ -6,8 +6,6 @@ public enum NotificationType
     Comment,
     Follow,
 
-    // Mention,
-    // TaggedInPost
 }
 
 public class Notification
@@ -15,7 +13,7 @@ public class Notification
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
     public User User { get; set; } = null!;
-    public Guid ActorId { get; set; }  // who triggered the notification
+    public Guid ActorId { get; set; } 
     public User Actor { get; set; } = null!;
     
     public NotificationType Type { get; set; }

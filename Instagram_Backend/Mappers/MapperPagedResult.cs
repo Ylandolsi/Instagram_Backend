@@ -6,9 +6,6 @@ namespace Instagram_Backend.Mappers;
 
 public static class MapperPagedResult
 {
-    // benefits of this approach : 
-        // -  Mapper logic is separated from the data access logic
-        // -  Mapper logic is reusable across different services
     public static async Task<PagedResult<TDestination>> MapPagedResult<TSource, TDestination>(
         IQueryable<TSource> source, int page, int pageSize, 
         Func<TSource, TDestination> mapFunc)
