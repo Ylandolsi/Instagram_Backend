@@ -2,6 +2,10 @@
 
 This project is a web application designed to replicate some of the core functionalities of Instagram.
 
+## Frontend Repository
+
+The corresponding frontend application can be found here: [Instagram Frontend](https://github.com/Ylandolsi/Instagram_Front)
+
 ## Technologies Used
 
 - .NET 9
